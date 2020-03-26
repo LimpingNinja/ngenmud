@@ -91,7 +91,7 @@ void init_races() {
   // If you are wanting to add new, non-stock races it is suggested
   // you do so through a module and import them with add_race instead
   // of putting them directly into this folder. This will make your life
-  // much easier whenever new versions of NakedMud are released and you
+  // much easier whenever new versions of the drier are released and you
   // want to upgrade!
   //********************************************************************
 }

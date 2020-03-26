@@ -5,7 +5,7 @@
 // pyplugs.h
 //
 // Pyplugs are just various things that occur at the intersection between 
-// Python and C, in NakedMud. They include the loading of python modules,
+// Python and C, in NGenMud. They include the loading of python modules,
 // a few commands for interacting with python modules, and miscellaneory (sp?)
 // python stuff that doesn't neccessarily fall under "scripting".
 //

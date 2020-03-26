@@ -1,7 +1,7 @@
 '''
 cmd_manip.py
 
-a set of commands that NakedMud(tm) comes with that allows characters to
+a set of commands that NGenMud comes with that allows characters to
 manipulate various things. These commands are mostly directed towards
 manipulating objects (e.g. get, put, drop, etc...) but can also affect other
 things like exits (e.g. open, close)

@@ -12,7 +12,7 @@ list:=
   key: general
   val:-
     posts :=
-      poster: Alister
+      poster: LimpingNinja
       time  : Sun Jul  9 14:53:08 2006
       title : hello, world!
       mssg  :~

@@ -424,7 +424,7 @@ void game_loop(int control)
 
     /*
      * Here we sleep out the rest of the pulse, thus forcing
-     * SocketMud(tm) (NakedMud) to run at PULSES_PER_SECOND pulses each second.
+     * the driver to run at PULSES_PER_SECOND pulses each second.
      */
     gettimeofday(&new_time, NULL);
 

@@ -3,12 +3,9 @@
 #
 # autorun.py
 #
-# This autorun script was designed to be used with NakedMud. It will 
+# This autorun script was designed to be used with NgenMud. It will 
 # automagically restart your MUD any time it crashes. If the MUD is manually
 # shut down, the autorun script will terminate. Accepts a port argument.
-#
-# Geoff Hollis
-# http://www.ualberta.ca/~hollis/nakedmud.html
 #
 ################################################################################
 import sys               # for sys.argv
@@ -21,7 +18,7 @@ def main(argv = sys.argv[1:]):
     specifies the port number to run under
     '''
     restart_delay = 5     # how long do we delay before a restart (seconds)
-    path = './NakedMud'   # the path to the MUD binary
+    path = './ngenmud'    # the path to the MUD binary
     port = 4000           # the default port we will be running the MUD under
 
     # parse out our port number if one was supplied

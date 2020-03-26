@@ -3,7 +3,7 @@
 // pyaccount.c
 //
 // Contains a python account module, and an Account class that is a python 
-// wrapper for NakedMud accounts.
+// wrapper for game accounts.
 //
 //*****************************************************************************
 

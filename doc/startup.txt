@@ -1,15 +1,28 @@
-Startup should be pretty easy. To compile, simply go into the src directory and
-type "make". Everything should compile automagically. From here, to start, you
-simply type ./NakedMud [port] & If you do not supply a port, the MUD will
-start up on port 4000 by default.
+Starting
+-----------
+Startup should be pretty easy once you've compiled/built. With SCons, everything
+should compile automagically.
 
-If you're having troubles compiling when it gets to the scripts, you will want
-to read src/scripts/module.mk
+Simply type ./ngenmud [port] & If you do not supply a port, the MUD will
+start up on port 5555 by default.
 
-If you've got other problems and cannot figure out what to do, you can try
-giving me a description of your problem, and I'll see if I can help you out. No
-promises, though.
+Building
+-----------
+SCONS: (might need to install: i.e. debian: sudo apt-get install scons)
+To build, simply run `scons`. To clean, run `scons -c` (unlike Make,
+SCons can work out what it's built and delete it). To make a backup,
+run `scons backup` (caveat: this won't clean first like the Makefile
+does. You'll have to run `scons -c` by hand).
 
-Geoff Hollis
-hollisgf@email.uc.edu
-http://www.uc.edu/~hollisgf/
+MAKE:
+To compile, simply go into the src directory and type "make". You will likely
+need to read/edit the src/scripts/module.mk (instructions in file) to ensure 
+that you are pointing at the right Python. SCons is a better choice for 
+building.
+
+Help
+-----------
+If you've got other problems and cannot figure out what to do, please use the
+github issues in order to get a response. 
+
+https://github.com/LimpingNinja/ngenmud

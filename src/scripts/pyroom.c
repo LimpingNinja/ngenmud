@@ -4,7 +4,7 @@
 //
 // Contains the implementation of a module that contains all of the methods
 // for dealing with rooms. Also contains a Python Class implementation of
-// NakedMud rooms.
+// the game driver rooms, eventually the driver should not have a concern.
 //
 //*****************************************************************************
 

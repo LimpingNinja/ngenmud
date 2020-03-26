@@ -4,7 +4,7 @@
 //
 // scripts.h
 //
-// NakedMud makes extensive use of scripting. It uses scripting to generate
+// NGenMud makes extensive use of scripting. It uses scripting to generate
 // objects, mobiles, and rooms when they are loaded into the game. There are
 // also scripting hooks for these things (commonly referred to as triggers), 
 // which allow them to be a bit more dynamic and flavorful in the game. For

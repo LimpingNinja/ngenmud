@@ -2,7 +2,7 @@
 //
 // help.c
 //
-// Contained within is the new help module for NakedMud, instituted at v3.6.
+// Contained within is the new help module for the driver, instituted at NMv3.6.
 // It allows for help files to exist both on disc, and to be built on the fly
 // by other game modules (but not saved to disc). 
 //

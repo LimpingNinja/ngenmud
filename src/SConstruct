@@ -48,15 +48,15 @@ def recursive_glob(directory, pattern):
     return files
 
 # Initialise the build environment
-nakedmud = Environment()
-nakedmud.Append(CPPPATH=[get_python_inc()])
+ngenmud = Environment()
+ngenmud.Append(CPPPATH=[get_python_inc()])
 # The following seems to break under Mac OSX, so we'll just filter it out. It still seems to work without it...
 if platform == 'darwin':
-    nakedmud.Append(LINKFLAGS=get_config_var('LINKFORSHARED').split())
-nakedmud.Append(LIBS=['python%d.%d' % version_info[0:2]])
+    ngenmud.Append(LINKFLAGS=get_config_var('LINKFORSHARED').split())
+ngenmud.Append(LIBS=['python%d.%d' % version_info[0:2]])
 
 # The name of the binary file to build
-binary = 'NakedMud'
+binary = 'ngenmud'
 
 # Required modules
 modules = ['dyn_vars', 'set_val', 'olc2', 'editor', 'items', 'scripts']
@@ -65,30 +65,30 @@ modules = ['dyn_vars', 'set_val', 'olc2', 'editor', 'items', 'scripts']
 modules += ['time', 'socials', 'alias', 'help2']
 
 # Compiler flags
-nakedmud.Append(CCFLAGS=['-Wall', '-g', '-ggdb', '-O2'])
+ngenmud.Append(CCFLAGS=['-Wall', '-g', '-ggdb', '-O2'])
 
 # Required libraries
-nakedmud.Append(LIBS=['z', 'm', 'pthread'])
+ngenmud.Append(LIBS=['z', 'm', 'pthread'])
 
 # non-darwin OSes need to include crypt
 if platform != 'darwin':
-   nakedmud.Append(LIBS=['crypt'])
+   ngenmud.Append(LIBS=['crypt'])
 
 # The big list of source files.
-nakedmud['NAKEDMUD_SOURCES'] = glob('*.c')
+ngenmud['NGENMUD_SOURCES'] = glob('*.c')
 
-# Export the nakedmud environment in case SConscripts need to modify it
-Export('nakedmud')
+# Export the ngenmud environment in case SConscripts need to modify it
+Export('ngenmud')
 
 # Work through the module dirs and append to the sources list
 for module in modules:
-    nakedmud['NAKEDMUD_SOURCES'] += probe_directory(module)
+    ngenmud['NGENMUD_SOURCES'] += probe_directory(module)
     filename = join(module, 'SConscript')
     if(isfile(filename)):
         SConscript(filename)
 
 # Default target is build the program
-nakedmud.Default(nakedmud.Program(binary, nakedmud['NAKEDMUD_SOURCES']))
+ngenmud.Default(ngenmud.Program(binary, ngenmud['NGENMUD_SOURCES']))
 
 # Backup stuff
 
@@ -98,6 +98,6 @@ backup_dirs = 'src lib doc'
 # Name of the backup file
 backup_file = join('backup', '%s-%s.tar.gz' % (binary.lower(), strftime('%Y-%m-%d-%Hh%Mm', localtime())))
 # Rule for making backups
-nakedmud.Command(backup_file, [], ['cd .. ; tar -zcf %s %s' % (backup_file, backup_dirs)])
+ngenmud.Command(backup_file, [], ['cd .. ; tar -zcf %s %s' % (backup_file, backup_dirs)])
 # Alias so `scons backup` will make a backup
-nakedmud.Alias('backup', backup_file)
+ngenmud.Alias('backup', backup_file)

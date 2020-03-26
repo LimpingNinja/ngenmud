@@ -222,7 +222,7 @@ def cmd_eval(ch, cmd, arg):
        For example:
 
        > eval "Your name is " + ch.name
-       Evaluation: Your name is Alister
+       Evaluation: Your name is LimpingNinja
 
        > eval dir()
        Evaluation: ['arg', 'ch', 'cmd']

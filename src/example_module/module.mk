@@ -3,14 +3,11 @@
 # example_module.mk
 #
 # The intent of this makefile is to act as a template makefile for people
-# creating new modules for NakedMud(tm). The module installation process has
-# been made as simple as I (Geoff Hollis) can make it; for the make file, all
-# you really have to do is add a couple lines to SRC so that the main makefile
-# knows that you have source files you want to compile. You are also able to
-# add new libraries and includes if you need to. To make sure your module is
-# compiled, you will have to add an entry for it in the Makefile within src/
-#
-# Questions and comments should be directed to Geoff Hollis (hollis@ualberta.ca)
+# creating new modules for the driver. For the make file, all you really have
+# to do is add a couple lines to SRC so that the main makefile knows that you
+# have source files you want to compile. You are also able to add new libraries
+# and includes if you need to. To make sure your module is compiled, you will
+# have to add an entry for it in the Makefile within src/
 #
 ################################################################################
 

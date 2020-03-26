@@ -1,7 +1,7 @@
 """
 colour.py
 
-NakedMud's base colour module. Contains functions for outbound text processing
+GenLib base colour module. Contains functions for outbound text processing
 to add ASCII colour codes to the text.
 """
 import mud, mudsock, hooks

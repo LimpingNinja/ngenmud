@@ -12,7 +12,7 @@ script  :~
   ### begin extra code
   # This script will restring the object's description to a pint of beer filled
   # with a random type of beer. This script merely provides cosmetic changes,
-  # as there are no alcoholic containers in NakedMud.
+  # as there are no alcoholic containers in GenLib.
   # pick a random type of beer
   type = random.choice(["Guinness", "Kriek", "Traditional", "Hoegaarten", "Maudite"])
   # restring all of our descriptions to take into account our new beer type

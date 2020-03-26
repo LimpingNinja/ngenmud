@@ -1,7 +1,7 @@
 '''
 cmd_comm.c
 
-Various commands used in NakedMud(tm) for communicating with other
+Various commands used in NGenMud(tm) for communicating with other
 characters, and NPCs.
 '''
 from mud import *

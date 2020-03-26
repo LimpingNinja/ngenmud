@@ -1089,7 +1089,8 @@ void do_copyover(void) {
   // exec - descriptors are inherited
   sprintf(control_buf, "%d", control);
   sprintf(port_buf, "%d", mudport);
-  execl(EXE_FILE, "NakedMud", "-copyover", control_buf, port_buf, NULL);
+  // TODO: Evaluate, this seems awkwardly hard coded
+  execl(EXE_FILE, "ngenmud", "-copyover", control_buf, port_buf, NULL);
 }
 
 

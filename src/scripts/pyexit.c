@@ -3,7 +3,7 @@
 // pyexit.c
 //
 // Contains a python exit module, and an Exit class that is a python wrapper
-// for NakedMud exits.
+// for the game driver exits.
 //
 //*****************************************************************************
 

@@ -3,7 +3,7 @@
 // pyplugs.c
 //
 // Pyplugs are just various things that occur at the intersection between 
-// Python and C, in NakedMud. They include the loading of python modules,
+// Python and C, in the game driver. They include the loading of python modules,
 // a few commands for interacting with python modules, and miscellaneory (sp?)
 // python stuff that doesn't neccessarily fall under "scripting".
 //
@@ -109,7 +109,7 @@ COMMAND(cmd_pyload) {
 }
 
 //
-// NakedMud allows you to extend the codebase in Python. These extensions must
+// NGenMud allows you to extend the codebase in Python. These extensions must
 // take the form of Python modules, and must be stored in the PYMOD_LIB
 // directory. These modules might add new commands to the mud, or provide new
 // functions that scripts or other extension modules can use. The game datatypes

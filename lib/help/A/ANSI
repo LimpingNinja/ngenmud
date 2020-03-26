@@ -1,6 +1,6 @@
 keywords  : ANSI
 info      :~
-  NakedMud supports ANSI colors, and you can access them by using the '{{'
+  The game supports ANSI colors, and you can access them by using the '{{'
   character, followed by the colorkey from the table below.
   
   Yellow    {yy {YY{n
@@ -12,6 +12,6 @@ info      :~
   Dark      {dd {DD{n
   White     {ww {WW{n
   
-  The 'n' key is the default NakedMud color, and the mudcolor will always
+  The 'n' key is the default game color, and the mudcolor will always
   revert to this color at the end of a string.
 -

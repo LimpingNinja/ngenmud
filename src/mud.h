@@ -18,7 +18,7 @@
 // the rest of the MUD know that you've installed the module.
 //*****************************************************************************
 
-// mandatory modules. These are modules that the NakedMud core REQUIRES to run.
+// mandatory modules. These are modules that the driver core REQUIRES to run.
 // They have simply been made modules for organizational ease.
 #define MODULE_ITEMS
 #define MODULE_OLC2
@@ -103,6 +103,7 @@ typedef unsigned char                     bool;
 #define eBOLD   1
 
 /* A few globals */
+// TODO: Globals should be moved to a global configuration file.
 #define DFLT_PULSES_PER_SECOND 10
 #define PULSES_PER_SECOND   mudsettingGetInt("pulses_per_second")
 #define SECOND              * PULSES_PER_SECOND   /* used for figuring out how many pulses in a second*/
@@ -116,9 +117,10 @@ typedef unsigned char                     bool;
 #define MAX_OUTPUT         8192                   /* well shoot me if it isn't enough   */
 #define FILE_TERMINATOR    "EOF"                  /* end of file marker                 */
 #define COPYOVER_FILE      "../.copyover.dat"     /* tempfile to store copyover data    */
-#define EXE_FILE           "../src/NakedMud"      /* the name of the mud binary         */
+#define EXE_FILE           "../src/ngenmud"       /* the name of the mud binary         */
 #define DEFAULT_PORT       4000                   /* the default port we run on */
 #define SCREEN_WIDTH       80                     // the width of a term screen
+
 #define PARA_INDENT        0                      // num of spaces to start para
 
 /* Thread States */

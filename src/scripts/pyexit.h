@@ -5,7 +5,7 @@
 // pyexit.h
 //
 // Contains a python exit module, and an Exit class that is a python wrapper
-// for NakedMud exits. If you wish to give python access to more features
+// for game driver exits. If you wish to give python access to more features
 // of an exit, it should NOT be done by editing pyexit.c! Use 
 // PyExit_addGetSetter and PyExit_addMethod in a new module implementing the 
 // feature you want to give Python access to.

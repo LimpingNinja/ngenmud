@@ -1,11 +1,15 @@
-Welcome to NakedMud(tm)
+ __      __       .__                               
+/  \    /  \ ____ |  |   ____  ____   _____   ____  
+\   \/\/   // __ \|  | _/ ___\/  _ \ /     \_/ __ \ 
+ \        /\  ___/|  |_\  \__(  <_> )  Y Y  \  ___/ 
+  \__/\  /  \___  >____/\___  >____/|__|_|  /\___  >
+       \/       \/          \/            \/     \/
+Welcome GenLib on NGenMud v1.0.0
 
 Glad you could get it up and running! The examples zone is a proof of concept
 for the various building utilities, such as triggers and zone reset commands. 
 Look around, and try HELP OLC if you are wanting to look at anything in detail.
 
 Comments, questions, and concerns should be addressed to:
-Geoff Hollis
-hollisgf@email.uc.edu
-http://www.uc.edu/~hollisgf/
+    https://github.com/LimpingNinja/ngenmud/issues
 

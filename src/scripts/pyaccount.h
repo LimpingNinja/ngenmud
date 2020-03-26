@@ -5,7 +5,7 @@
 // pyaccount.h
 //
 // Contains a python account module, and an Account class that is a python 
-// wrapper for NakedMud accounts. If you wish to give python access to more
+// wrapper for game engine accounts. If you wish to give python access to more
 // features of an account, it should NOT be done by editing pyaccount.c! Use 
 // PyAccount_addGetSetter and PyAccount_addMethod in a new module implementing 
 // the feature you want to give Python access to.

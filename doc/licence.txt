@@ -1,3 +1,6 @@
+NGenMud is free to use for any purpose. See below credits.
+
+---
 NakedMud is free to use for any purpose you would like to use it for, without 
 restriction from the creator, Geoff Hollis. By using it, or any pieces of the 
 code, you agree to absolve responsibility from the creator, Geoff Hollis, and 

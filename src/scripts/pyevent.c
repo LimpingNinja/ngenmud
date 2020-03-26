@@ -2,7 +2,7 @@
 //
 // pyevent.c
 //
-// pyevent gives Python access to NakedMud's event handler in a limited form.
+// pyevent gives Python access to the driver's event handler in a limited form.
 // Unlike normal events which can have owners of any sort, python events can
 // only have owners that are characters, objects, or rooms. Other than that,
 // python events are identical to normal events.

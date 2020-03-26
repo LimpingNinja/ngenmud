@@ -1,7 +1,7 @@
 '''
 cmd_misc.c
 
-a collection of miscellaneous commands that come with NakedMud(tm)
+a collection of miscellaneous commands that come with NGenMud
 '''
 import mudsys, mud, hooks, event, mudsys
 

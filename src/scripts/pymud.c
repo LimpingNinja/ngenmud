@@ -161,7 +161,7 @@ PyObject *mud_parse_args(PyObject *self, PyObject *args) {
 
 
 //
-// a wrapper around NakedMud's generic_find() function
+// a wrapper around the driver's generic_find() function
 PyObject *mud_generic_find(PyObject *self, PyObject *args) {
   PyObject *py_looker = Py_None;     CHAR_DATA *looker = NULL;
   char      *type_str = NULL;        bitvector_t  type = 0; 

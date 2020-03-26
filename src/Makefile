@@ -1,5 +1,5 @@
 ###############################################################################
-# makefile for nakedmud
+# makefile for ngenmud
 #
 # Thanks go out to Tyche for bringing my attention to "Recursive Make Considered
 # Harmful" by Peter Miller. Many of the make conventions used in this makefile
@@ -14,7 +14,7 @@
 CC = gcc
 
 # the name of the binary file created that you will run to start your mud
-BINARY  := NakedMud
+BINARY  := ngenmud
 
 # the name of the project - essentially, the executable sans capital letters
 PROJECT := $(shell echo $(BINARY) | tr A-Z a-z)
@@ -35,7 +35,7 @@ MODULES += time socials alias help2
 C_FLAGS := -Wall -g -ggdb -O2
 
 # extra libraries if required
-LIBS    := -lz -lpthread -lcrypt
+LIBS    := -lz -lpthread -lcrypt -lm
 
 # each module will add to this from its module.mk file
 SRC     := gameloop.c mud.c utils.c interpret.c handler.c inform.c \

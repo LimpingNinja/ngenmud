@@ -12,6 +12,7 @@
 // type "worn"; it calculates armor class/protection/whatnot based on the type
 // of worn item the item is.
 //
+// TODO: This should be ported over.
 // that said, I'm not going to do it. Well, not for NakedMud anyways; I don't
 // want to burden other developers with my conception of what a good way to do
 // armor class is. Therefore, if you agree with me, I leave the exercise up to

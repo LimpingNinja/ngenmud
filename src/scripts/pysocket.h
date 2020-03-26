@@ -5,7 +5,7 @@
 // pysocket.h
 //
 // Contains a python socket module, and an Socket class that is a python 
-// wrapper for NakedMud sockets. If you wish to give python access to more
+// wrapper for game driver sockets. If you wish to give python access to more
 // features of an socket, it should NOT be done by editing pysocket.c! Use 
 // PySocket_addGetSetter and PySocket_addMethod in a new module implementing 
 // the feature you want to give Python access to.

@@ -2,8 +2,8 @@
 //
 // pystorage.c
 //
-// Provides a wrapper around NakedMud's storage structure for use by scripts
-// and python modules.
+// Provides a wrapper around the game driver storage structure for use by 
+// scripts and python modules.
 //
 //*****************************************************************************
 

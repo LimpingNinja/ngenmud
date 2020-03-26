@@ -3,7 +3,7 @@
 // pysocket.c
 //
 // Contains a python socket module, and an Socket class that is a python 
-// wrapper for NakedMud sockets.
+// wrapper for game driver sockets.
 //
 //*****************************************************************************
 

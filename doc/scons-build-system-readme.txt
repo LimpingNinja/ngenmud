@@ -2,7 +2,7 @@ Introduction:
 ------------
 
 This package contains a new build system that I put together for
-NakedMud using the python based build tool SCons
+the game driver using the python based build tool SCons
 (http://www.scons.org). It compiles the unmodified codebase without
 errors and uses distutils to determine the python include path (unlike
 the bundled make-based system). It will also pass the appropriate
@@ -12,7 +12,7 @@ it does the right thing on my system.
 Installation:
 ------------
 
-Extract the tarball into the src directory of your NakedMud. If you
+Extract the tarball into the src directory of your ngenmud. If you
 haven't added any C modules, just skip ahead to the build command
 list.
 
@@ -44,13 +44,13 @@ compiling anything, and can interact with the build environment using
 normal SCons commands. The build environment will need to be imported
 with the following line in the SConscript:
 
-  Import('nakedmud')
+  Import('ngenmud')
 
 The presence of a file called .suppress in the top of a module's
 subdirectory will also influence the build process:
 
   - Each .c file named in the .suppress file will not be compiled or
-    linked into the NakedMud binary.
+    linked into the ngenmud binary.
 
   - If the .suppress file contains a line called 'all', no .c file in
     that module directory will be compiled or linked.
@@ -58,16 +58,16 @@ subdirectory will also influence the build process:
 Closing Remarks:
 ---------------
 
-I've tested with Python 2.4.3, NakedMud 3.2.1, NakedMud 3.3a, SCons
-0.96.91 and 0.96.92. Hopefully it should be fairly easy to follow.
+Tested with Python 2.7.x, NGenMud v1.0.0, SCons v3.0.1.
 
-Oh, and there's no restrictions on its use.
-
-Enjoy,
-Jack Kelly
+Credits: Jack Kelley
 
 ChangeLog:
 ---------
+Version 1.3 (26 Mar 2020):
+
+* Added -lm to throw in the m library.
+* Modified naming of outputs and script.
 
 Version 1.2 (19 Dec 2006):
 
@@ -82,13 +82,13 @@ Version 1.1 (10 Nov 2006):
   will be sourced if they exist, if a module needs to modify the build
   environment in some strange way. The environment can be imported
   with the line:
-    Import('nakedmud')
+    Import('ngenmud')
 
 * The presence of a file called .suppress in the top of a module's
   subdirectory will influence the build process:
 
   - Each .c file named in the .suppress file will not be compiled or
-    linked into the NakedMud binary.
+    linked into the ngenmud binary.
 
   - If the .suppress file contains a line called 'all', no .c file in
     that module directory will be compiled or linked.
