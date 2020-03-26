@@ -19,7 +19,7 @@ def main(argv = sys.argv[1:]):
     '''
     restart_delay = 5     # how long do we delay before a restart (seconds)
     path = './ngenmud'    # the path to the MUD binary
-    port = 4000           # the default port we will be running the MUD under
+    port = 5555           # the default port we will be running the MUD under
 
     # parse out our port number if one was supplied
     if len(argv) > 0:

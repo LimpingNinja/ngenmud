@@ -29,8 +29,18 @@
 // the directory where we keep python modules that we have extended ourself with
 #define PYMOD_LIB       "../lib/pymodules"
 
+// The directory to the mudlib sys files
+#define PYMOD_SYS       "../lib/sys"
 
-//
+// The directory for the root of the mudlib
+#define PYMOD_MUDLIB    "../lib/"
+
+// Master is the master file that is loaded and can handled any overrides
+// Autoload of other objects, allows for scripts in other directories
+#define PYMOD_AUTOLOAD  PYMOD_SYS+"/autoload.py"
+
+#define PYMOD_MASTER    PYMOD_SYS+"/master.py"
+
 // Similar to Py_CompileString (in the Python API), but a file is compiled
 // instead. fname is the file that will be compiled. The code object will be
 // stored in a file named fname + c (e.g. foo.py becomes foo.pyc)
@@ -91,7 +101,7 @@ bool PyModule_Reload(char *fname, char *mname) {
   }
 }
 
-//
+
 // takes the name of a python module, and loads that module into the game
 COMMAND(cmd_pyload) {
   if(!*arg)
@@ -108,7 +118,28 @@ COMMAND(cmd_pyload) {
   }
 }
 
-//
+// Coming soon, stub - not sure if I want to map out the actual directory
+// structure as it exists, the current thought is to simply be able to add
+// paths
+void process_dir(const char * dir_name) {
+  // Recursively loop through 
+  // char mname[SMALL_BUFFER]; // module name
+  // char fname[SMALL_BUFFER]; // the name of the file
+  // 
+  // DIR *dir = opendir(dir_name);
+  // struct dirent *entry;
+  // return;
+}
+
+
+// This, specifically is designed to load the master.py and the autoload.py
+// which need to exist in the specified location by the
+void init_py_mudlib() {
+  //
+  //
+}
+
+
 // NGenMud allows you to extend the codebase in Python. These extensions must
 // take the form of Python modules, and must be stored in the PYMOD_LIB
 // directory. These modules might add new commands to the mud, or provide new

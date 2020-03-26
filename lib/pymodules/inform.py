@@ -14,18 +14,42 @@ import utils, char, hooks, mudsock, mud, string, display
 def build_who(ch = None):
     '''returns a formatted list of all the people currently online'''
     buf = [ ]
-    buf.append(display.seperator)
-
+    buf.append("{g")
+    buf.append("%64s" % ("  _____            ____   ____         _____     "))
+    buf.append("%64s" % (" |\    \   _____  |    | |    |   ____|\    \    "))
+    buf.append("%64s" % (" | |    | /    /| |    | |    |  /     /\    \   "))
+    buf.append("%64s" % (" \/     / |    || |    |_|    | /     /  \    \  "))
+    buf.append("%64s" % (" /     /_  \   \/ |    .-.    ||     |    |    | "))
+    buf.append("%64s" % ("|     // \  \   \ |    | |    ||     |    |    | "))
+    buf.append("%64s" % ("|    |/   \ |    ||    | |    ||\     \  /    /| "))
+    buf.append("%64s" % ("|\ ___/\   \|   /||____| |____|| \_____\/____/ | "))
+    buf.append("%64s" % ("| |   | \______/ ||    | |    | \ |    ||    | / "))
+    buf.append("%64s" % (" \|___|/\ |    | ||____| |____|  \|____||____|/  "))
+    buf.append("%64s" % ("    \(   \|____|/   \(     )/       \(    )/     "))
+    buf.append("%64s" % ("     '      )/       '     '         '    '      "))
+    buf.append("%s%s" % ("{n",display.seperator))
+                                                               
     # build character info
     count   = len(mudsock.socket_list())
     playing = 0
+    groups = [ ]
+    
     for sock in mudsock.socket_list():
         if not (sock.ch == None or sock.ch.room == None):
             desc = sock.ch.name
             if ch != None:
                 desc = ch.see_as(sock.ch)
+            groups = sock.ch.user_groups
+            
+            if 'admin' in groups:
+                group = "{Y(wizard){n"
+            if 'wizard' in groups:
+                group = "{G(wizard){n"
+            if 'builder' in groups:
+                group = "{B(builder){n"
+                
             buf.append(" %-12s %-10s %53s" %
-                       (desc,sock.ch.race,sock.ch.user_groups))
+                       (desc,sock.ch.race,group))
             playing = playing + 1
 
     conn_end = "s"
@@ -55,6 +79,44 @@ cardinal_dirs = ["north", "south", "east", "west"]
 compass_dirs  = ["north", "south", "east", "west",
                  "northwest", "northeast", "southwest", "southeast"]
 
+def short_room_exits(ch, room, filter_compass = False, split_compass = False):
+    exits = []
+    output = ""
+    
+    switcher = {
+        0: "There doesn't seem to be any obvious exits!",
+        1: "The only obvious exit is",
+        2: "There are two obvious exits:",
+        3: "Obvious exits are:"
+    }
+    
+    if not filter_compass:
+        for dir in compass_dirs:
+            ex = room.exit(dir)
+            if ex == None:
+                continue
+            if ex.dest == None:
+                mud.log_string("ERROR: room %s headed %s to destination %s "+
+                    "which does not exist.", room.proto, dir, ex.destproto)
+            elif ch.cansee(ex):
+                exits = exits + [dir]
+            
+    ex = None
+    for dir in room.exnames:
+        if not dir in compass_dirs:
+            ex = room.exit(dir)
+            if ex.dest == None:
+                mud.log_string("ERROR: room %s headed %s to destination %s "+
+                    "which does not exist.", room.proto, dir, ex.destproto)
+            elif ch.cansee(ex):
+                exits = exits + [dir]
+    
+    if(len(exits) == 0):
+        ch.send(switcher[0])
+    else:
+        count = 3 if (len(exits) >= 3) else len(exits);
+        ch.send("\n    {W%s %s and %s.\n{n" % (switcher[count], ", ".join(exits[:-1]), exits[-1]))
+
 def list_one_exit(ch, ex, dir):
     builder_info = ""
     if ch.isInGroup("builder"):
@@ -62,8 +124,9 @@ def list_one_exit(ch, ex, dir):
 
     # display the direction we can go
     ch.send("  {n- %-10s :: %s%s" % (dir, ch.see_as(ex), builder_info))
-                  
-def list_room_exits(ch, room, filter_compass = False):
+
+
+def long_room_exits(ch, room, filter_compass = False):
     # first, go through our standard exits
     if not filter_compass:
         for dir in compass_dirs:
@@ -85,6 +148,9 @@ def list_room_exits(ch, room, filter_compass = False):
                                room.proto, dir, ex.destproto)
             elif ch.cansee(ex):
                 list_one_exit(ch, ex, dir)
+
+def list_room_exits(ch, room, filter_compass = False):
+    short_room_exits(ch, room, filter_compass)
 
 def list_one_furniture(ch, obj):
     '''list the contents of a piece of furniture to the character.'''

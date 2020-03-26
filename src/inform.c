@@ -264,7 +264,7 @@ void look_at_room(CHAR_DATA *ch, ROOM_DATA *room) {
     send_to_char(ch, "{c[%s] [%s] ", roomGetClass(room), 
 		 terrainGetName(roomGetTerrain(room)));
 
-  send_to_char(ch, "{c%s\r\n", roomGetName(room));
+  send_to_char(ch, "{c%s\r\n\r\n", roomGetName(room));
 
   // make the working copy of the description, and fill it up with info
   bufferClear(charGetLookBuffer(ch));

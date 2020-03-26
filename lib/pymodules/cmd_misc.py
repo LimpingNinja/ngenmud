@@ -45,7 +45,7 @@ def cmd_delay(ch, cmd, arg):
 
 def cmd_motd(ch, cmd, arg):
     '''This command will display to you the mud\'s message of the day.'''
-    ch.page(get_motd())
+    ch.page(mud.get_motd())
 
 def cmd_save(ch, cmd, arg):
     '''Attempt to save your character and all recent changes made to it, to

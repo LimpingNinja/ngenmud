@@ -121,7 +121,7 @@ typedef unsigned char                     bool;
 #define DEFAULT_PORT       5555                   /* the default port we run on */
 #define SCREEN_WIDTH       80                     // the width of a term screen
 
-#define PARA_INDENT        0                      // num of spaces to start para
+#define PARA_INDENT        4                      // num of spaces to start para
 
 /* Thread States */
 #define TSTATE_LOOKUP          0  /* Socket is in host_lookup        */
