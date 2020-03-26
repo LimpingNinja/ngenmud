@@ -1,6 +1,6 @@
 # NgenMUD
 
-This is a mud server written in C with Python (current support 2.x with no plans to upgrade yet). It is a derivative of NakedMud 3.8.1.
+This is a mud server written in C with Python (current support 2.x with no plans to upgrade yet). It is a derivative of NakedMud 3.8.1 written by Geoff Hollis. Please see CREDITS and doc/README for details.
 
 # Purpose and Intent
 
