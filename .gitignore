@@ -1,7 +1,9 @@
 # Sensitive stuff (logs/accts)
 log/*.log
 lib/logs/logs
-*.accts
+*.acct
+*.ofile
+*.pfile
 
 # Python
 *.pyc

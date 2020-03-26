@@ -5,7 +5,7 @@ This module allows documentation for Python classes and modules to be viewed
 in-game via the 'doc' command. 
 """
 import pydoc, os, mudsys, display
-
+import re
 
 
 ################################################################################
@@ -118,9 +118,11 @@ def cmd_doc(ch, cmd, arg):
             ch.send("Could not find Python documentation on: '%s'" % arg)
         else:
             doc = pydoc.TextDoc()
-            ch.page(doc.document(todoc).replace("{", "{{"))
-
-
+            doc = doc.document(todoc).replace("{", "{{")
+            # Strip backspace-overprints for compatibility with autodoc
+            doc = re.sub('\x08.', '', doc)
+            
+            ch.page(doc)
 
 ################################################################################
 # initialization

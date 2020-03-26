@@ -1,5 +1,11 @@
 keywords  : credits
 info      :~
+  NGenMud is a modification of NakedMud(tm) created in order to finish the work
+  of moving as much possible back towards the Python side of the house. Since my
+  background was in LPC, I felt a push towards that dynamic separaTION.
+  
+  ORIGINAL CREDITS from Geoff Hollis:
+  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
   Thanks go out to Brian Graversen for creating SocketMud(tm), which NakedMud(tm)
   was built on top of. I know nothing (yet) about TCP/IP, and SocketMud(tm) made 
   my life that much easier.

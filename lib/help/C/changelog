@@ -1,0 +1,16 @@
+keywords  : changelog
+info      :~
+ March-April 2020
+-=-=-=-=-=-=-=-=-=-
+
+FIXED:
+  - The mud was not outputting an IAC,GA after prompts. I modified the socket
+    code to spit this out after busting a prompt. Other editors may not have
+    this, but the GA will fix some lags/delays in popular clients.
+  - AutoDoc uses backspace overprints, 'doc' was illegible, fixed it.
+  
+MODIFIED:
+
+ADDED:
+
+-

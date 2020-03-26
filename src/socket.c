@@ -107,6 +107,9 @@ fd_set        rFd;
 const unsigned char compress_will   [] = { IAC, WILL, TELOPT_COMPRESS,  '\0' };
 const unsigned char compress_will2  [] = { IAC, WILL, TELOPT_COMPRESS2, '\0' };
 
+/* go ahead */
+const unsigned char go_ahead [] = { IAC, GA, '\0' };
+
 // used to delete an input handler pair
 void deleteInputHandler(IH_PAIR *pair) {
   if(pair->python) {
@@ -580,8 +583,10 @@ bool flush_output(SOCKET_DATA *dsock) {
 
   // quit if we have no output and don't need/can't have a prompt
   if(bufferLength(dsock->outbuf) <= 0 && 
-     (!dsock->bust_prompt || !socketHasPrompt(dsock)))
+     (!dsock->bust_prompt || !socketHasPrompt(dsock))) 
+  {
     return success;
+  }
 
   buf = newBuffer(1);
 
@@ -600,6 +605,7 @@ bool flush_output(SOCKET_DATA *dsock) {
     hookRun("process_outbound_prompt",  hookBuildInfo("sk", dsock));
     hookRun("finalize_outbound_prompt", hookBuildInfo("sk", dsock));
     //success = text_to_socket(dsock, bufferString(dsock->outbuf));
+    text_to_buffer(dsock, (char *) go_ahead);
     bufferCat(buf, bufferString(dsock->outbuf));
     bufferClear(dsock->outbuf);
     dsock->bust_prompt = FALSE;
