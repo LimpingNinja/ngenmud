@@ -14,6 +14,11 @@ html/pydocs/*.html
 # Prerequisites
 *.d
 
+# Build results
+src/.sconsign.dblite
+src/NakedMud
+src/ngenmud
+
 # Object files
 *.o
 *.ko

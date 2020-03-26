@@ -68,7 +68,7 @@ modules += ['time', 'socials', 'alias', 'help2']
 nakedmud.Append(CCFLAGS=['-Wall', '-g', '-ggdb', '-O2'])
 
 # Required libraries
-nakedmud.Append(LIBS=['z', 'pthread'])
+nakedmud.Append(LIBS=['z', 'm', 'pthread'])
 
 # non-darwin OSes need to include crypt
 if platform != 'darwin':
