@@ -118,7 +118,7 @@ typedef unsigned char                     bool;
 #define FILE_TERMINATOR    "EOF"                  /* end of file marker                 */
 #define COPYOVER_FILE      "../.copyover.dat"     /* tempfile to store copyover data    */
 #define EXE_FILE           "../src/ngenmud"       /* the name of the mud binary         */
-#define DEFAULT_PORT       4000                   /* the default port we run on */
+#define DEFAULT_PORT       5555                   /* the default port we run on */
 #define SCREEN_WIDTH       80                     // the width of a term screen
 
 #define PARA_INDENT        0                      // num of spaces to start para
