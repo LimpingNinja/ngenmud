@@ -4,7 +4,7 @@ Startup should be pretty easy once you've compiled/built. With SCons, everything
 should compile automagically.
 
 Simply type ./ngenmud [port] & If you do not supply a port, the MUD will
-start up on port 5555 by default.
+start up on port 4000 by default.
 
 Building
 -----------

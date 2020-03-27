@@ -1,11 +1,11 @@
-NgenMUD
+# NgenMUD
 ---------------
 This is a mud server written in C with Python (current support 2.x with no 
 plans to upgrade yet). It is a derivative of NakedMud 3.8.1 written by Geoff 
 Hollis. Please see CREDITS and original README included at the bottom of this
 file for details.
 
-Intent
+## Intent
 ---------------
 NakedMud was left in a very workable state with some bugs and some design
 decisions that needed to be dressed up. The initial goal was to clean up the
@@ -15,7 +15,7 @@ remove as much dependency on the C code for game-related and support-related
 issues. Additionally there will be breaking changes to exposed functions and
 objects.
 
-Naming
+## Naming
 ---------------
 I'm not very creative, a long while back I had developed a pike mud driver and
 lib "GenMud + GenLib" for "Generic". When thinking of a name for a game engine,
@@ -23,14 +23,14 @@ it made since to simply prepend N (for NakedMud). I also have always disliked
 the name NakedMud due to the naming and penchant for disrupting search results.
 Yes, it is intended to sound like "Engine Mud".
 
-Contributing
+## Contributing
 ---------------
 I will address contributions on a case-by-case basis, please create an issue
 on the GitHub and reference your pull request: 
     https://github.com/LimpingNinja/ngenmud/issues
 
 --------------------------------------------------------------------------------
-NakedMud version 3.8.1 (Geoff Hollis)
+**NakedMud version 3.8.1 (Geoff Hollis)**
 
 NakedMud is a project I started up to keep myself entertained, and fool around
 with a couple ideas I could not work with on the MUD I run. The basic idea
@@ -53,8 +53,7 @@ hollisgf@email.uc.edu
 http://www.uc.edu/~hollisgf/
 
 --------------------------------------------------------------------------------
-
-SocketMud version 1.9 (Brian Graversen)
+**SocketMud version 1.9 (Brian Graversen) **
 
 Little mud project, which has a command interpreter and supports
 ANSI colors... has a nifty little help file system, and a few
