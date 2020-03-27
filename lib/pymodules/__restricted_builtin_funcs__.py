@@ -7,7 +7,16 @@
 #
 ################################################################################
 import __builtin__
+import types
 
+def getfunctions(module):
+    l = []
+    for key, value in module.__dict__.items():
+        if type(value) is FunctionType:
+            l.append(value)
+    
+    return l
+    
 def r_import(name, globals = {}, locals = {}, fromlist = []):
     '''Restricted __import__ only allows importing of specific modules'''
 

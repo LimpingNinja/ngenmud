@@ -9,6 +9,7 @@ KEVIN'S TO DO LIST
   * Create an autoload.py which can be used to autoload any additional python 
     scripts.
   * Move task list out of this document and into Github.
+  * https://restrictedpython.readthedocs.io/en/latest/index.html
     
 +-- TASK LIST - MUD ENGINE
   +-- HIGH PRIORITY
@@ -16,6 +17,9 @@ KEVIN'S TO DO LIST
     * Input handlers, specifically the editors, tend to output information
       twice when in a sub-menu such as the quest stage editor
     * Heartbeat Hooks needed 
+    * Move send_message parsing for $ expansion to mudlib, why does the engine
+      actually care about this? Also it's really painful to use preprocessing
+      directives for mudSettings to handle this. (RE: SOMEONE"'s")
 
   +-- MUDLIB PRIORITY
     * Rewrite the example zone to be a little more interesting and include

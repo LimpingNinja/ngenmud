@@ -119,16 +119,6 @@ int main(int argc, char **argv)
     }
   }
 
-  // port number not supplied... just use default
-  if(i > argc-1)
-    mudport = DEFAULT_PORT;
-  else if(i == argc-1)
-    mudport = atoi(argv[argc-1]);
-  else {
-    perror("Arguments were not parsed properly. Could not start MUD.\r\n");
-    return 1;
-  }
-
   /* seed the random number generator */
   srand(time(0));
 
@@ -289,6 +279,15 @@ int main(int argc, char **argv)
   log_string("Force-resetting world");
   worldForceReset(gameworld);
 
+  // port number not supplied... just use default
+  if(i > argc-1)
+    mudport = LISTENING_PORT;
+  else if(i == argc-1)
+    mudport = atoi(argv[argc-1]);
+  else {
+    perror("Arguments were not parsed properly. Could not start MUD.\r\n");
+    return 1;
+  }
 
 
   /**********************************************************************/
@@ -353,6 +352,10 @@ void update_handler()
   if((num_updates % (1 MINUTE)) == 0)
     worldPulse(gameworld);
 
+  // heartbeat pulse
+  if((num_updates % (2 SECOND)) == 0)
+    hookRun("heartbeat", "");
+    
   // if we have final extractions pending, do them
   CHAR_DATA *ch = NULL;
   while((ch = (CHAR_DATA *)listPop(mobs_to_delete)) != NULL)

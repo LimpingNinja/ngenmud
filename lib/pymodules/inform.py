@@ -14,19 +14,10 @@ import utils, char, hooks, mudsock, mud, string, display
 def build_who(ch = None):
     '''returns a formatted list of all the people currently online'''
     buf = [ ]
-    buf.append("{g")
-    buf.append("%64s" % ("  _____            ____   ____         _____     "))
-    buf.append("%64s" % (" |\    \   _____  |    | |    |   ____|\    \    "))
-    buf.append("%64s" % (" | |    | /    /| |    | |    |  /     /\    \   "))
-    buf.append("%64s" % (" \/     / |    || |    |_|    | /     /  \    \  "))
-    buf.append("%64s" % (" /     /_  \   \/ |    .-.    ||     |    |    | "))
-    buf.append("%64s" % ("|     // \  \   \ |    | |    ||     |    |    | "))
-    buf.append("%64s" % ("|    |/   \ |    ||    | |    ||\     \  /    /| "))
-    buf.append("%64s" % ("|\ ___/\   \|   /||____| |____|| \_____\/____/ | "))
-    buf.append("%64s" % ("| |   | \______/ ||    | |    | \ |    ||    | / "))
-    buf.append("%64s" % (" \|___|/\ |    | ||____| |____|  \|____||____|/  "))
-    buf.append("%64s" % ("    \(   \|____|/   \(     )/       \(    )/     "))
-    buf.append("%64s" % ("     '      )/       '     '         '    '      "))
+    
+    f = open("/home/ubuntu/ngenmud/lib/txt/who", "r")
+    buf.append(f.read())
+    
     buf.append("%s%s" % ("{n",display.seperator))
                                                                
     # build character info

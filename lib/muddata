@@ -1,4 +1,13 @@
-start_room       : tavern_entrance@examples
-pulses_per_second: 10
-puid             : 1
+start_room             : tavern_entrance@examples
+paragraph_indent       : 4
+pulses_per_second      : 10
+puid                   : 1
+world_path             : ../lib/world
+listening_port         : 5555
+screen_width           : 80
+message_somewhere      : somewhere
+message_something      : something
+message_someone        : someone
+message_nothing_special: You see nothing special.
+message_what           : What?
 -

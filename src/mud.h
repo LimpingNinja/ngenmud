@@ -110,18 +110,49 @@ typedef unsigned char                     bool;
 #define SECONDS             SECOND                /* same as above */
 #define MINUTE              * 60 SECONDS          /* one minute */
 #define MINUTES             MINUTE
+
+// the room that new characters are dropped into
+#define START_ROOM         mudsettingGetString("start_room")
+#define DFLT_START_ROOM    "tavern_entrance@examples"
+
+// copyover and executable path, probably safe to leav for now
+#define COPYOVER_FILE      "../.copyover.dat"     /* tempfile to store copyover data    */
+#define EXE_FILE           "../src/ngenmud"       /* the name of the mud binary         */
+
+/* the default port we run on */
+#define DFLT_LISTEN_PORT   4000
+#define LISTENING_PORT     mudsettingGetInt("listening_port") 
+
+/* the width of a term screen */
+#define DFLT_SCREEN_WIDTH  80
+#define DFLT_PARA_INDENT   4
+#define SCREEN_WIDTH       mudsettingGetInt("screen_width")                    
+#define PARA_INDENT        mudsettingGetInt("paragraph_indent")
+
+/* Default Text Responses */
+#define DFLT_SOMEWHERE         "somewhere"
+#define SOMEWHERE              mudsettingGetString("message_somewhere")
+#define DFLT_SOMETHING         "something"
+#define SOMETHING              mudsettingGetString("message_something")
+#define DFLT_SOMEONE           "someone"
+#define SOMEONE                mudsettingGetString("message_someone")
+#define DFLT_NOTHING_SPECIAL   "You see nothing special."
+#define NOTHING_SPECIAL        mudsettingGetString("message_nothing_special")
+#define DFLT_WHAT              "What?"
+#define WHAT                   mudsettingGetString("message_what")
+
+/* Location to world path */
+#define DFLT_WORLD_PATH    "../lib/world"
+#define WORLD_PATH         mudsettingGetString("world_path")
+
+
 #define MAX_INPUT_LEN      2048                   /* max length of a string someone can input */
 #define SMALL_BUFFER       2048
 #define MAX_BUFFER         8192                   /* seems like a decent amount         */
 #define MAX_SCRIPT         16384                  /* max length of a script */
 #define MAX_OUTPUT         8192                   /* well shoot me if it isn't enough   */
 #define FILE_TERMINATOR    "EOF"                  /* end of file marker                 */
-#define COPYOVER_FILE      "../.copyover.dat"     /* tempfile to store copyover data    */
-#define EXE_FILE           "../src/ngenmud"       /* the name of the mud binary         */
-#define DEFAULT_PORT       5555                   /* the default port we run on */
-#define SCREEN_WIDTH       80                     // the width of a term screen
 
-#define PARA_INDENT        4                      // num of spaces to start para
 
 /* Thread States */
 #define TSTATE_LOOKUP          0  /* Socket is in host_lookup        */
@@ -136,18 +167,6 @@ typedef unsigned char                     bool;
 #define NOBODY               (-1)
 #define NOTHING              (-1)
 #define NOWHERE              (-1)
-
-#define SOMEWHERE       "somewhere"
-#define SOMETHING       "something"
-#define SOMEONE         "someone"
-#define NOTHING_SPECIAL "you see nothing special."
-
-// the room that new characters are dropped into
-#define START_ROOM      mudsettingGetString("start_room")
-#define DFLT_START_ROOM "tavern_entrance@examples"
-
-#define WORLD_PATH     "../lib/world"
-
 
 
 //*****************************************************************************

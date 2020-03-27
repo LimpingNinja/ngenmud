@@ -46,10 +46,29 @@ void init_mud_settings() {
   settings = storage_read(MUD_DATA);
 
   // make sure we have initial values for some stuff
+  if(!*mudsettingGetString("world_path"))
+    mudsettingSetString("world_path", DFLT_WORLD_PATH);
   if(!*mudsettingGetString("start_room"))
     mudsettingSetString("start_room", DFLT_START_ROOM);
   if(mudsettingGetInt("pulses_per_second") == 0)
     mudsettingSetInt("pulses_per_second", DFLT_PULSES_PER_SECOND);
+  if(mudsettingGetInt("listening_port") == 0)
+    mudsettingSetInt("listening_port", DFLT_LISTEN_PORT);
+  if(mudsettingGetInt("screen_width") == 0)
+    mudsettingSetInt("screen_width", DFLT_SCREEN_WIDTH);
+  if(mudsettingGetInt("paragraph_indent") == 0)
+    mudsettingSetInt("paragraph_indent", DFLT_PARA_INDENT);
+  if(!*mudsettingGetString("message_somewhere"))
+    mudsettingSetString("message_somewhere", DFLT_SOMEWHERE);
+  if(!*mudsettingGetString("message_something"))
+    mudsettingSetString("message_something", DFLT_SOMETHING);
+  if(!*mudsettingGetString("message_someone"))
+    mudsettingSetString("message_someone", DFLT_SOMEONE);
+  if(!*mudsettingGetString("message_nothing_special"))
+    mudsettingSetString("message_nothing_special", DFLT_NOTHING_SPECIAL);
+  if(!*mudsettingGetString("message_what"))
+    mudsettingSetString("message_what", DFLT_WHAT);
+  
 }
 
 void mudsettingSetString(const char *key, const char *val) {
