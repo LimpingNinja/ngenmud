@@ -9,6 +9,7 @@ KEVIN'S TO DO LIST
   * Create an autoload.py which can be used to autoload any additional python 
     scripts.
   * Move task list out of this document and into Github.
+  * Python 3 migration
   * https://restrictedpython.readthedocs.io/en/latest/index.html
     
 +-- TASK LIST - MUD ENGINE
