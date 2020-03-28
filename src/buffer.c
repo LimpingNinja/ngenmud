@@ -123,7 +123,9 @@ int bufferReplace(BUFFER *buf, const char *a, const char *b, int all) {
       return 0;
 
     // if we won't have enough room, do the expansion
-    if(to_replace * (b_len - a_len) + buf->len > buf->maxlen)
+    // Description crashbug - fix added based on old forum trawling: 
+    //      http://www.mudbytes.net/forum/comment/51178/
+    if(to_replace * (b_len - a_len) + buf->len >= buf->maxlen)
       len_needed = ((buf->maxlen + to_replace*(b_len-a_len))*5)/4 + 20;
   }
 
