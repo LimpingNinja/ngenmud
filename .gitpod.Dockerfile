@@ -2,7 +2,7 @@ FROM gitpod/workspace-full
                     
 USER gitpod
 
-RUN sudo apt-get install -y scons libpython-dev zlib1g-dev libc6-dev
+RUN sudo apt-get install -y scons libpython-dev zlib1g-dev libc6-dev telnet
 # Install custom tools, runtime, etc. using apt-get
 # For example, the command below would install "bastet" - a command line tetris clone:
 #
