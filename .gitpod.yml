@@ -1,0 +1,5 @@
+tasks:
+  - init: /workspace/ngenmud/src/scons
+    command: echo "I love you."
+image:
+  file: .gitpod.Dockerfile
