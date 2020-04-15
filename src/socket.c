@@ -5,6 +5,15 @@
 // This file contains the socket code, used for accepting new connections as 
 // well as reading and writing to sockets, and closing down unused sockets.
 //
+// Changes: read_from_socket will be changed to read into dsock->input_work, 
+//          with dsock->inbuf being the final destination. During init of the
+//          engine in gameloop.c init_socket_handlers() is called which adds 
+//          hooks sequentially for socket input handling. You can parse this 
+//          either destructively or non-destructively, but it is up to you to 
+//          set the dsock->input_index accordingly if you push data 
+//          dsock->inbuf prior to the end of the pipeline. The last socket 
+//          handler will always be finish_read() which will push the remainder
+//          of input_work from input_index onwards into inbuf.
 //*****************************************************************************
 
 #include "wrapsock.h"
@@ -48,12 +57,15 @@ struct socket_data {
   ACCOUNT_DATA  * account;
   char          * hostname;
   char            inbuf[MAX_INPUT_LEN];
+  char            input_work[MAX_INPUT_LEN];
+  int             input_index;
   BUFFER        * next_command;
   BUFFER        * iac_sequence;
   // char            next_command[MAX_BUFFER];
   bool            cmd_read;
   bool            bust_prompt;
   bool            closed;
+  bool            valid_read;
   int             lookup_status;
   int             control;
   int             uid;
@@ -156,6 +168,16 @@ int init_socket()
   return sockfd;
 }
 
+/*
+ * init_socket_pipeline()
+ *
+ * Initialize the socket handling pipeline which
+ * simply means hooking in the right functions.
+ */
+void init_socket_pipeline() {
+  //hookadds
+  hookAdd("socket_pipeline", socket_read); // rename later, this is temp
+}
 
 /* 
  * New_socket()
@@ -291,6 +313,10 @@ void close_socket(SOCKET_DATA *dsock, bool reconnect)
 }
 
 
+bool socket_pipeline_complete(SOCKET_DATA *dsock) {
+  return TRUE;
+}
+
 /* 
  * Read_from_socket()
  *
@@ -298,17 +324,29 @@ void close_socket(SOCKET_DATA *dsock, bool reconnect)
  * in a buffer for later use. Will also close
  * the socket if it tries a buffer overflow.
  */
+
 bool read_from_socket(SOCKET_DATA *dsock)
 {
+  dsock->valid_read = TRUE;
+  hookRun("socket_pipeline", hookBuildInfo("sk", dsock));
+  return dsock->valid_read;
+}
+
+void socket_read(const char *info) 
+{
+  SOCKET_DATA *dsock = NULL;
   int size;
   extern int errno;
+
+  hookParseInfo(info, &dsock);
 
   /* check for buffer overflows, and drop connection in that case */
   size = strlen(dsock->inbuf);
   if (size >= sizeof(dsock->inbuf) - 2)
   {
     text_to_socket(dsock, "\n\r!!!! Input Overflow !!!!\n\r");
-    return FALSE;
+    dsock->valid_read = FALSE;
+    return;
   }
 
   /* start reading from the socket */
@@ -329,18 +367,22 @@ bool read_from_socket(SOCKET_DATA *dsock)
     else if (sInput == 0)
     {
       log_string("Read_from_socket: EOF");
-      return FALSE;
+      dsock->valid_read = FALSE;
+      return;
     }
     else if (errno == EAGAIN || sInput == wanted)
       break;
     else
     {
       perror("Read_from_socket");
-      return FALSE;
+      dsock->valid_read = FALSE;
+      return;
     }
   }
   dsock->inbuf[size] = '\0';
-  return TRUE;
+  dsock->valid_read = TRUE;
+  return;
+
 }
 
 

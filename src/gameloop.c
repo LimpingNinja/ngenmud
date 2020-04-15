@@ -25,6 +25,7 @@
 #include "races.h"
 #include "inform.h"
 #include "hooks.h"
+#include "strings.h"
 
 
 
@@ -169,7 +170,11 @@ int main(int argc, char **argv)
 
   // change to the lib directory
   log_string("Changing to lib directory.");
-  chdir("../lib");
+  if(chdir("../lib") != 0) {
+    log_string("Error changing to lib directory!\r\nExecution halted.");
+    exit(0);
+  }
+    
 
   log_string("Initializing hooks.");
   init_hooks();
@@ -228,8 +233,6 @@ int main(int argc, char **argv)
   log_string("Initializing set utility.");
   init_set();
 
-
-  
   /**********************************************************************/
   /*                 START OPTIONAL MODULE INSTALLATION                 */
   /**********************************************************************/
@@ -253,6 +256,12 @@ int main(int argc, char **argv)
   init_help();
 #endif
 
+  // Adds in the socket pipeline, this can be extended by Python as well, 
+  // since scripts are initialized below they will hook in sequentially
+  // after whatever is defined in init_socket_handlers, so make sure you
+  // handle things accordingly.
+  log_string("Initializing socket pipeline.");
+  init_socket_pipeline();
 
 
   /**********************************************************************/
@@ -288,7 +297,6 @@ int main(int argc, char **argv)
     perror("Arguments were not parsed properly. Could not start MUD.\r\n");
     return 1;
   }
-
 
   /**********************************************************************/
   /*                  HANDLE THE SOCKET STARTUP STUFF                   */
