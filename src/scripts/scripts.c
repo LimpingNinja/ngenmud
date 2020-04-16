@@ -47,8 +47,13 @@
 #include "script_editor.h"
 
 // Python stuff
+#ifdef __APPLE__
+#include <Python/compile.h>
+#include <Python/eval.h>
+#elif
 #include <compile.h>
 #include <eval.h>
+#endif
 
 
 

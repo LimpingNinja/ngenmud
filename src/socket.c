@@ -169,17 +169,6 @@ int init_socket()
 }
 
 /*
- * init_socket_pipeline()
- *
- * Initialize the socket handling pipeline which
- * simply means hooking in the right functions.
- */
-void init_socket_pipeline() {
-  //hookadds
-  hookAdd("socket_pipeline", socket_read); // rename later, this is temp
-}
-
-/* 
  * New_socket()
  *
  * Initializes a new socket, get's the hostname
@@ -311,13 +300,18 @@ void close_socket(SOCKET_DATA *dsock, bool reconnect)
   dsock->closed = TRUE;
   //  dsock->state = STATE_CLOSED;
 }
-
-
-bool socket_pipeline_complete(SOCKET_DATA *dsock) {
-  return TRUE;
+/*
+ * init_socket_pipeline()
+ *
+ * Initialize the socket handling pipeline which
+ * simply means hooking in the right functions.
+ */
+void init_socket_pipeline() {
+    //hookadds
+    hookAdd("socket_pipeline", socket_read); // rename later, this is temp
 }
 
-/* 
+/*
  * Read_from_socket()
  *
  * Reads one line from the socket, storing it
@@ -385,6 +379,9 @@ void socket_read(const char *info)
 
 }
 
+bool socket_pipeline_complete(SOCKET_DATA *dsock) {
+    return TRUE;
+}
 
 /*
  * Text_to_socket()

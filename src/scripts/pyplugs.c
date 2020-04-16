@@ -9,11 +9,18 @@
 //
 //*****************************************************************************
 
+#ifdef __APPLE__
+#include <Python/Python.h>
+#include <Python/structmember.h>
+#include <Python/compile.h>
+#include <Python/node.h>
+#elif
 #include <Python.h>
 #include <structmember.h>
 #include <compile.h>
-#include <dirent.h> 
 #include <node.h>
+#endif
+#include <dirent.h>
 
 #include "../mud.h"
 #include "../utils.h"

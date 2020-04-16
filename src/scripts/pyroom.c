@@ -8,8 +8,13 @@
 //
 //*****************************************************************************
 
+#ifdef __APPLE__
+#include <Python/Python.h>
+#include <Python/structmember.h>
+#elif
 #include <Python.h>
 #include <structmember.h>
+#endif
 
 #include "../mud.h"
 #include "../utils.h"

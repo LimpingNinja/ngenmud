@@ -6,7 +6,11 @@
 //
 //*****************************************************************************
 
-#include <Python.h>        // to add Python hooks
+#ifdef __APPLE__
+#include <Python/Python.h>
+#elif
+#include <Python.h>
+#endif
 
 #include "../mud.h"
 #include "../utils.h"

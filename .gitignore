@@ -10,6 +10,8 @@ lib/logs/logs
 # Ide
 .c9/*
 .DS_STORE
+/cmake-*
+.idea*
 
 # Python
 *.pyc

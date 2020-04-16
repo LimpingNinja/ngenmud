@@ -21,9 +21,17 @@
 // been defined. So, we have to do it here.
 #ifdef _POSIX_C_SOURCE
 #undef _POSIX_C_SOURCE
+
 #endif
+#ifdef __APPLE__
+#include <Python/Python.h>
+#include <Python/structmember.h>
+#elif
 #include <Python.h>
 #include <structmember.h>
+#endif
+
+
 
 //
 // this is also needed by anything that touches scripts

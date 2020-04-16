@@ -9,7 +9,11 @@
 //
 //*****************************************************************************
 
+#ifdef __APPLE__
+#include <Python/Python.h>
+#elif
 #include <Python.h>
+#endif
 
 #include "../mud.h"
 #include "../event.h"
