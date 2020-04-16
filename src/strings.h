@@ -111,7 +111,7 @@ static inline size_t str_avail(const string s) {
     return 0;
 }
 
-static inline void str_set_length(string s, size_t newlen) {
+static inline void str_resize(string s, size_t newlen) {
     unsigned char flags = s[-1];
     switch(flags&STR_TYPE_MASK) {
         case STR_TYPE_5:
@@ -206,23 +206,23 @@ string str_duplicate(const string s);
 void str_free(string s);
 string str_grow_zero(string s, size_t len);
 string str_append_len(string s, const void *t, size_t len);
-string str_append(string s, const char *t);
-string str_add(string s, const string t);
+string str_append_c(string s, const char *t);
+string str_append(string s, const string t);
 string str_copy_length(string s, const char *t, size_t len);
 string str_copy(string s, const char *t);
 
-string str_add_vprintf(string s, const char *fmt, va_list ap);
+string str_vprintf(string s, const char *fmt, va_list ap);
 #ifdef __GNUC__
-string str_add_printf(string s, const char *fmt, ...)
+string str_printf(string s, const char *fmt, ...)
     __attribute__((format(printf, 2, 3)));
 #else
-string str_add_printf(string s, const char *fmt, ...);
+string str_printf(string s, const char *fmt, ...);
 #endif
 
-string str_add_fmt(string s, char const *fmt, ...);
+string str_format(string s, char const *fmt, ...);
 string str_trim_chars(string s, const char *cset);
 void str_range(string s, ssize_t start, ssize_t end);
-void str_fix_length(string s);
+void str_fix(string s);
 void str_clear(string s);
 int str_compare(const string s1, const string s2);
 string *str_split_len(const char *s, ssize_t len, const char *sep, int seplen, int *count);

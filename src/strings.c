@@ -163,7 +163,7 @@ void str_free(string s) {
  * remains 6 bytes. */
 void str_fix_length(string s) {
     size_t reallen = strlen(s);
-    str_set_length(s, reallen);
+    str_resize(s, reallen);
 }
 
 /* Modify an sds string in-place to make it empty (zero length).
@@ -171,7 +171,7 @@ void str_fix_length(string s) {
  * so that next append operations will not require allocations up to the
  * number of bytes previously available. */
 void str_clear(string s) {
-    str_set_length(s, 0);
+    str_resize(s, 0);
     s[0] = '\0';
 }
 
@@ -220,7 +220,7 @@ string strMakeRoomFor(string s, size_t addlen) {
         s_free(sh);
         s = (char*)newsh+hdrlen;
         s[-1] = type;
-        str_set_length(s, len);
+        str_resize(s, len);
     }
     str_set_alloc(s, newlen);
     return s;
@@ -263,7 +263,7 @@ string strRemoveFreeSpace(string s) {
         s_free(sh);
         s = (char*)newsh+hdrlen;
         s[-1] = type;
-        str_set_length(s, len);
+        str_resize(s, len);
     }
     str_set_alloc(s, len);
     return s;
@@ -365,7 +365,7 @@ string str_grow_zero(string s, size_t len) {
 
     /* Make sure added region doesn't contain garbage */
     memset(s+curlen,0,(len-curlen+1)); /* also set trailing \0 byte */
-    str_set_length(s, len);
+    str_resize(s, len);
     return s;
 }
 
@@ -380,7 +380,7 @@ string str_append_len(string s, const void *t, size_t len) {
     s = strMakeRoomFor(s,len);
     if (s == NULL) return NULL;
     memcpy(s+curlen, t, len);
-    str_set_length(s, curlen+len);
+    str_resize(s, curlen+len);
     s[curlen+len] = '\0';
     return s;
 }
@@ -389,7 +389,7 @@ string str_append_len(string s, const void *t, size_t len) {
  *
  * After the call, the passed sds string is no longer valid and all the
  * references must be substituted with the new pointer returned by the call. */
-string str_append(string s, const char *t) {
+string str_append_c(string s, const char *t) {
     return str_append_len(s, t, strlen(t));
 }
 
@@ -397,7 +397,7 @@ string str_append(string s, const char *t) {
  *
  * After the call, the modified sds string is no longer valid and all the
  * references must be substituted with the new pointer returned by the call. */
-string str_add(string s, const string t) {
+string str_append(string s, const string t) {
     return str_append_len(s, t, str_length(t));
 }
 
@@ -410,7 +410,7 @@ string str_copy_length(string s, const char *t, size_t len) {
     }
     memcpy(s, t, len);
     s[len] = '\0';
-    str_set_length(s, len);
+    str_resize(s, len);
     return s;
 }
 
@@ -489,7 +489,7 @@ int sdsull2str(char *s, unsigned long long v) {
 
 /* Create an sds string from a long long value. It is much faster than:
  *
- * str_add_printf(str_empty(),"%lld\n", value);
+ * str_printf(str_empty(),"%lld\n", value);
  */
 string str_from_longlong(long long value) {
     char buf[STR_LLSTR_SIZE];
@@ -498,8 +498,8 @@ string str_from_longlong(long long value) {
     return str_new_length(buf,len);
 }
 
-/* Like str_add_printf() but gets va_list instead of being variadic. */
-string str_add_vprintf(string s, const char *fmt, va_list ap) {
+/* Like str_printf() but gets va_list instead of being variadic. */
+string str_vprintf(string s, const char *fmt, va_list ap) {
     va_list cpy;
     char staticbuf[1024], *buf = staticbuf, *t;
     size_t buflen = strlen(fmt)*2;
@@ -531,7 +531,7 @@ string str_add_vprintf(string s, const char *fmt, va_list ap) {
     }
 
     /* Finally concat the obtained string to the STR string and return it. */
-    t = str_append(s, buf);
+    t = str_append_c(s, buf);
     if (buf != staticbuf) s_free(buf);
     return t;
 }
@@ -545,23 +545,23 @@ string str_add_vprintf(string s, const char *fmt, va_list ap) {
  * Example:
  *
  * s = str_new("Sum is: ");
- * s = str_add_printf(s,"%d+%d = %d",a,b,a+b).
+ * s = str_printf(s,"%d+%d = %d",a,b,a+b).
  *
  * Often you need to create a string from scratch with the printf-alike
  * format. When this is the need, just use str_empty() as the target string:
  *
- * s = str_add_printf(str_empty(), "... your format ...", args);
+ * s = str_printf(str_empty(), "... your format ...", args);
  */
-string str_add_printf(string s, const char *fmt, ...) {
+string str_printf(string s, const char *fmt, ...) {
     va_list ap;
     char *t;
     va_start(ap, fmt);
-    t = str_add_vprintf(s,fmt,ap);
+    t = str_vprintf(s,fmt,ap);
     va_end(ap);
     return t;
 }
 
-/* This function is similar to str_add_printf, but much faster as it does
+/* This function is similar to str_printf, but much faster as it does
  * not rely on sprintf() family functions implemented by the libc that
  * are often very slow. Moreover directly handling the sds string as
  * new data is concatenated provides a performance improvement.
@@ -577,7 +577,7 @@ string str_add_printf(string s, const char *fmt, ...) {
  * %U - 64 bit unsigned integer (unsigned long long, uint64_t)
  * %% - Verbatim "%" character.
  */
-string str_add_fmt(string s, char const *fmt, ...) {
+string str_format(string s, char const *fmt, ...) {
     size_t initlen = str_length(s);
     const char *f = fmt;
     long i;
@@ -696,7 +696,7 @@ string str_trim_chars(string s, const char *cset) {
     len = (sp > ep) ? 0 : ((ep-sp)+1);
     if (s != sp) memmove(s, sp, len);
     s[len] = '\0';
-    str_set_length(s,len);
+    str_resize(s,len);
     return s;
 }
 
@@ -741,7 +741,7 @@ void str_range(string s, ssize_t start, ssize_t end) {
     }
     if (start && newlen) memmove(s, s+start, newlen);
     s[newlen] = 0;
-    str_set_length(s,newlen);
+    str_resize(s,newlen);
 }
 
 /* Apply tolower() to every character of the sds string 's'. */
@@ -867,7 +867,7 @@ string str_add_repr(string s, const char *p, size_t len) {
         switch(*p) {
         case '\\':
         case '"':
-            s = str_add_printf(s,"\\%c",*p);
+            s = str_printf(s,"\\%c",*p);
             break;
         case '\n': s = str_append_len(s,"\\n",2); break;
         case '\r': s = str_append_len(s,"\\r",2); break;
@@ -876,9 +876,9 @@ string str_add_repr(string s, const char *p, size_t len) {
         case '\b': s = str_append_len(s,"\\b",2); break;
         default:
             if (isprint(*p))
-                s = str_add_printf(s,"%c",*p);
+                s = str_printf(s,"%c",*p);
             else
-                s = str_add_printf(s,"\\x%02x",(unsigned char)*p);
+                s = str_printf(s,"\\x%02x",(unsigned char)*p);
             break;
         }
         p++;
@@ -1076,8 +1076,8 @@ string str_join(char **argv, int argc, char *sep) {
     int j;
 
     for (j = 0; j < argc; j++) {
-        join = str_append(join, argv[j]);
-        if (j != argc-1) join = str_append(join,sep);
+        join = str_append_c(join, argv[j]);
+        if (j != argc-1) join = str_append_c(join,sep);
     }
     return join;
 }
@@ -1088,7 +1088,7 @@ string str_join_str(string *argv, int argc, const char *sep, size_t seplen) {
     int j;
 
     for (j = 0; j < argc; j++) {
-        join = str_add(join, argv[j]);
+        join = str_append(join, argv[j]);
         if (j != argc-1) join = str_append_len(join,sep,seplen);
     }
     return join;
