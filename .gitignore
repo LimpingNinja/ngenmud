@@ -7,6 +7,9 @@ lib/logs/logs
 *.ofile
 *.pfile
 
+# App
+bin/
+
 # Ide
 .c9/*
 .DS_STORE

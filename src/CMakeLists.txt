@@ -12,11 +12,10 @@ macro(SUBDIRLIST result curdir)
     file(GLOB children RELATIVE ${curdir} ${curdir}/*)
 
     foreach(child ${children})
-        if(IS_DIRECTORY ${curdir}/${child} AND EXISTS ${curdir}/${child}/CMakeLists.txt)
+        if(IS_DIRECTORY ${curdir}/${child} AND EXISTS ${curdir}/${child}/CMakeLists.txt AND NOT EXISTS ${curdir}/${child}/.exclude)
             list(APPEND dirlist ${child})
         endif()
     endforeach()
-    message("Here: ${dirlist}")
     set(${result} ${dirlist})
 endmacro()
 
@@ -115,3 +114,5 @@ link_directories( scripts dyn_vars set_val olc2 editor items )
 link_directories( time socials alias help2)
 
 target_link_libraries(ngenmud C ${PYTHON_LIBRARIES} ${subdirs} z)
+
+install(TARGETS ngenmud DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/../bin)
