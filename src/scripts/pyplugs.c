@@ -14,7 +14,7 @@
 #include <Python/structmember.h>
 #include <Python/compile.h>
 #include <Python/node.h>
-#elif
+#else
 #include <Python.h>
 #include <structmember.h>
 #include <compile.h>

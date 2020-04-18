@@ -101,7 +101,7 @@ BUFFER *read_file(const char *file) {
   }
 }
 
-__unused int make_path(char* file_path, mode_t mode) {
+eint make_path(char* file_path, mode_t mode) {
     assert(file_path && *file_path);
     for (char* p = strchr(file_path + 1, '/'); p; p = strchr(p + 1, '/')) {
         *p = '\0';

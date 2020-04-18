@@ -50,7 +50,7 @@
 #ifdef __APPLE__
 #include <Python/compile.h>
 #include <Python/eval.h>
-#elif
+#else
 #include <compile.h>
 #include <eval.h>
 #endif

@@ -8,7 +8,7 @@
 
 #ifdef __APPLE__
 #include <Python/Python.h>
-#elif
+#else
 #include <Python.h>
 #endif
 
