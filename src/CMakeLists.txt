@@ -24,6 +24,7 @@ SUBDIRLIST(subdirs ${CMAKE_CURRENT_SOURCE_DIR})
 foreach(subdir ${subdirs})
     add_subdirectory(${subdir})
     link_directories(${subdir})
+    include_directories(${subdir})
     message("Adding module: ${subdir}")
 endforeach()
 
@@ -108,7 +109,7 @@ add_executable(ngenmud
     world.h
     wrapsock.h
     zone.c
-    zone.h)
+    zone.h socket_channel.c socket_channel.h)
 
 link_directories( scripts dyn_vars set_val olc2 editor items )
 link_directories( time socials alias help2)

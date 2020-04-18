@@ -1,3 +1,4 @@
+#include <ntsid.h>
 /*
  * This file handles input/output to files (including log)
  */
@@ -9,6 +10,7 @@
 #include <stdarg.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include <assert.h>
 
 /* include main header file */
 #include "mud.h"
@@ -97,4 +99,19 @@ BUFFER *read_file(const char *file) {
     fclose(fl);
     return buf;
   }
+}
+
+__unused int make_path(char* file_path, mode_t mode) {
+    assert(file_path && *file_path);
+    for (char* p = strchr(file_path + 1, '/'); p; p = strchr(p + 1, '/')) {
+        *p = '\0';
+        if (mkdir(file_path, mode) == -1) {
+            if (errno != EEXIST) {
+                *p = '/';
+                return -1;
+            }
+        }
+        *p = '/';
+    }
+    return 0;
 }

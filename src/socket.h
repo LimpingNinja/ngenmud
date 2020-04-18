@@ -5,13 +5,14 @@
 //
 // all of the functions needed for working with character sockets
 //*****************************************************************************
+#include <zlib.h>
+typedef HASHTABLE AUX_TABLE;
 
 int   init_socket           ( void );
 void  init_socket_pipeline  ( void );
 SOCKET_DATA  *new_socket    ( int sock );
 void  close_socket          ( SOCKET_DATA *dsock, bool reconnect );
 bool  read_from_socket      ( SOCKET_DATA *dsock );
-void  socket_read			( const char *info );
 void  input_handler         ( void );
 void  output_handler        ( void );
 void  copyover_recover      ( void );
@@ -70,5 +71,66 @@ bool socketHasCommand         ( SOCKET_DATA *sock);
 const char *socketGetLastCmd  ( SOCKET_DATA *sock);
 const char *socketGetState    ( SOCKET_DATA *sock);
 double socketGetIdleTime      ( SOCKET_DATA *sock);
+
+
+//
+// Here it is... the big ol' datastructure for sockets. Yum.
+struct socket_data {
+    CHAR_DATA     * player;
+    ACCOUNT_DATA  * account;
+    char          * hostname;
+    char            inbuf[MAX_INPUT_LEN];
+    char            input_work[MAX_INPUT_LEN];
+    int             input_index;
+    BUFFER        * next_command;
+    BUFFER        * iac_sequence;
+    // char            next_command[MAX_BUFFER];
+    bool            cmd_read;
+    bool            bust_prompt;
+    bool            closed;
+    bool            valid_read;
+    int             lookup_status;
+    int             control;
+    int             uid;
+    double          idle;          // how many pulses have we been idle for?
+
+    char          * page_string;   // the string that has been paged to us
+    int             curr_page;     // the current page we're on
+    int             tot_pages;     // the total number of pages the string has
+
+    BUFFER        * text_editor;   // where we do our actual work
+    BUFFER        * outbuf;        // our buffer of pending output
+
+    LIST          * input_handlers;// a stack of our input handlers and prompts
+    LIST          * input;         // lines of input we have received
+    LIST          * command_hist;  // the commands we've executed in the past
+
+    unsigned char   compressing;                 /* MCCP support */
+    z_stream      * out_compress;                /* MCCP support */
+    unsigned char * out_compress_buf;            /* MCCP support */
+
+    AUX_TABLE     * auxiliary;     // auxiliary data installed by other modules
+};
+
+
+//
+// contains an input handler and the socket prompt in one structure, so they
+// can be stored together in the socket_data. Allows for the option of Python
+// or C input handlers and prompt pairs.
+typedef struct input_handler_data {
+    void *handler; // (* handler)(SOCKET_DATA *, char *);
+    void  *prompt; // (*  prompt)(SOCKET_DATA *);
+    bool   python;
+    char   *state; // what state does this input handler represent?
+} IH_PAIR;
+
+
+//
+// required for looking up a socket's IP in a new thread
+typedef struct lookup_data {
+    SOCKET_DATA    * dsock;   // the socket we wish to do a hostlookup on
+    char           * buf;     // the buffer it should be stored in
+} LOOKUP_DATA;
+
 
 #endif // SOCKET_H
