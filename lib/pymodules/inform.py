@@ -15,7 +15,7 @@ def build_who(ch = None):
     '''returns a formatted list of all the people currently online'''
     buf = [ ]
     
-    f = open("/home/ubuntu/ngenmud/lib/txt/who", "r")
+    f = open("txt/who", "r")
     buf.append(f.read())
     
     buf.append("%s%s" % ("{n",display.seperator))

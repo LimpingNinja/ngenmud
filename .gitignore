@@ -13,7 +13,7 @@ bin/
 # Ide
 .c9/*
 .DS_Store
-*/.DS_Store
+*.DS_Store
 /cmake-*
 .idea*
 
