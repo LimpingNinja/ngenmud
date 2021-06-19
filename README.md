@@ -19,3 +19,37 @@ The SCons system that was put in place prior to the end of NakedMud releases is 
 5. *Optional* `rm ../lib/muddata` - all the settings in here will be recreated off of the default settings, this can be good unless my tests slip in.  
 5. Run `./ngenmud &`: This will start the mud running on the port defined in `../lib/muddata` or, if you deleted this file, the default port of 4000.
 6. Login and have fun with your game!
+
+## SCons is Python Specific
+SCons is built specifically for Python 2.x or Python 3, you will need to 
+install the Python 2.x dependent version to be able to run this. If you 
+have Scons for Python 2.x and Python 3 installed, it will be up to you to
+ensure that you set the appropriate environmental options to use the right
+version. Some systems will alias it to scons2, but a google search on your
+system will help you move forward.
+
+### OSX
+
+This assumes you do not have SCons installed.
+
+Newer versions of OSX ship with Python 3 as the default, so to get the SCons
+setup for Python2.x you will need to run the following:
+
+```bash
+curl https://bootstrap.pypa.io/pip/2.7/get-pip.py  -o get-pip.py
+python get-pip.py
+```
+
+You will then need to add the bin path for Python2.7 to your $PATH, you can
+do this by editing .zshrc in your home directory with:
+
+```bash
+export PATH=$HOME/Library/Python/2.7/bin:$PATH
+```
+
+After this you can install SCons:
+
+```bash
+pip install scons
+```
+

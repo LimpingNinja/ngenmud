@@ -80,3 +80,4 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+lib/misc/time

@@ -1,3 +1,14 @@
+# NGenMud v1.0.1
+
+Compiled and tested on OSX Catalina.
+
+### FIXED:
+- (io.c) Typo caused failure to compile
+- (inform.py) Had a hardcoded absolute path that caused who to barf
+
+### ADDED:
+- Some extra instructions for getting SCons working on OSX.
+
 # NGenMud v1.0.0
 
 This is the base release of NGenMud which is a child/derivative of NakedMud. The goal for this is to fix some of the hanging bugs and to make step-wise feature enhancements that follow the progression that NakedMud was taking: Offloading more of the game logic to the lib and keeping the C code for the driver/engine and for modules requiring performance. Changes in this release:
