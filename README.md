@@ -1,4 +1,4 @@
-[Logo of computer with crossed swords and stylized NGenMud with caption: C and Python Hybrid Mud Engone](https://i.imgur.com/dfli5ij.png)
+![Logo of computer with crossed swords and stylized NGenMud with caption: C and Python Hybrid Mud Engone](https://i.imgur.com/dfli5ij.png)
 # NGenMUD
 
 This is a mud server written in C with Python (current support 2.x with no plans to upgrade yet). It is a derivative of NakedMud 3.8.1 written by Geoff Hollis. Please see CREDITS and doc/README for details. NakedMud was left in a very workable state with some bugs and some design decisions that needed to be dressed up and this is considered a continuation on that line. The goal is to 
