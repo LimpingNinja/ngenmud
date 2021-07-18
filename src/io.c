@@ -1,7 +1,12 @@
-#include <ntsid.h>
 /*
  * This file handles input/output to files (including log)
  */
+
+// OSX Compatibility
+#ifdef __APPLE__
+    #include <ntsid.h>
+#endif
+
 #include <sys/types.h>
 #include <stdio.h>
 #include <unistd.h>  
