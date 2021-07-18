@@ -134,8 +134,9 @@ void         charSetKeywords   (CHAR_DATA *ch, const char *keywords);
 #define SEX_NONE                (-1)
 #define SEX_MALE                  0
 #define SEX_FEMALE                1
-#define SEX_NEUTRAL               2
-#define NUM_SEXES                 3
+#define SEX_FLUID                 2
+#define SEX_NEUTRAL               3
+#define NUM_SEXES                 4
 
 const char *sexGetName(int sex);
 int  sexGetNum(const char *sex);

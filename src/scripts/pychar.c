@@ -2008,7 +2008,7 @@ PyMODINIT_FUNC init_PyChar(void) {
   PyChar_addGetSetter("keywords", PyChar_getkeywords, PyChar_setkeywords,
     "A comma-separated list of the keywords for referencing the character.");
   PyChar_addGetSetter("sex", PyChar_getsex, PyChar_setsex,
-    "The character's sex. Can be male, female, or neutral.");
+    "The character's sex. Can be male, female, fluid or neutral.");
   PyChar_addGetSetter("gender", PyChar_getsex, PyChar_setsex,
     "Alias for char.Char.sex");
   PyChar_addGetSetter("race", PyChar_getrace, PyChar_setrace,

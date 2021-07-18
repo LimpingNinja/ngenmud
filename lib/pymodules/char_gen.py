@@ -39,6 +39,8 @@ def cg_sex_handler(sock, arg):
         result = {
             'M' : 'male',
             'F' : 'female',
+            'L' : 'fluid',
+            'N' : 'not specified',
             }[arg[0].upper()]
         sock.ch.sex = result
         sock.pop_ih()
@@ -89,6 +91,7 @@ def cg_name_prompt(sock):
     sock.send_raw("What is your character's name? ")
 
 def cg_sex_prompt(sock):
+    sock.send_raw("\r\n[M] - Male\r\n[F] - Female\r\n[L] - Fluid/Intersex\r\n[N] - Not specified\r\n\r\n")
     sock.send_raw("What is your sex (M/F)? ")
 
 def cg_race_prompt(sock):

@@ -49,18 +49,18 @@ const char *numth(int num);
 
 
 //*****************************************************************************
-// Utilities for characters
+// Utilities for characters > ToDO: Fix pronouns to softcode and changeable
 //*****************************************************************************
 #define IS_ADMIN(ch)          (bitIsOneSet(charGetUserGroups(ch), "admin"))
 
 #define HIMHER(ch)            (charGetSex(ch) == SEX_MALE ? "him" : \
-			       (charGetSex(ch) == SEX_FEMALE ? "her" : "it"))
+			       (charGetSex(ch) == SEX_FEMALE ? "her" : "them"))
 
 #define HISHER(ch)            (charGetSex(ch) == SEX_MALE ? "his" : \
-			       (charGetSex(ch) == SEX_FEMALE ? "her" : "its"))
+			       (charGetSex(ch) == SEX_FEMALE ? "her" : "their"))
 
 #define HESHE(ch)             (charGetSex(ch) == SEX_MALE ? "he" : \
-			       (charGetSex(ch) == SEX_FEMALE ? "she" : "it"))
+			       (charGetSex(ch) == SEX_FEMALE ? "she" : "them"))
 
 #define YESNO(val)            (val == FALSE ? "no" : "yes")
 
