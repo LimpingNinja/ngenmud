@@ -9,5 +9,4 @@ message_something      : something
 message_someone        : someone
 message_nothing_special: You see nothing special.
 message_what           : What?
-puid                   : 12
 -

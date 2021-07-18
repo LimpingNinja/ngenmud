@@ -21,9 +21,9 @@
 
 const char *sex_names[NUM_SEXES] = {
   "male",
-  "female"
+  "female",
   "fluid",
-  "not specified"
+  "neutral"
 };
 
 const char *sexGetName(int sex) {
