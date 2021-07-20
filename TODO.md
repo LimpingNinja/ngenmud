@@ -1,16 +1,15 @@
 # KEVIN'S TO DO LIST
 ## THOUGHTS / CONSIDERATIONS
-  * Move all of the mudlib defines into a config file and create a parser
-  * Allow python outside of the PYMOD_LIB directory, allow lazy loading, right
+- [x] Move all of the mudlib defines into a config file and create a parser
+- [ ] Allow python outside of the PYMOD_LIB directory, allow lazy loading, right
     now the mud crashes as PYMOD_LIB is an autoload directory and subdirectories
     make it barf.
-  * Create a master.py which is the first object loaded, this can be used as 
+- [ ] Create a master.py which is the first object loaded, this can be used as 
     an initialization driver and override.
-  * Create an autoload.py which can be used to autoload any additional python 
+- [ ] Create an autoload.py which can be used to autoload any additional python 
     scripts.
-  * Move task list out of this document and into Github.
-  * Python 3 migration
-  * https://restrictedpython.readthedocs.io/en/latest/index.html
+- [ ] Python 3 migration: Rough.
+- [ ] https://restrictedpython.readthedocs.io/en/latest/index.html
     
 ## TASK LIST - MUD ENGINE
 ### HIGH PRIORITY
