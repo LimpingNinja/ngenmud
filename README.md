@@ -11,46 +11,76 @@ Latest Release:
     
 # Compiling and Running
 
-The SCons system that was put in place prior to the end of NakedMud releases is still fully functional from a type-and-go point of view, v1.0.0 made a modification to ensure libm was included.
+Python 2.x is now deprecated, it is getting harder to manage dependencies and ensure that you are building with the correct version of python. The best way do do that now is to use **pyenv**, the installation of PyEnv is relatively simple, follow the instructions on the Github project or basic instructions below. After you install PyEnv then simply doing the following:
 
-1. Install 'SConstruct' in whatever manner your system requires it.
-2. Untar/Unzip the package into your directory and `cd ./ngenmud/src`
-3. Run: `scons`.
-4. Wait for compilation to finish, if there are errors come back here and open an issue!
-5. *Optional* `rm ../lib/muddata` - all the settings in here will be recreated off of the default settings, this can be good unless my tests slip in.  
-5. Run `./ngenmud &`: This will start the mud running on the port defined in `../lib/muddata` or, if you deleted this file, the default port of 4000.
-6. Login and have fun with your game!
+1. `pyenv install 2.7.18`
+2. Untar/Unzip the package into the directory of your choice and `cd ./ngenmud/src`
+3. `pip install scons` 
+4. `scons`.
+5. Wait for compilation to finish, if there are errors come back here and open an issue!
+6. *Optional* `rm ../lib/muddata` - all the settings in here will be recreated off of the default settings, this can be good unless my tests slip in.  
+7. From the src/ directory run `./ngenmud &`: This will start the mud running on the port defined in `../lib/muddata` or, if you deleted this file, the default port of 4000.
+8. Login and have fun with your game!
 
-## SCons is Python Specific
-SCons is built specifically for Python 2.x or Python 3, you will need to 
-install the Python 2.x dependent version to be able to run this. If you 
-have Scons for Python 2.x and Python 3 installed, it will be up to you to
-ensure that you set the appropriate environmental options to use the right
-version. Some systems will alias it to scons2, but a google search on your
-system will help you move forward.
+## PyEnv
+PyEnv lets you easily switch between versions of Python at the global level or at the project level. In this projects root there is a `.python-version`. It is a simple single line file that specifies to PyEnv which version of Python to use.
+
+The instructions for installation are located at https://github.com/pyenv/pyenv#Installation. Those instructions make it seem a bit more complicated then it needs to be. Here are generalized instructions:
 
 ### OSX
 
-This assumes you do not have SCons installed.
+Homebrew includes pyenv, makes sure you have homebrew (https://brew.sh/) installed and do the following.
 
-Newer versions of OSX ship with Python 3 as the default, so to get the SCons
-setup for Python2.x you will need to run the following:
-
-```bash
-curl https://bootstrap.pypa.io/pip/2.7/get-pip.py  -o get-pip.py
-python get-pip.py
+```sh
+brew install pyenv
 ```
 
-You will then need to add the bin path for Python2.7 to your $PATH, you can
-do this by editing .zshrc in your home directory with:
+Restart your shell
 
-```bash
-export PATH=$HOME/Library/Python/2.7/bin:$PATH
+```sh
+pyenv install 2.7.18
 ```
 
-After this you can install SCons:
+This should work since Brew handles the environment variable placement.
 
-```bash
-pip install scons
+### Linux
+
+Some package managers (like pacman/pamac for arch/manjaro) include pyenv and it is as simple as typing `pamac install pyenv`, but these usually do not set the appropriate environment variables so you need to then go into your profile and set these or explicitly run them before working.
+
+If your package manager does not include it, these are generalized instructions:
+
+1. Clone the Repository
+
+To install the latest version of pyenv and provide a straightforward method for updating it, run the following commands to pull it down from GitHub:
+
+```sh
+cd $HOME
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 ```
+
+2. Configure the Environment
+
+Run the following block of commands to set some important environment variables and setup pyenv autocompletion:
+
+```sh
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n eval "$(pyenv init -)"\nfi' >> ~/.bashrc
+```
+
+If you are using **zsh** then you can replace .bashrc with .zshrc in the above example. After this, restart your shell and install 2.7.18:
+
+```sh
+pyenv install 2.7.18
+```
+
+### Windows
+
+The best bet here is to run WSL Ubuntu 20.04 and follow the Linux commands. WSL is Windows Subsystem for Linux, it essentially allows you to run a full linux distribution in your terminal without having to switch operating systems: https://docs.microsoft.com/en-us/windows/wsl/install-win10
+
+I have built it in WSL with no problem, the good thing about doing this is you can host it from WSL or you can easily create an executable and deploy it to your mud host or cloud environment to run.
+
+### Note: SCons is Python Specific
+If you do not choose to use PyEnv, realize that SCons is built specifically for Python 2.x or Python 3, you will need to install the Python 2.x dependent version to be able to run this. If you have Scons for Python 2.x and Python 3 installed, it will be up to you to ensure that you set the appropriate environmental options to use the right version. Some systems will alias it to scons2, but a google search on your system will help you move forward.
+
 
