@@ -66,7 +66,7 @@ modules = ['dyn_vars', 'set_val', 'olc2', 'editor', 'items', 'scripts']
 modules += ['time', 'socials', 'alias', 'help2']
 
 # Compiler flags
-ngenmud.Append(CCFLAGS=['-Wall', '-g', '-ggdb', '-O2'])
+ngenmud.Append(CCFLAGS=['-fcommon', '-Wall', '-g', '-ggdb', '-O2'])
 
 # Required libraries
 ngenmud.Append(LIBS=['z', 'm', 'pthread'])
