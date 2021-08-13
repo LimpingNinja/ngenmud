@@ -45,7 +45,13 @@
 #include "../help2/help.h"
 #endif
 
-
+// Used by the other script files.
+extern PyTypeObject PyChar_Type;
+extern PyTypeObject PyExit_Type;
+extern PyTypeObject PyObj_Type;
+extern PyTypeObject PyRoom_Type;
+extern PyTypeObject PySocket_Type;
+extern PyTypeObject PyAccount_Type;
 
 //*****************************************************************************
 // local variables and functions

@@ -31,9 +31,6 @@
 #include <structmember.h>
 #endif
 
-
-
-//
 // this is also needed by anything that touches scripts
 typedef struct trigger_data TRIGGER_DATA;
 
