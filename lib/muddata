@@ -9,4 +9,5 @@ message_something      : something
 message_someone        : someone
 message_nothing_special: You see nothing special.
 message_what           : What?
+required_pymodules     : account_handler,utils,display,inform
 -

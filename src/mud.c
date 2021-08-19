@@ -69,7 +69,8 @@ void init_mud_settings() {
     mudsettingSetString("message_nothing_special", DFLT_NOTHING_SPECIAL);
   if(!*mudsettingGetString("message_what"))
     mudsettingSetString("message_what", DFLT_WHAT);
-  
+  if(!*mudsettingGetString("required_pymodules"))
+    mudsettingSetString("required_pymodules", "");
 }
 
 void mudsettingSetString(const char *key, const char *val) {

@@ -25,8 +25,9 @@
 #include "../mud.h"
 #include "../utils.h"
 #include "../character.h"
-#include "pyplugs.h"
+#include "../strings.h"
 
+#include "pyplugs.h"
 
 
 //*****************************************************************************
@@ -159,6 +160,12 @@ void init_py_modules() {
   char fname[SMALL_BUFFER]; // the name of the file
   DIR *dir = opendir(PYMOD_LIB);
   struct dirent *entry;
+  // for handling *required_pymodules
+  string *tokens;
+  int count, j;
+
+  string line = str_new(mudsettingGetString("required_pymodules"));
+  tokens = str_split_len(line,str_length(line),",",1,&count);
 
   // add our PYMOD_LIB directory to the sys path, 
   // so the modules can access each other
@@ -203,11 +210,18 @@ void init_py_modules() {
       // can have potentially dangerous affects on the loading of other modules
       // Thanks to Thirsteh for pointing this out.
       log_pyerr("Error loading module, %s:", mname);
-      log_string("Bootup aborted. MUD shutting down.");
-      closedir(dir);
-      exit(1);
+
+      for (j = 0; j < count; j++) {
+          if(strcmp(tokens[j],mname)==0) {
+              log_string("Required module %s failed to load, bootup aborted.\r\nMUD shutting down.", mname);
+              closedir(dir);
+              str_free_splitres(tokens,count);
+              exit(1);
+          }
+      }
     }
   }
+  str_free_splitres(tokens,count);
   closedir(dir);
 }
 
