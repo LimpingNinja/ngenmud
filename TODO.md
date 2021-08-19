@@ -1,4 +1,4 @@
-# KEVIN'S TO DO LIST
+# KEVIN'S TO DO LIST - AKA: Wishful Thinking
 ## THOUGHTS / CONSIDERATIONS
 - [x] Move all of the mudlib defines into a config file and create a parser
 - [ ] Allow python outside of the PYMOD_LIB directory, allow lazy loading, right
