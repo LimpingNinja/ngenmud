@@ -11,8 +11,6 @@
 #include <arpa/telnet.h>
 #include "wrapsock.h"
 
-
-
 //*****************************************************************************
 // if you've installed a new module, you  need to put a define in here to let
 // the rest of the MUD know that you've installed the module.
@@ -29,7 +27,7 @@
 
 // here is where your optional modules will go
 #define MODULE_ALIAS
-#define MODULE_SOCIALS
+// #define MODULE_SOCIALS - removed
 #define MODULE_HELP2
 #define MODULE_TIME
 
