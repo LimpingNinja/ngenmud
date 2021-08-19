@@ -63,7 +63,7 @@ binary = 'ngenmud'
 modules = ['dyn_vars', 'set_val', 'olc2', 'editor', 'items', 'scripts']
 
 # Optional modules
-modules += ['time', 'socials', 'alias', 'help2']
+modules += ['time', 'alias', 'help2']
 
 # Compiler flags
 ngenmud.Append(CCFLAGS=['-fcommon', '-Wall', '-g', '-ggdb', '-O2'])
