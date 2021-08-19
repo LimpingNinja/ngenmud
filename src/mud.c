@@ -10,6 +10,7 @@
 #include "mud.h"
 #include "utils.h"
 #include "storage.h"
+#include "string.h"
 
 
 //*****************************************************************************
