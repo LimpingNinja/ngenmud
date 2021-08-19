@@ -1,11 +1,12 @@
-'''
+""""
 cmd_manip.py
 
 a set of commands that NGenMud comes with that allows characters to
 manipulate various things. These commands are mostly directed towards
 manipulating objects (e.g. get, put, drop, etc...) but can also affect other
 things like exits (e.g. open, close)
-'''
+"""
+from cmd_checks import chk_can_manip
 import mudsys, mud, inform, utils, movement, hooks
 import obj as mudobj
 
@@ -532,11 +533,6 @@ mudsys.add_cmd("open",   None, cmd_open,   "player", True)
 mudsys.add_cmd("close",  None, cmd_close,  "player", True)
 mudsys.add_cmd("lock",   None, cmd_lock,   "player", True)
 mudsys.add_cmd("unlock", None, cmd_unlock, "player", True)
-
-def chk_can_manip(ch, cmd):
-    if not ch.pos in ["sitting", "standing", "flying"]:
-        ch.send("You cannot do that while " + ch.pos + ".")
-        return False
 
 for cmd in ["give", "get", "drop", "remove", "wear", "put", "open", "close",
             "lock", "unlock"]:
