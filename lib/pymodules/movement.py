@@ -5,8 +5,6 @@ all of the functions concerned with movement and position change
 '''
 import inform, hooks, mudsys, mud
 
-
-
 # a ranking of positions
 positions     = ["unconscious", "sleeping", "sitting", "standing", "flying"]
 pos_act       = ["collapse",   "sleep",    "sit",     "stand",    "fly"]
