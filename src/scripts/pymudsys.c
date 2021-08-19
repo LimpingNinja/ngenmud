@@ -573,6 +573,19 @@ PyObject *mudsys_set_password(PyObject *self, PyObject *args) {
   return Py_BuildValue("i", 1);
 }
 
+PyObject *mudsys_cmd_exists(PyObject *self, PyObject *args) {
+    char       *cmd = NULL;
+
+    if(!PyArg_ParseTuple(args, "s", &cmd)) {
+        PyErr_Format(PyExc_TypeError,"cmd_exists requires a command name.");
+        return NULL;
+    }
+
+    if(cmd_exists(cmd)) {
+        return Py_BuildValue("i", 1);
+    }
+    return Py_BuildValue("i", 0);
+}
 
 //
 // add a new command to the mud, via a python script or module. Takes in a
@@ -1183,7 +1196,12 @@ init_PyMudSys(void) {
   PyMudSys_addMethod("sys_getval", mudsys_get_sys_val, METH_VARARGS,
 		     "sys_getval(name)\n"
 		     "\n"
-		     "returns a value registered in the system settings.");
+		     "returns a value registered in the system settings.");PyMudSys_addMethod("cmd_exists", mudsys_cmd_exists, METH_VARARGS,
+                   "cmd_exists(cmd_name)\n"
+                   "\n"
+                   "Checks to see if a command exists in the master command table. If\n"
+                   "a command exist it will return True, otherwise False.");
+
   PyMudSys_addMethod("sys_getvar", mudsys_get_sys_val, METH_VARARGS,
 		     "Alias to mudsys.sys_getval");
   PyMudSys_addMethod("sys_setvar", mudsys_set_sys_val, METH_VARARGS,
@@ -1257,6 +1275,11 @@ init_PyMudSys(void) {
 		     "set_password(acct, passwd)\n"
 		     "\n"
 		     "Set an account's password.");
+  PyMudSys_addMethod("cmd_exists", mudsys_cmd_exists, METH_VARARGS,
+                     "cmd_exists(cmd_name)\n"
+                     "\n"
+                     "Checks to see if a command exists in the master command table. If\n"
+                     "a command exist it will return True, otherwise False.");
   PyMudSys_addMethod("add_cmd", mudsys_add_cmd, METH_VARARGS,
     "add_cmd(name, shorthand, cmd_func, user_group, interrupts_action)\n"
     "\n"
