@@ -1,4 +1,4 @@
-# NgenMud v1.1.0
+# NgenMud v3.9.0
 Compiled and tested on Manjaro Linux
 ### ADDED
 - Setting required_pymodules, prevent aborting on all pymodules and only abort reboot if core modules fail to load. Yes, this could leave you in a wonky state, but the best bet is to ensure you have base modules defined that allow you to hit "copyover" again.
