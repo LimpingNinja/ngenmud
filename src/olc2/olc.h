@@ -80,15 +80,14 @@ void init_olc2();
 #define MENU_NOCHOICE               (0)
 
 void do_olc(SOCKET_DATA *sock,
-	    void *menu,
-	    void *chooser,
-	    void *parser,
-	    void *copier,
-	    void *copyto,
-	    void *deleter,
-	    void *saver,
-	    void *data);
-
+            void *menu,
+            void *chooser,
+            void *parser,
+            void *copier,
+            void *copyto,
+            void *deleter,
+            void *saver,
+            void *data);
 
 
 #define ECODE_BEGIN "### begin extra code"
@@ -99,7 +98,7 @@ void do_olc(SOCKET_DATA *sock,
 // Now, we just run the relevant code to generate something editable. This is
 // the function that does all the work of parsing out the 'extra' code and not
 // running it, but running everything else.
-void olc_from_proto(PROTO_DATA *proto,BUFFER *extra,void *me,void *aspy);
+void olc_from_proto(PROTO_DATA *proto, BUFFER *extra, void *me, void *aspy);
 
 
 
@@ -112,7 +111,7 @@ void olc_from_proto(PROTO_DATA *proto,BUFFER *extra,void *me,void *aspy);
 // Display a bunch of options in a tabular form. The table will have num_vals
 // elements, and num_cols of those elements will be displayed per row.
 void olc_display_table(SOCKET_DATA *sock, const char *getName(int val),
-		       int num_vals, int num_cols);
+                       int num_vals, int num_cols);
 
 //
 // Same deal as olc_display_table, except that it takes in a list of strings

@@ -8,25 +8,27 @@
 # shut down, the autorun script will terminate. Accepts a port argument.
 #
 ################################################################################
-import sys               # for sys.argv
-from time import sleep   # we delay before restarting
-from os   import system  # to start running the MUD
+import sys  # for sys.argv
+from os import system  # to start running the MUD
 
-def main(argv = sys.argv[1:]):
+from time import sleep  # we delay before restarting
+
+
+def main(argv=sys.argv[1:]):
     '''
     handles the autorunning of the mud. Can accept 1 optional argument that
     specifies the port number to run under
     '''
-    restart_delay = 5     # how long do we delay before a restart (seconds)
-    path = './ngenmud'    # the path to the MUD binary
-    port = 5555           # the default port we will be running the MUD under
+    restart_delay = 5  # how long do we delay before a restart (seconds)
+    path = './ngenmud'  # the path to the MUD binary
+    port = 5555  # the default port we will be running the MUD under
 
     # parse out our port number if one was supplied
     if len(argv) > 0:
         port = int(argv[0])
 
     # the command we execute to boot up the MUD
-    cmd  = "%s %d" % (path, port)
+    cmd = "%s %d" % (path, port)
 
     # now, while we have not exited without an error, run the MUD 
     # and reboot it every time we exit with an error (we crash)
@@ -43,6 +45,7 @@ def main(argv = sys.argv[1:]):
 
             # wait out our delay, then restart the MUD
             sleep(restart_delay)
+
 
 # start us if we're run as a script
 if __name__ == "__main__":

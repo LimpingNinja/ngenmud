@@ -14,13 +14,15 @@
 
 // initialize accounts for use. This must be called AFTER all other modules
 // have added in new get/setters and methods to pyroom
-PyMODINIT_FUNC     init_PyAccount(void);
-PyObject            *newPyAccount(ACCOUNT_DATA *account);
+PyMODINIT_FUNC init_PyAccount(void);
+
+PyObject *newPyAccount(ACCOUNT_DATA *account);
+
 ACCOUNT_DATA *PyAccount_AsAccount(PyObject *account);
 
 //
 // checks to see if the PyObject is a PyAccount
-int          PyAccount_Check(PyObject *value);
+int PyAccount_Check(PyObject *value);
 
 //
 // getters allow Python to access pieces of the Account module. Setters allow

@@ -35,14 +35,16 @@ bool zoneSave(ZONE_DATA *zone);
 //
 // Pulse a zone. i.e. decrement it's reset timer. When the timer hits 0,
 // set it back to the max, and reset everything in the zone
-void      zonePulse(ZONE_DATA *zone);
+void zonePulse(ZONE_DATA *zone);
+
 void zoneForceReset(ZONE_DATA *zone);
 
 //
 // Copy zone-specific data, but not contents in the zone (no rooms, mobs
 // objs, scripts, etc)
 ZONE_DATA *zoneCopy(ZONE_DATA *zone);
-void     zoneCopyTo(ZONE_DATA *from, ZONE_DATA *to);
+
+void zoneCopyTo(ZONE_DATA *from, ZONE_DATA *to);
 
 
 
@@ -52,39 +54,59 @@ void     zoneCopyTo(ZONE_DATA *from, ZONE_DATA *to);
 
 //
 // various get functions for zones
-int      zoneGetPulseTimer(ZONE_DATA *zone);
-int           zoneGetPulse(ZONE_DATA *zone);
-WORLD_DATA   *zoneGetWorld(ZONE_DATA *zone);
-const char    *zoneGetName(ZONE_DATA *zone);
-const char    *zoneGetDesc(ZONE_DATA *zone);
+int zoneGetPulseTimer(ZONE_DATA *zone);
+
+int zoneGetPulse(ZONE_DATA *zone);
+
+WORLD_DATA *zoneGetWorld(ZONE_DATA *zone);
+
+const char *zoneGetName(ZONE_DATA *zone);
+
+const char *zoneGetDesc(ZONE_DATA *zone);
+
 const char *zoneGetEditors(ZONE_DATA *zone);
-BUFFER  *zoneGetDescBuffer(ZONE_DATA *zone);
+
+BUFFER *zoneGetDescBuffer(ZONE_DATA *zone);
+
 void *zoneGetAuxiliaryData(const ZONE_DATA *zone, char *name);
-LIST    *zoneGetResettable(ZONE_DATA *zone);
+
+LIST *zoneGetResettable(ZONE_DATA *zone);
 
 
 //
 // various set functions for zones
 void zoneSetPulseTimer(ZONE_DATA *zone, int timer);
-void      zoneSetPulse(ZONE_DATA *zone, int pulse_left);
-void      zoneSetWorld(ZONE_DATA *zone, WORLD_DATA *world);
-void       zoneSetName(ZONE_DATA *zone, const char *name);
-void       zoneSetDesc(ZONE_DATA *zone, const char *description);
-void    zoneSetEditors(ZONE_DATA *zone, const char *names);
+
+void zoneSetPulse(ZONE_DATA *zone, int pulse_left);
+
+void zoneSetWorld(ZONE_DATA *zone, WORLD_DATA *world);
+
+void zoneSetName(ZONE_DATA *zone, const char *name);
+
+void zoneSetDesc(ZONE_DATA *zone, const char *description);
+
+void zoneSetEditors(ZONE_DATA *zone, const char *names);
 
 
 //
 // stuff for editing different prototypes stored in zones
-void        zoneSetKey(ZONE_DATA *zone, const char *key);
+void zoneSetKey(ZONE_DATA *zone, const char *key);
+
 const char *zoneGetKey(ZONE_DATA *zone);
-void      *zoneGetType(ZONE_DATA *zone, const char *type, const char *key);
-void   *zoneRemoveType(ZONE_DATA *zone, const char *type, const char *key);
-void      zoneSaveType(ZONE_DATA *zone, const char *type, const char *key);
-void       zonePutType(ZONE_DATA *zone, const char *type, const char *key,
-		       void *data);
-void       zoneAddType(ZONE_DATA *zone, const char *type, void *reader,
-		       void *storer, void *deleter, void *keysetter);
-LIST  *zoneGetTypeKeys(ZONE_DATA *zone, const char *type);
+
+void *zoneGetType(ZONE_DATA *zone, const char *type, const char *key);
+
+void *zoneRemoveType(ZONE_DATA *zone, const char *type, const char *key);
+
+void zoneSaveType(ZONE_DATA *zone, const char *type, const char *key);
+
+void zonePutType(ZONE_DATA *zone, const char *type, const char *key,
+                 void *data);
+
+void zoneAddType(ZONE_DATA *zone, const char *type, void *reader,
+                 void *storer, void *deleter, void *keysetter);
+
+LIST *zoneGetTypeKeys(ZONE_DATA *zone, const char *type);
 
 //
 // some types can 'forget' what they are. This is a fudge so Python can add
@@ -93,6 +115,6 @@ LIST  *zoneGetTypeKeys(ZONE_DATA *zone, const char *type);
 // Forgetful functions are exactly the same as normal functions, except they
 // take an additional initial argument, which is a const string of their type
 void zoneAddForgetfulType(ZONE_DATA *zone, const char *type, void *reader,
-			  void *storer, void *deleter, void *keysetter);
+                          void *storer, void *deleter, void *keysetter);
 
 #endif // __ZONE_H

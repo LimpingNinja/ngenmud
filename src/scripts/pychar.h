@@ -15,10 +15,12 @@
 // initialize rooms for use. This must be called AFTER all other modules
 // have added in new get/setters and methods to pyroom
 PyMODINIT_FUNC init_PyChar(void);
-PyObject        *newPyChar(CHAR_DATA *ch);
 
-CHAR_DATA   *PyChar_AsChar(PyObject *ch);
-int           PyChar_AsUid(PyObject *ch);
+PyObject *newPyChar(CHAR_DATA *ch);
+
+CHAR_DATA *PyChar_AsChar(PyObject *ch);
+
+int PyChar_AsUid(PyObject *ch);
 
 //
 // checks to see if the PyObject is a PyChar

@@ -34,14 +34,14 @@ void extenderDoMenu(SOCKET_DATA *sock, OLC_EXTENDER *ext, void *data);
 // If the option does not exist, return MENU_CHOICE_INVALID.
 // If the option leads to a submenu or a toggle, return MENU_NOCHOICE.
 // Otherwise, return a unique identifier in the range of 10000 and 11000
-int extenderDoOptChoice(SOCKET_DATA *sock, OLC_EXTENDER *ext, void *data, 
-			char opt);
+int extenderDoOptChoice(SOCKET_DATA *sock, OLC_EXTENDER *ext, void *data,
+                        char opt);
 
 //
 // Run the parse function for the extender wit hthe specified choice ID.
 // Return TRUE if it is successful, or FALSE otherwise
-bool extenderDoParse(SOCKET_DATA *sock, OLC_EXTENDER *ext, void *data, 
-		     int choice, const char *arg);
+bool extenderDoParse(SOCKET_DATA *sock, OLC_EXTENDER *ext, void *data,
+                     int choice, const char *arg);
 
 //
 // run all of our toProto functions
@@ -80,15 +80,15 @@ void extenderFromProto(OLC_EXTENDER *ext, void *data);
 //       it. Not neccesary if the extender is not for something that comes from
 //       a prototype.
 //       void to_proto(datatype *to_convert, BUFFER *destination)
-void extenderRegisterOpt(OLC_EXTENDER *ext, char opt, 
-			 void *menu, void *choice, void *parse,
-			 void *from_proto, void *to_proto);
+void extenderRegisterOpt(OLC_EXTENDER *ext, char opt,
+                         void *menu, void *choice, void *parse,
+                         void *from_proto, void *to_proto);
 
 //
 // The same, but takes Python functions instead of C function. to_proto will
 // return a string instead of concatting it to a buffer.
-void extenderRegisterPyOpt(OLC_EXTENDER *ext, char opt, 
-			   void *menu, void *choice, void *parse,
-			   void *from_proto, void *to_proto);
+void extenderRegisterPyOpt(OLC_EXTENDER *ext, char opt,
+                           void *menu, void *choice, void *parse,
+                           void *from_proto, void *to_proto);
 
 #endif // OLC_EXTENDER_H

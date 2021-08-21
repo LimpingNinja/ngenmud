@@ -17,7 +17,7 @@
 #define PI                    3.14159265
 #define MATH_E                2.71828182
 
-#define UMIN(a, b)	      ((a) < (b) ? (a) : (b))
+#define UMIN(a, b)          ((a) < (b) ? (a) : (b))
 #ifndef MIN
 #define MIN(a, b)             ((a) < (b) ? (a) : (b))
 #endif
@@ -52,42 +52,48 @@ const char *numth(int num);
 // Utilities for characters > ToDO: Fix pronouns to softcode and changeable
 //*****************************************************************************
 #define IS_ADMIN(ch)          (bitIsOneSet(charGetUserGroups(ch), "admin"))
-
 #define HIMHER(ch)            (charGetSex(ch) == SEX_MALE ? "him" : \
-			       (charGetSex(ch) == SEX_FEMALE ? "her" : "them"))
-
+                   (charGetSex(ch) == SEX_FEMALE ? "her" : "them"))
 #define HISHER(ch)            (charGetSex(ch) == SEX_MALE ? "his" : \
-			       (charGetSex(ch) == SEX_FEMALE ? "her" : "their"))
-
+                   (charGetSex(ch) == SEX_FEMALE ? "her" : "their"))
 #define HESHE(ch)             (charGetSex(ch) == SEX_MALE ? "he" : \
-			       (charGetSex(ch) == SEX_FEMALE ? "she" : "them"))
-
+                   (charGetSex(ch) == SEX_FEMALE ? "she" : "they"))
 #define YESNO(val)            (val == FALSE ? "no" : "yes")
-
 #define TOGGLE(val)           (val == FALSE ? TRUE : FALSE)
 
 //
 // register a check that's performed when can_see_char/obj/exit is called.
 // Returns True if the target is visible, and False if it is not.
-void  register_char_see   ( bool (* check)(CHAR_DATA *ch, CHAR_DATA *target));
-void  register_obj_see    ( bool (* check)(CHAR_DATA *ch, OBJ_DATA *target));
-void  register_exit_see   ( bool (* check)(CHAR_DATA *ch, EXIT_DATA *target));
-bool  can_see_char        ( CHAR_DATA *ch, CHAR_DATA *target);
-bool  can_see_obj         ( CHAR_DATA *ch, OBJ_DATA  *target);
-bool  can_see_exit        ( CHAR_DATA *ch, EXIT_DATA *exit);
-bool  try_enter_game      ( CHAR_DATA *ch);
-int   can_see_hidden      ( CHAR_DATA *ch);
-int   can_see_invis       ( CHAR_DATA *ch);
+void register_char_see(bool (*check)(CHAR_DATA *ch, CHAR_DATA *target));
+
+void register_obj_see(bool (*check)(CHAR_DATA *ch, OBJ_DATA *target));
+
+void register_exit_see(bool (*check)(CHAR_DATA *ch, EXIT_DATA *target));
+
+bool can_see_char(CHAR_DATA *ch, CHAR_DATA *target);
+
+bool can_see_obj(CHAR_DATA *ch, OBJ_DATA *target);
+
+bool can_see_exit(CHAR_DATA *ch, EXIT_DATA *exit);
+
+bool try_enter_game(CHAR_DATA *ch);
+
+int can_see_hidden(CHAR_DATA *ch);
+
+int can_see_invis(CHAR_DATA *ch);
 
 //
 // returns the target's name if the ch can see the target,
 // and returns SOMEONE/SOMETHING otherwise.
-const char *see_char_as (CHAR_DATA *ch, CHAR_DATA *target);
-const char *see_obj_as  (CHAR_DATA *ch, OBJ_DATA  *target);
-const char *see_exit_as (CHAR_DATA *ch, EXIT_DATA *target);
+const char *see_char_as(CHAR_DATA *ch, CHAR_DATA *target);
 
-void     show_prompt(SOCKET_DATA *socket);
-const char *custom_prompt (CHAR_DATA *ch);
+const char *see_obj_as(CHAR_DATA *ch, OBJ_DATA *target);
+
+const char *see_exit_as(CHAR_DATA *ch, EXIT_DATA *target);
+
+void show_prompt(SOCKET_DATA *socket);
+
+const char *custom_prompt(CHAR_DATA *ch);
 
 
 
@@ -96,14 +102,16 @@ const char *custom_prompt (CHAR_DATA *ch);
 //*****************************************************************************
 #define BITS_PER_BITVECTOR                   32
 
-#define IS_SET(flag,bit)       (((flag) &  (bit)) != 0)
-#define SET_BIT(var,bit)        ((var) |=  (bit))
-#define REMOVE_BIT(var,bit)     ((var) &= ~(bit))
-#define TOGGLE_BIT(var,bit)     ((var) ^=  (bit))
+#define IS_SET(flag, bit)       (((flag) &  (bit)) != 0)
+#define SET_BIT(var, bit)        ((var) |=  (bit))
+#define REMOVE_BIT(var, bit)     ((var) &= ~(bit))
+#define TOGGLE_BIT(var, bit)     ((var) ^=  (bit))
 
 bitvector_t parse_bits(const char *string);
+
 const char *write_bits(bitvector_t bits);
-void        print_bits(bitvector_t bits, const char **names, char *buf);
+
+void print_bits(bitvector_t bits, const char **names, char *buf);
 
 
 
@@ -114,47 +122,73 @@ void        print_bits(bitvector_t bits, const char **names, char *buf);
 #define AN(string)         (strchr("AEIOU", toupper(*string)) ? "an" : "a")
 #define strdupsafe(string) strdup(string ? string : "")
 
-LIST *parse_strings       (const char *string, char delimeter);
-LIST *parse_keywords      (const char *keywords);
-bool dup_keywords_exist   (const char *keywords);
-bool is_keyword           (const char *keywords, const char *word, 
-			   bool abbrev_ok);
-int  find_keyword         (const char *keywords, const char *string);
-void add_keyword          (char **keywords_ptr, const char *word);
-void remove_keyword       (char *keywords, const char *word);
-void trim                 (char *string);
-void strip_word           (char *string, const char *word);
-void buf_tag_keywords     (BUFFER *buf, const char *keywords,
-			   const char *start_tag, const char *end_tag);
-int  count_letters        (const char *string, const char ch, const int strlen);
-int  count_occurences     (const char *string, const char *word);
-char *line_start          (char *string, int line);
-int  fgetline             (FILE *file, char *p, int maxlen);
-void center_string        (char *buf, const char *string, int linelen, 
-			   int buflen, bool border);
-int next_space_in         (const char *string);
-int next_letter_in        (const char *string, char marker);
-int is_paragraph_marker   (const char *string, int index);
+LIST *parse_strings(const char *string, char delimeter);
+
+LIST *parse_keywords(const char *keywords);
+
+bool dup_keywords_exist(const char *keywords);
+
+bool is_keyword(const char *keywords, const char *word,
+                bool abbrev_ok);
+
+int find_keyword(const char *keywords, const char *string);
+
+void add_keyword(char **keywords_ptr, const char *word);
+
+void remove_keyword(char *keywords, const char *word);
+
+void trim(char *string);
+
+void strip_word(char *string, const char *word);
+
+void buf_tag_keywords(BUFFER *buf, const char *keywords,
+                      const char *start_tag, const char *end_tag);
+
+int count_letters(const char *string, const char ch, const int strlen);
+
+int count_occurences(const char *string, const char *word);
+
+char *line_start(char *string, int line);
+
+int fgetline(FILE *file, char *p, int maxlen);
+
+void center_string(char *buf, const char *string, int linelen,
+                   int buflen, bool border);
+
+int next_space_in(const char *string);
+
+int next_letter_in(const char *string, char marker);
+
+int is_paragraph_marker(const char *string, int index);
 
 //
 // four unique hash functions for 8-bit hashing. They can be concatinated
 // to do higher-order hashing as would be typically desired
-unsigned long    pearson_hash8(const char *string, int *table);
-unsigned long  pearson_hash8_1(const char *string);
-unsigned long  pearson_hash8_2(const char *string);
-unsigned long  pearson_hash8_3(const char *string);
-unsigned long  pearson_hash8_4(const char *string);
+unsigned long pearson_hash8(const char *string, int *table);
+
+unsigned long pearson_hash8_1(const char *string);
+
+unsigned long pearson_hash8_2(const char *string);
+
+unsigned long pearson_hash8_3(const char *string);
+
+unsigned long pearson_hash8_4(const char *string);
+
 unsigned long pearson_hash16_1(const char *string);
+
 unsigned long pearson_hash16_2(const char *string);
-unsigned long   pearson_hash32(const char *string);
+
+unsigned long pearson_hash32(const char *string);
 
 //
 // aliases pearson_hash32
 unsigned long string_hash(const char *key);
 
-bool endswith             (const char *string, const char *end);
-bool startswith           (const char *string, const char *start);
-const char *strcpyto      (char *to, const char *from, char end);
+bool endswith(const char *string, const char *end);
+
+bool startswith(const char *string, const char *start);
+
+const char *strcpyto(char *to, const char *from, char end);
 
 
 
@@ -163,24 +197,31 @@ const char *strcpyto      (char *to, const char *from, char end);
 //*****************************************************************************
 
 // remove the thing from the game, and delete it
-void         extract_mobile(CHAR_DATA *ch);
-void            extract_obj(OBJ_DATA  *obj);
-void           extract_room(ROOM_DATA *room);
+void extract_mobile(CHAR_DATA *ch);
+
+void extract_obj(OBJ_DATA *obj);
+
+void extract_room(ROOM_DATA *room);
 
 // don't call these. These are for use by gameloop.c only. Use the non-final
 // versions, please!!
-void   extract_mobile_final(CHAR_DATA *ch);
-void      extract_obj_final(OBJ_DATA  *obj);
-void     extract_room_final(ROOM_DATA *room);
+void extract_mobile_final(CHAR_DATA *ch);
 
-char *get_time             ( void );
-void  communicate          ( CHAR_DATA *dMob, char *txt, int range );
-void  load_muddata         ( void );
-CHAR_DATA  *check_reconnect( const char *player );
+void extract_obj_final(OBJ_DATA *obj);
+
+void extract_room_final(ROOM_DATA *room);
+
+char *get_time(void);
+
+void communicate(CHAR_DATA *dMob, char *txt, int range);
+
+void load_muddata(void);
+
+CHAR_DATA *check_reconnect(const char *player);
 
 // transfers things from one room to another
-void do_mass_transfer(ROOM_DATA *from, ROOM_DATA *to, bool chars, bool mobs, 
-		      bool objs);
+void do_mass_transfer(ROOM_DATA *from, ROOM_DATA *to, bool chars, bool mobs,
+                      bool objs);
 
 // handles relative exits. If an exit destination does not have a locale, 
 // append the one for its room.
@@ -207,8 +248,8 @@ bool parse_worldkey(const char *key, char *name, char *locale);
 //
 // same as parse_worldkey, but if no locale is supplied, use the zone that the
 // character is currently in
-bool parse_worldkey_relative(CHAR_DATA *ch, const char *key, char *name, 
-			     char *locale);
+bool parse_worldkey_relative(CHAR_DATA *ch, const char *key, char *name,
+                             char *locale);
 
 //
 // returns the locale of a key, and \0 if none exists
@@ -276,25 +317,31 @@ LIST *reverse_list(LIST *list);
 //
 // checks to see if a file or directory exists
 bool file_exists(const char *fname);
-bool dir_exists (const char *dname);
+
+bool dir_exists(const char *dname);
 
 
 //
 // count how many objects are in the list, that meet our critereon.
 // If name is not NULL, we search by name. Otherwise, we search by prototype.
 // must_see TRUE, a looker must be supplied. Same thing goes for count_letters
-int   count_objs   (CHAR_DATA *looker, LIST *list, const char *name,
-		    const char *prototype, bool must_see);
-int   count_chars  (CHAR_DATA *looker, LIST *list, const char *name,
-		    const char *prototype, bool must_see);
+int count_objs(CHAR_DATA *looker, LIST *list, const char *name,
+               const char *prototype, bool must_see);
+
+int count_chars(CHAR_DATA *looker, LIST *list, const char *name,
+                const char *prototype, bool must_see);
+
 CHAR_DATA *find_char(CHAR_DATA *looker, LIST *list, int num, const char *name,
-		     const char *prototype, bool must_see);
-OBJ_DATA *find_obj (CHAR_DATA *looker, LIST *list, int num, const char *name,
-		    const char *prototype, bool must_see);
+                     const char *prototype, bool must_see);
+
+OBJ_DATA *find_obj(CHAR_DATA *looker, LIST *list, int num, const char *name,
+                   const char *prototype, bool must_see);
+
 LIST *find_all_chars(CHAR_DATA *looker, LIST *list, const char *name,
-		     const char *prototype, bool must_see);
+                     const char *prototype, bool must_see);
+
 LIST *find_all_objs(CHAR_DATA *looker, LIST *list, const char *name,
-		    const char *prototype, bool must_see);
+                    const char *prototype, bool must_see);
 
 // in the various find() routines, it may sometimes arise that someone
 // wants to find multiple things (e.g. all.cookies, all.women). This is
@@ -334,8 +381,8 @@ char *print_list(LIST *list, void *descriptor, void *multi_descriptor);
 //
 // multi-descriptor is a pointer to the function that gets a copy of the
 // thing's description if there is more than 1 copy of it in the list.
-void show_list(CHAR_DATA *ch, LIST *list, void *descriptor, 
-	       void *multi_descriptor);
+void show_list(CHAR_DATA *ch, LIST *list, void *descriptor,
+               void *multi_descriptor);
 
 
 //
@@ -367,12 +414,12 @@ bool do_delete(CHAR_DATA *ch, const char *type, void *deleter, const char *arg);
 //
 // generic xxxlist for listing all the entries of one type for a zone (e.g.
 // mprotos, oprotos, scripts...)
-void do_list(CHAR_DATA *ch, const char *locale, const char *type, 
-	     const char *header, void *informer);
+void do_list(CHAR_DATA *ch, const char *locale, const char *type,
+             const char *header, void *informer);
 
 
 //
 // moves something of the given type with one name to the other name
-bool do_rename(CHAR_DATA *ch,const char *type,const char *from,const char *to);
+bool do_rename(CHAR_DATA *ch, const char *type, const char *from, const char *to);
 
 #endif // __UTILS_H

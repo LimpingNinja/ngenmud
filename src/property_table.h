@@ -18,8 +18,8 @@
 //
 //*****************************************************************************
 
-typedef struct property_table             PROPERTY_TABLE;
-typedef struct property_table_iterator    PROPERTY_TABLE_ITERATOR;
+typedef struct property_table PROPERTY_TABLE;
+typedef struct property_table_iterator PROPERTY_TABLE_ITERATOR;
 
 
 //

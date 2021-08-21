@@ -15,19 +15,32 @@
 //
 //*****************************************************************************
 
-ACCOUNT_DATA       *newAccount(void);
-void             deleteAccount(ACCOUNT_DATA *account);
-ACCOUNT_DATA      *accountRead(STORAGE_SET *set);
-STORAGE_SET      *accountStore(ACCOUNT_DATA *account);
-void             accountCopyTo(ACCOUNT_DATA *from, ACCOUNT_DATA *to);
-ACCOUNT_DATA      *accountCopy(ACCOUNT_DATA *account);
-void            accountPutChar(ACCOUNT_DATA *account, const char *name);
-void         accountRemoveChar(ACCOUNT_DATA *account, const char *name);
-LIST          *accountGetChars(ACCOUNT_DATA *account);
-void  *accountGetAuxiliaryData(ACCOUNT_DATA *account, const char *data);
-void        accountSetPassword(ACCOUNT_DATA *account, const char *password);
+ACCOUNT_DATA *newAccount(void);
+
+void deleteAccount(ACCOUNT_DATA *account);
+
+ACCOUNT_DATA *accountRead(STORAGE_SET *set);
+
+STORAGE_SET *accountStore(ACCOUNT_DATA *account);
+
+void accountCopyTo(ACCOUNT_DATA *from, ACCOUNT_DATA *to);
+
+ACCOUNT_DATA *accountCopy(ACCOUNT_DATA *account);
+
+void accountPutChar(ACCOUNT_DATA *account, const char *name);
+
+void accountRemoveChar(ACCOUNT_DATA *account, const char *name);
+
+LIST *accountGetChars(ACCOUNT_DATA *account);
+
+void *accountGetAuxiliaryData(ACCOUNT_DATA *account, const char *data);
+
+void accountSetPassword(ACCOUNT_DATA *account, const char *password);
+
 const char *accountGetPassword(ACCOUNT_DATA *account);
-void            accountSetName(ACCOUNT_DATA *account, const char *name);
-const char     *accountGetName(ACCOUNT_DATA *account);
+
+void accountSetName(ACCOUNT_DATA *account, const char *name);
+
+const char *accountGetName(ACCOUNT_DATA *account);
 
 #endif // ACCOUNT_H

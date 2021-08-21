@@ -29,7 +29,7 @@ char fbgetc(FILEBUF *buf);
 
 //
 // print the formatting to the file
-int fbprintf(FILEBUF *buf, const char *fmt, ...) 
+int fbprintf(FILEBUF *buf, const char *fmt, ...)
 __attribute__ ((format (printf, 2, 3)));
 
 //

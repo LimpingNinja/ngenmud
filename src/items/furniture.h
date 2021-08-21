@@ -14,12 +14,16 @@
 #define FURNITURE_ON          1
 #define NUM_FURNITURES        2
 
-int  furnitureGetCapacity(OBJ_DATA *obj);
+int furnitureGetCapacity(OBJ_DATA *obj);
+
 void furnitureSetCapacity(OBJ_DATA *obj, int capacity);
-int  furnitureGetType(OBJ_DATA *obj);
+
+int furnitureGetType(OBJ_DATA *obj);
+
 void furnitureSetType(OBJ_DATA *obj, int type);
 
 const char *furnitureTypeGetName(int type);
-int  furnitureTypeGetNum(const char *type);
+
+int furnitureTypeGetNum(const char *type);
 
 #endif // FURNITURE_H

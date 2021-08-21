@@ -51,12 +51,12 @@ void interrupt_events_involving(void *thing);
 // as its second argument. It must return TRUE if the data contains
 // a pointer to the thing, and FALSE otherwise.
 //
-void start_event(void *owner, 
-		 int   delay,
- 		 void *on_complete,
-		 void *check_involvement,
-		 void *data,
-		 const char *arg);
+void start_event(void *owner,
+                 int delay,
+                 void *on_complete,
+                 void *check_involvement,
+                 void *data,
+                 const char *arg);
 
 
 //
@@ -65,10 +65,10 @@ void start_event(void *owner,
 // mudtime updating, ticks, zone reset timers).
 //
 void start_update(void *owner,
-		  int   delay,
-		  void *on_complete,
-		  void *check_involvement,
-		  void *data,
-		  const char *arg);
+                  int delay,
+                  void *on_complete,
+                  void *check_involvement,
+                  void *data,
+                  const char *arg);
 
 #endif // __EVENT_H

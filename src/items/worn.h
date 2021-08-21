@@ -24,7 +24,9 @@
 //
 // what type of a worn item is this object? 
 const char *wornGetType(OBJ_DATA *obj);
+
 const char *wornGetPositions(OBJ_DATA *obj);
+
 void wornSetType(OBJ_DATA *obj, const char *type);
 
 //

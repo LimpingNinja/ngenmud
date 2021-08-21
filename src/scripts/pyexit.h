@@ -15,14 +15,16 @@
 // initialize exits for use. This must be called AFTER all other modules
 // have added in new get/setters and methods to pyroom
 PyMODINIT_FUNC init_PyExit(void);
-PyObject        *newPyExit(EXIT_DATA *exit);
 
-EXIT_DATA   *PyExit_AsExit(PyObject *exit);
-int           PyExit_AsUid(PyObject *exit);
+PyObject *newPyExit(EXIT_DATA *exit);
+
+EXIT_DATA *PyExit_AsExit(PyObject *exit);
+
+int PyExit_AsUid(PyObject *exit);
 
 //
 // checks to see if the PyObject is a PyExit
-int          PyExit_Check(PyObject *value);
+int PyExit_Check(PyObject *value);
 
 //
 // getters allow Python to access pieces of the Exit module. Setters allow

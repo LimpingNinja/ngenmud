@@ -15,14 +15,16 @@
 // initialize rooms for use. This must be called AFTER all other modules
 // have added in new get/setters and methods to pyroom
 PyMODINIT_FUNC init_PyRoom(void);
-PyObject      *newPyRoom(ROOM_DATA *room);
+
+PyObject *newPyRoom(ROOM_DATA *room);
 
 ROOM_DATA *PyRoom_AsRoom(PyObject *room);
-int        PyRoom_AsUid(PyObject *room);
+
+int PyRoom_AsUid(PyObject *room);
 
 //
 // checks to see if the PyObject is a PyRoom
-int        PyRoom_Check (PyObject *value);
+int PyRoom_Check(PyObject *value);
 
 //
 // getters allow Python to access pieces of the Room module. Setters allow

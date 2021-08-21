@@ -1,10 +1,10 @@
- __      __       .__                               
+{Y __      __       .__
 /  \    /  \ ____ |  |   ____  ____   _____   ____  
 \   \/\/   // __ \|  | _/ ___\/  _ \ /     \_/ __ \ 
  \        /\  ___/|  |_\  \__(  <_> )  Y Y  \  ___/ 
   \__/\  /  \___  >____/\___  >____/|__|_|  /\___  >
        \/       \/          \/            \/     \/
-Welcome GenLib on NGenMud v1.0.0
+{nWelcome to GenLib on NGenMud v1.1.0
 
 Glad you could get it up and running! The examples zone is a proof of concept
 for the various building utilities, such as triggers and zone reset commands. 

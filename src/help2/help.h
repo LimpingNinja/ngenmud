@@ -39,7 +39,7 @@ BUFFER *build_help(const char *keyword);
 // to disc and loaded anew each time the MUD is booted up. It will be saved with
 // the first keyword in the keywords list as the main keyword.
 void add_help(const char *keywords, const char *info, const char *user_groups,
-	      const char *related, bool persistent);
+              const char *related, bool persistent);
 
 //
 // removes a help file with the given keyword from our records; if it is 
@@ -49,10 +49,14 @@ void remove_help(const char *keyword);
 //
 // returns the help data associated with the keyword. 
 // Also, various get functions for it
-HELP_DATA           *get_help(const char *keyword, bool abbrev_ok);
-const char   *helpGetKeywords(HELP_DATA *data);
+HELP_DATA *get_help(const char *keyword, bool abbrev_ok);
+
+const char *helpGetKeywords(HELP_DATA *data);
+
 const char *helpGetUserGroups(HELP_DATA *data);
-const char    *helpGetRelated(HELP_DATA *data);
-const char       *helpGetInfo(HELP_DATA *data);
+
+const char *helpGetRelated(HELP_DATA *data);
+
+const char *helpGetInfo(HELP_DATA *data);
 
 #endif // HELP2_H

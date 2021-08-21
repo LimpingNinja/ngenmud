@@ -62,10 +62,13 @@ void bitvectorAddBit(const char *name, const char *bit);
 //
 // create a new instance of the bitvector with the given name. 
 // Return NULL if a bitvector with the given name does not exist
-BITVECTOR   *bitvectorInstanceOf(const char *name);
-void         deleteBitvector(BITVECTOR *v);
-void         bitvectorCopyTo(BITVECTOR *from, BITVECTOR *to);
-BITVECTOR   *bitvectorCopy(BITVECTOR *v);
+BITVECTOR *bitvectorInstanceOf(const char *name);
+
+void deleteBitvector(BITVECTOR *v);
+
+void bitvectorCopyTo(BITVECTOR *from, BITVECTOR *to);
+
+BITVECTOR *bitvectorCopy(BITVECTOR *v);
 
 //
 // checks to see if ANY of the bits in the name list are set. Name can be 

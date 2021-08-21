@@ -27,7 +27,8 @@ typedef struct opt_var OPT_VAR;
 //
 // create and delete optional variables for use with gen_do_trigs
 OPT_VAR *newOptVar(const char *name, void *data, int type);
-void  deleteOptVar(OPT_VAR *var);
+
+void deleteOptVar(OPT_VAR *var);
 
 //
 // generalized function for running all triggers of a specified type. First
@@ -38,15 +39,15 @@ void  deleteOptVar(OPT_VAR *var);
 // are needed, a list of optionals can be provided, which must be deleted after
 // use
 void gen_do_trigs(void *me, int me_type, const char *type,
-		  CHAR_DATA *ch,OBJ_DATA *obj, ROOM_DATA *room, EXIT_DATA *exit,
-		  const char *cmd, const char *arg, LIST *optional);
+                  CHAR_DATA *ch, OBJ_DATA *obj, ROOM_DATA *room, EXIT_DATA *exit,
+                  const char *cmd, const char *arg, LIST *optional);
 
 //
 // the trigger edit (tedit) menu displays a list of possible trigger types
 // to choose from. That list can be extended by calling this function. desc
 // should be a comma-separated list of things the trigger can be attached to
 // (obj, mob, room, in that order)
-void register_tedit_opt(const char *type, const char *desc); 
+void register_tedit_opt(const char *type, const char *desc);
 
 // returns a table of the available tedit opts
 HASHTABLE *get_tedit_opts(void);

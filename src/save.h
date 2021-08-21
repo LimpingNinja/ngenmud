@@ -29,23 +29,31 @@
 void init_save(void);
 
 ACCOUNT_DATA *get_account(const char *account);
-CHAR_DATA     *get_player(const char *player);
 
-void  unreference_account(ACCOUNT_DATA *account);
-void   unreference_player(CHAR_DATA    *ch);
-void    reference_account(ACCOUNT_DATA *account);
-void     reference_player(CHAR_DATA    *ch);
+CHAR_DATA *get_player(const char *player);
 
-void     register_account(ACCOUNT_DATA *account);
-void      register_player(CHAR_DATA    *ch);
+void unreference_account(ACCOUNT_DATA *account);
 
-void         save_account(ACCOUNT_DATA *account);
-void          save_player(CHAR_DATA    *ch);
+void unreference_player(CHAR_DATA *ch);
 
-bool       account_exists(const char *name);
-bool        player_exists(const char *name);
+void reference_account(ACCOUNT_DATA *account);
 
-bool     account_creating(const char *name);
-bool      player_creating(const char *name);
+void reference_player(CHAR_DATA *ch);
+
+void register_account(ACCOUNT_DATA *account);
+
+void register_player(CHAR_DATA *ch);
+
+void save_account(ACCOUNT_DATA *account);
+
+void save_player(CHAR_DATA *ch);
+
+bool account_exists(const char *name);
+
+bool player_exists(const char *name);
+
+bool account_creating(const char *name);
+
+bool player_creating(const char *name);
 
 #endif // __SAVE_H

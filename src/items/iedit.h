@@ -34,12 +34,14 @@ void init_item_olc(void);
 // is an object prototype (python script). It should also be of the form:
 //   void to_proto(type *item_type_data, BUFFER *script)
 void item_add_olc(const char *type, void *menu, void *chooser, void *parser,
-		  void *from_proto, void *to_proto);
+                  void *from_proto, void *to_proto);
 
 //
 // these functions will be needed by oedit
 void iedit_menu(SOCKET_DATA *sock, OBJ_DATA *obj);
-int  iedit_chooser(SOCKET_DATA *sock, OBJ_DATA *obj, const char *option);
-bool iedit_parser(SOCKET_DATA *sock, OBJ_DATA *obj,int choice, const char *arg);
+
+int iedit_chooser(SOCKET_DATA *sock, OBJ_DATA *obj, const char *option);
+
+bool iedit_parser(SOCKET_DATA *sock, OBJ_DATA *obj, int choice, const char *arg);
 
 #endif // IEDIT_H

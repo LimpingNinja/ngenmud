@@ -14,18 +14,25 @@
 //
 //*****************************************************************************
 
-typedef struct near_map           NEAR_MAP;
+typedef struct near_map NEAR_MAP;
 typedef struct near_iterator NEAR_ITERATOR;
 
-NEAR_MAP        *newNearMap(void);
-void          deleteNearMap(NEAR_MAP *map);
-void            *nearMapGet(NEAR_MAP *map, const char *key, bool abbrev_ok);
-void             nearMapPut(NEAR_MAP *map, const char *key, 
-			    const char *min_abbrev, void *data);
-bool       nearMapKeyExists(NEAR_MAP *map, const char *key);
-void         *nearMapRemove(NEAR_MAP *map, const char *key);
-LIST  *nearMapGetAllMatches(NEAR_MAP *map, const char *key);
-int             nearMapSize(NEAR_MAP *map);
+NEAR_MAP *newNearMap(void);
+
+void deleteNearMap(NEAR_MAP *map);
+
+void *nearMapGet(NEAR_MAP *map, const char *key, bool abbrev_ok);
+
+void nearMapPut(NEAR_MAP *map, const char *key,
+                const char *min_abbrev, void *data);
+
+bool nearMapKeyExists(NEAR_MAP *map, const char *key);
+
+void *nearMapRemove(NEAR_MAP *map, const char *key);
+
+LIST *nearMapGetAllMatches(NEAR_MAP *map, const char *key);
+
+int nearMapSize(NEAR_MAP *map);
 
 
 
@@ -40,12 +47,18 @@ int             nearMapSize(NEAR_MAP *map);
       nearIteratorNext(it), \
       abbrev = nearIteratorCurrentAbbrev(it), val = nearIteratorCurrentVal(it))
 
-NEAR_ITERATOR        *newNearIterator(NEAR_MAP *map);
-void               deleteNearIterator(NEAR_ITERATOR *I);
-void                nearIteratorReset(NEAR_ITERATOR *I);
-void                 nearIteratorNext(NEAR_ITERATOR *I);
-const char    *nearIteratorCurrentKey(NEAR_ITERATOR *I);
+NEAR_ITERATOR *newNearIterator(NEAR_MAP *map);
+
+void deleteNearIterator(NEAR_ITERATOR *I);
+
+void nearIteratorReset(NEAR_ITERATOR *I);
+
+void nearIteratorNext(NEAR_ITERATOR *I);
+
+const char *nearIteratorCurrentKey(NEAR_ITERATOR *I);
+
 const char *nearIteratorCurrentAbbrev(NEAR_ITERATOR *I);
-void          *nearIteratorCurrentVal(NEAR_ITERATOR *I);
+
+void *nearIteratorCurrentVal(NEAR_ITERATOR *I);
 
 #endif // NEAR_MAP_H

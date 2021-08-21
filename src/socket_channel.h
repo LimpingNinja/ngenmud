@@ -5,6 +5,6 @@
 #ifndef NGENMUD_SOCKET_CHANNEL_H
 #define NGENMUD_SOCKET_CHANNEL_H
 
-void  socket_read			( const char *info );
+void socket_read(const char *info);
 
 #endif //NGENMUD_SOCKET_CHANNEL_H

@@ -19,7 +19,6 @@
 #define MUD_HOURS      * 5 MINUTES
 
 
-
 //
 // Set up the time module
 //
@@ -54,8 +53,11 @@ int get_year();
 // What period of the day are we in?
 //
 bool is_morning();
+
 bool is_afternoon();
+
 bool is_evening();
+
 bool is_night();
 
 #endif // __MUDTIME_H

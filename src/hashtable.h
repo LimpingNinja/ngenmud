@@ -9,8 +9,8 @@
 //
 //*****************************************************************************
 
-typedef struct hashtable                  HASHTABLE;
-typedef struct hashtable_iterator         HASH_ITERATOR;
+typedef struct hashtable HASHTABLE;
+typedef struct hashtable_iterator HASH_ITERATOR;
 
 //
 // create a new hashtable with the specified number of buckets in it
@@ -30,11 +30,15 @@ void deleteHashtable(HASHTABLE *table);
 // given function. Should take the form: void func(void *data)
 void deleteHashtableWith(HASHTABLE *table, void *function);
 
-int   hashPut    (HASHTABLE *table, const char *key, void *val);
-void *hashGet    (HASHTABLE *table, const char *key);
-void *hashRemove (HASHTABLE *table, const char *key);
-int   hashIn     (HASHTABLE *table, const char *key);
-int   hashSize   (HASHTABLE *table);
+int hashPut(HASHTABLE *table, const char *key, void *val);
+
+void *hashGet(HASHTABLE *table, const char *key);
+
+void *hashRemove(HASHTABLE *table, const char *key);
+
+int hashIn(HASHTABLE *table, const char *key);
+
+int hashSize(HASHTABLE *table);
 
 //
 // expand a hashtable to the new size. Hashtables will automagically expand
@@ -70,12 +74,16 @@ void hashClearWith(HASHTABLE *table, void *func);
       hashIteratorNext(it), \
       key = hashIteratorCurrentKey(it), val = hashIteratorCurrentVal(it))
 
-HASH_ITERATOR *newHashIterator     (HASHTABLE *table);
-void        deleteHashIterator     (HASH_ITERATOR *I);
+HASH_ITERATOR *newHashIterator(HASHTABLE *table);
 
-void        hashIteratorReset      (HASH_ITERATOR *I);
-void        hashIteratorNext       (HASH_ITERATOR *I);
-const char *hashIteratorCurrentKey (HASH_ITERATOR *I);
-void       *hashIteratorCurrentVal (HASH_ITERATOR *I);
+void deleteHashIterator(HASH_ITERATOR *I);
+
+void hashIteratorReset(HASH_ITERATOR *I);
+
+void hashIteratorNext(HASH_ITERATOR *I);
+
+const char *hashIteratorCurrentKey(HASH_ITERATOR *I);
+
+void *hashIteratorCurrentVal(HASH_ITERATOR *I);
 
 #endif // __HASHTABLE_H

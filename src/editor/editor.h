@@ -26,10 +26,13 @@ void init_editor();
 
 // sets up a little notepad that the character can write/post stuff from.
 // Notepads are erased when the socket disconnects.
-void        init_notepad();
+void init_notepad();
+
 BUFFER *socketGetNotepad(SOCKET_DATA *sock);
-void    socketSetNotepad(SOCKET_DATA *sock, const char *txt);
-void  socketStartNotepad(SOCKET_DATA *sock, EDITOR *editor);
+
+void socketSetNotepad(SOCKET_DATA *sock, const char *txt);
+
+void socketStartNotepad(SOCKET_DATA *sock, EDITOR *editor);
 
 
 // editors are intended to be permenant and, thus, have no delete function.
@@ -56,7 +59,7 @@ void editorSetInit(EDITOR *editor, void init(SOCKET_DATA *sock));
 // some cases where previous input determines how the next input is appended.
 // So, for instance, if/else blocks for scripts.
 void editorSetAppend(EDITOR *editor,
-		     void append(SOCKET_DATA *sock, char *arg, BUFFER *buf));
+                     void append(SOCKET_DATA *sock, char *arg, BUFFER *buf));
 
 //
 // add a new command to the text editor, and map it to an editor function. The
@@ -65,8 +68,8 @@ void editorSetAppend(EDITOR *editor,
 //   /s, /q      quit and save changes
 //   /a          quit but do not save changes
 //   /h, /?      display the help menu
-void editorAddCommand(EDITOR *editor, const char *cmd, const char *desc, 
-		      void func(SOCKET_DATA *sock, char *arg, BUFFER *buf));
+void editorAddCommand(EDITOR *editor, const char *cmd, const char *desc,
+                      void func(SOCKET_DATA *sock, char *arg, BUFFER *buf));
 
 //
 // Remove a command from the text editor. None of the reserved commands can be
@@ -83,9 +86,10 @@ void socketStartEditor(SOCKET_DATA *sock, EDITOR *editor, BUFFER *buf);
 // begin editing text. Instead of copying the results to a buffer after
 // completion, call a function which will pass in the resulting text.
 void socketStartEditorFunc(SOCKET_DATA *sock, EDITOR *editor, const char *dflt,
-			   void (* on_complete)(SOCKET_DATA *, const char *));
-void socketStartPyEditorFunc(SOCKET_DATA *sock, EDITOR *editor,const char *dflt,
-			     void *py_complete);
+                           void (*on_complete)(SOCKET_DATA *, const char *));
+
+void socketStartPyEditorFunc(SOCKET_DATA *sock, EDITOR *editor, const char *dflt,
+                             void *py_complete);
 
 //
 // get a pointer to the current editor the socket is using, if any

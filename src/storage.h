@@ -59,25 +59,37 @@ void storage_list_put(STORAGE_SET_LIST *list, STORAGE_SET *set);
 //
 // store various datatypes to the storage data
 //
-void    store_set(STORAGE_SET *set, const char *key, STORAGE_SET *val);
-void   store_list(STORAGE_SET *set, const char *key, STORAGE_SET_LIST *val);
+void store_set(STORAGE_SET *set, const char *key, STORAGE_SET *val);
+
+void store_list(STORAGE_SET *set, const char *key, STORAGE_SET_LIST *val);
+
 void store_string(STORAGE_SET *set, const char *key, const char *val);
+
 void store_double(STORAGE_SET *set, const char *key, double val);
-void    store_int(STORAGE_SET *set, const char *key, int val);
-void   store_long(STORAGE_SET *set, const char *key, long val);
-void   store_bool(STORAGE_SET *set, const char *key, bool val);
+
+void store_int(STORAGE_SET *set, const char *key, int val);
+
+void store_long(STORAGE_SET *set, const char *key, long val);
+
+void store_bool(STORAGE_SET *set, const char *key, bool val);
 
 
 //
 // read various datatypes fro mthe storage data
 //
-STORAGE_SET         *read_set(STORAGE_SET *set, const char *key);
-STORAGE_SET_LIST   *read_list(STORAGE_SET *set, const char *key);
-const char       *read_string(STORAGE_SET *set, const char *key);
-double            read_double(STORAGE_SET *set, const char *key);
-int                  read_int(STORAGE_SET *set, const char *key);
-long                read_long(STORAGE_SET *set, const char *key);
-bool                read_bool(STORAGE_SET *set, const char *key);
+STORAGE_SET *read_set(STORAGE_SET *set, const char *key);
+
+STORAGE_SET_LIST *read_list(STORAGE_SET *set, const char *key);
+
+const char *read_string(STORAGE_SET *set, const char *key);
+
+double read_double(STORAGE_SET *set, const char *key);
+
+int read_int(STORAGE_SET *set, const char *key);
+
+long read_long(STORAGE_SET *set, const char *key);
+
+bool read_bool(STORAGE_SET *set, const char *key);
 
 
 //
@@ -94,6 +106,7 @@ bool storage_contains(STORAGE_SET *set, const char *key);
 // utilities to speed up the reading/saving of lists
 //
 STORAGE_SET_LIST *gen_store_list(LIST *list, void *storer);
-LIST  *gen_read_list(STORAGE_SET_LIST *list, void *reader);
+
+LIST *gen_read_list(STORAGE_SET_LIST *list, void *reader);
 
 #endif // __STORAGE_H

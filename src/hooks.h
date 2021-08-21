@@ -32,11 +32,17 @@
 void init_hooks(void);
 
 void hookRun(const char *type, const char *info);
-void hookAdd(const char *type, void (* func)(const char *));
-void hookAddMonitor(void (* func)(const char *, const char *));
-void hookRemove(const char *type, void (* func)(const char *));
+
+void hookAdd(const char *type, void (*func)(const char *));
+
+void hookAddMonitor(void (*func)(const char *, const char *));
+
+void hookRemove(const char *type, void (*func)(const char *));
+
 void hookParseInfo(const char *info, ...);
+
 const char *hookBuildInfo(const char *format, ...);
+
 LIST *parse_hook_info_tokens(const char *info);
 
 #endif // HOOKS_H

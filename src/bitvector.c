@@ -43,7 +43,6 @@
 #include "bitvector.h"
 
 
-
 //*****************************************************************************
 // local functions, datastructures, and defines
 //*****************************************************************************
@@ -52,213 +51,211 @@
 HASHTABLE *bitvector_table = NULL;
 
 typedef struct bitvector_data {
-  HASHTABLE *bitmap; // a mapping from bit name to bit number
-  char        *name; // which bitvector is this?
+    HASHTABLE *bitmap; // a mapping from bit name to bit number
+    char *name; // which bitvector is this?
 } BITVECTOR_DATA;
 
 struct bitvector {
-  BITVECTOR_DATA *data; // the data corresponding to this bitvector
-  char           *bits; // the bits we have set/unset
+    BITVECTOR_DATA *data; // the data corresponding to this bitvector
+    char *bits; // the bits we have set/unset
 };
 
 BITVECTOR_DATA *newBitvectorData(const char *name) {
-  BITVECTOR_DATA *data = malloc(sizeof(BITVECTOR_DATA));
-  data->bitmap = newHashtable();
-  data->name   = strdup(name);
-  return data;
+    BITVECTOR_DATA *data = malloc(sizeof(BITVECTOR_DATA));
+    data->bitmap = newHashtable();
+    data->name = strdup(name);
+    return data;
 }
-
-
 
 
 //*****************************************************************************
 // implementation of bitvector.h
 //*****************************************************************************
 void init_bitvectors() {
-  // create the bitvector table
-  bitvector_table = newHashtable();
+    // create the bitvector table
+    bitvector_table = newHashtable();
 
-  // and also create some of the basic bitvectors and 
-  // bits that come stock and are required for the core release
-  bitvectorCreate("char_prfs");
+    // and also create some of the basic bitvectors and
+    // bits that come stock and are required for the core release
+    bitvectorCreate("char_prfs");
 
-  bitvectorCreate("obj_bits");
-  bitvectorAddBit("obj_bits", "notake");
+    bitvectorCreate("obj_bits");
+    bitvectorAddBit("obj_bits", "notake");
 
-  bitvectorCreate("room_bits");
+    bitvectorCreate("room_bits");
 
-  bitvectorCreate("user_groups");
-  bitvectorAddBit("user_groups", "admin");
-  bitvectorAddBit("user_groups", "scripter");
-  bitvectorAddBit("user_groups", "builder");
-  bitvectorAddBit("user_groups", "player");
-  bitvectorAddBit("user_groups", "playtester");
-  bitvectorAddBit("user_groups", "wizard");
-  bitvectorAddBit("user_groups", "empty");
+    bitvectorCreate("user_groups");
+    bitvectorAddBit("user_groups", "admin");
+    bitvectorAddBit("user_groups", "scripter");
+    bitvectorAddBit("user_groups", "builder");
+    bitvectorAddBit("user_groups", "player");
+    bitvectorAddBit("user_groups", "playtester");
+    bitvectorAddBit("user_groups", "wizard");
+    bitvectorAddBit("user_groups", "empty");
 }
 
 void bitvectorAddBit(const char *name, const char *bit) {
-  BITVECTOR_DATA *data = hashGet(bitvector_table, name);
-  if(data != NULL)
-    hashPut(data->bitmap, bit, (void *)(hashSize(data->bitmap) + 1));
+    BITVECTOR_DATA *data = hashGet(bitvector_table, name);
+    if (data != NULL)
+        hashPut(data->bitmap, bit, (void *) (hashSize(data->bitmap) + 1));
 }
 
 void bitvectorCreate(const char *name) {
-  if(!hashGet(bitvector_table, name))
-    hashPut(bitvector_table, name, newBitvectorData(name));
+    if (!hashGet(bitvector_table, name))
+        hashPut(bitvector_table, name, newBitvectorData(name));
 }
 
 BITVECTOR *newBitvector() {
-  BITVECTOR *v = calloc(1, sizeof(BITVECTOR));
-  return v;
+    BITVECTOR *v = calloc(1, sizeof(BITVECTOR));
+    return v;
 }
 
-BITVECTOR   *bitvectorInstanceOf(const char *name) {
-  BITVECTOR_DATA *data = hashGet(bitvector_table, name);
-  BITVECTOR    *vector = NULL;
-  if(data != NULL) {
-    int vector_len = hashSize(data->bitmap)/8 + 1;
-    vector = newBitvector();
-    vector->data = data;
-    vector->bits = calloc(vector_len, sizeof(char));
-  }
-  return vector;
+BITVECTOR *bitvectorInstanceOf(const char *name) {
+    BITVECTOR_DATA *data = hashGet(bitvector_table, name);
+    BITVECTOR *vector = NULL;
+    if (data != NULL) {
+        int vector_len = hashSize(data->bitmap) / 8 + 1;
+        vector = newBitvector();
+        vector->data = data;
+        vector->bits = calloc(vector_len, sizeof(char));
+    }
+    return vector;
 }
 
-void         deleteBitvector(BITVECTOR *v) {
-  if(v->bits) free(v->bits);
-  free(v);
+void deleteBitvector(BITVECTOR *v) {
+    if (v->bits) free(v->bits);
+    free(v);
 }
 
-void         bitvectorCopyTo(BITVECTOR *from, BITVECTOR *to) {
-  int bit_len = 1 + hashSize(from->data->bitmap)/8;
-  to->data = from->data;
-  if(to->bits) free(to->bits);
-  to->bits = malloc(sizeof(char) * bit_len);
-  to->bits = memcpy(to->bits, from->bits, bit_len);
+void bitvectorCopyTo(BITVECTOR *from, BITVECTOR *to) {
+    int bit_len = 1 + hashSize(from->data->bitmap) / 8;
+    to->data = from->data;
+    if (to->bits) free(to->bits);
+    to->bits = malloc(sizeof(char) * bit_len);
+    to->bits = memcpy(to->bits, from->bits, bit_len);
 }
 
-BITVECTOR   *bitvectorCopy(BITVECTOR *v) {
-  BITVECTOR *newvector = bitvectorInstanceOf(v->data->name);
-  bitvectorCopyTo(v, newvector);
-  return newvector;
+BITVECTOR *bitvectorCopy(BITVECTOR *v) {
+    BITVECTOR *newvector = bitvectorInstanceOf(v->data->name);
+    bitvectorCopyTo(v, newvector);
+    return newvector;
 }
 
 bool bitIsSet(BITVECTOR *v, const char *bit) {
-  LIST    *bits = parse_keywords(bit);
-  char *one_bit = NULL; 
-  bool    found = FALSE;
+    LIST *bits = parse_keywords(bit);
+    char *one_bit = NULL;
+    bool found = FALSE;
 
-  // check for one
-  while( !found && (one_bit = listPop(bits)) != NULL) {
-    found = bitIsOneSet(v, one_bit);
-    free(one_bit);
-  }
-  
-  // clean up our mess
-  deleteListWith(bits, free);
-  return found;
+    // check for one
+    while (!found && (one_bit = listPop(bits)) != NULL) {
+        found = bitIsOneSet(v, one_bit);
+        free(one_bit);
+    }
+
+    // clean up our mess
+    deleteListWith(bits, free);
+    return found;
 }
 
 bool bitIsAllSet(BITVECTOR *v, const char *bit) {
-  LIST    *bits = parse_keywords(bit);
-  char *one_bit = NULL;
-  bool    found = TRUE;
+    LIST *bits = parse_keywords(bit);
+    char *one_bit = NULL;
+    bool found = TRUE;
 
-  // check for each one
-  while( found && (one_bit = listPop(bits)) != NULL) {
-    found = bitIsOneSet(v, one_bit);
-    free(one_bit);
-  }
+    // check for each one
+    while (found && (one_bit = listPop(bits)) != NULL) {
+        found = bitIsOneSet(v, one_bit);
+        free(one_bit);
+    }
 
-  // clean up our mess
-  deleteListWith(bits, free);
-  return found;
+    // clean up our mess
+    deleteListWith(bits, free);
+    return found;
 }
 
 bool bitIsOneSet(BITVECTOR *v, const char *bit) {
-  int val = (int)hashGet(v->data->bitmap, bit);
-  return IS_SET(v->bits[val/8], (1 << (val % 8)));
+    int val = (int) hashGet(v->data->bitmap, bit);
+    return IS_SET(v->bits[val / 8], (1 << (val % 8)));
 }
 
 void bitSet(BITVECTOR *v, const char *name) {
-  LIST    *bits = parse_keywords(name);
-  char *one_bit = NULL;
+    LIST *bits = parse_keywords(name);
+    char *one_bit = NULL;
 
-  // set each one
-  while( (one_bit = listPop(bits)) != NULL) {
-    int val = (int)hashGet(v->data->bitmap, one_bit);
-    free(one_bit);
-    // 0 is a filler meaning 'this is not an actual name for a bit'
-    if(val == 0) continue;
-    SET_BIT(v->bits[val/8], (1 << (val % 8)));
-  }
+    // set each one
+    while ((one_bit = listPop(bits)) != NULL) {
+        int val = (int) hashGet(v->data->bitmap, one_bit);
+        free(one_bit);
+        // 0 is a filler meaning 'this is not an actual name for a bit'
+        if (val == 0) continue;
+        SET_BIT(v->bits[val / 8], (1 << (val % 8)));
+    }
 
-  // garbage collection
-  deleteListWith(bits, free);
+    // garbage collection
+    deleteListWith(bits, free);
 }
 
 void bitClear(BITVECTOR *v) {
-  int i;
-  for(i = 1; i <= hashSize(v->data->bitmap); i++)
-    REMOVE_BIT(v->bits[i/8], (1 << (i % 8)));
+    int i;
+    for (i = 1; i <= hashSize(v->data->bitmap); i++)
+        REMOVE_BIT(v->bits[i / 8], (1 << (i % 8)));
 }
 
 void bitRemove(BITVECTOR *v, const char *name) {
-  LIST    *bits = parse_keywords(name);
-  char *one_bit = NULL;
+    LIST *bits = parse_keywords(name);
+    char *one_bit = NULL;
 
-  // remove each one
-  while( (one_bit = listPop(bits)) != NULL) {
-    int val = (int)hashGet(v->data->bitmap, one_bit);
-    REMOVE_BIT(v->bits[val/8], (1 << (val % 8)));
-    free(one_bit);
-  }
+    // remove each one
+    while ((one_bit = listPop(bits)) != NULL) {
+        int val = (int) hashGet(v->data->bitmap, one_bit);
+        REMOVE_BIT(v->bits[val / 8], (1 << (val % 8)));
+        free(one_bit);
+    }
 
-  // garbage collection
-  deleteListWith(bits, free);
+    // garbage collection
+    deleteListWith(bits, free);
 }
 
 void bitToggle(BITVECTOR *v, const char *name) {
-  LIST    *bits = parse_keywords(name);
-  char *one_bit = NULL;
+    LIST *bits = parse_keywords(name);
+    char *one_bit = NULL;
 
-  // toggle each one
-  while( (one_bit = listPop(bits)) != NULL) {
-    int val = (int)hashGet(v->data->bitmap, one_bit);
-    free(one_bit);
-    // 0 is a filler meaning 'this is not an actual name for a bit'
-    if(val == 0) continue;
-    TOGGLE_BIT(v->bits[val/8], (1 << (val % 8)));
-  }
+    // toggle each one
+    while ((one_bit = listPop(bits)) != NULL) {
+        int val = (int) hashGet(v->data->bitmap, one_bit);
+        free(one_bit);
+        // 0 is a filler meaning 'this is not an actual name for a bit'
+        if (val == 0) continue;
+        TOGGLE_BIT(v->bits[val / 8], (1 << (val % 8)));
+    }
 
-  // garbage collection
-  deleteListWith(bits, free);
+    // garbage collection
+    deleteListWith(bits, free);
 }
 
 const char *bitvectorGetBits(BITVECTOR *v) {
-  static char bits[MAX_BUFFER];
-  HASH_ITERATOR *hash_i = newHashIterator(v->data->bitmap);
-  const char *key = NULL;
-  void *val       = NULL;
-  int bit_i       = 0;
-  *bits = '\0';
+    static char bits[MAX_BUFFER];
+    HASH_ITERATOR *hash_i = newHashIterator(v->data->bitmap);
+    const char *key = NULL;
+    void *val = NULL;
+    int bit_i = 0;
+    *bits = '\0';
 
-  // add each set bit to our list to store
-  ITERATE_HASH(key, val, hash_i) {
-    if(bitIsOneSet(v, key)) {
-      bit_i += snprintf(bits+bit_i, MAX_BUFFER-bit_i, "%s%s", 
-			(bit_i == 0 ? "" : ", "), key);
+    // add each set bit to our list to store
+    ITERATE_HASH(key, val, hash_i) {
+        if (bitIsOneSet(v, key)) {
+            bit_i += snprintf(bits + bit_i, MAX_BUFFER - bit_i, "%s%s",
+                              (bit_i == 0 ? "" : ", "), key);
+        }
     }
-  }
-  deleteHashIterator(hash_i);
-  return bits;
+    deleteHashIterator(hash_i);
+    return bits;
 }
 
 int bitvectorSize(BITVECTOR *v) {
-  return hashSize(v->data->bitmap);
+    return hashSize(v->data->bitmap);
 }
 
 LIST *bitvectorListBits(BITVECTOR *v) {
-  return hashCollect(v->data->bitmap);
+    return hashCollect(v->data->bitmap);
 }

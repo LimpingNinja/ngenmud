@@ -42,6 +42,7 @@
 #define PARSE_DOUBLE                 5
 #define PARSE_INT                    6
 #define PARSE_BOOL                   7
+
 // Types will be checked by the order they are provided in. So, for instance
 // {room ch obj} would check for a room first, then a ch, and otherwise an obj.
 // NOTE: Using double, integer, and boolean values in the { } syntax is frowned
@@ -110,12 +111,12 @@
 //   give         [the] obj.inv.multiple [to] ch.room
 //   set          ch.world.multiple word string
 //   transfer     ch.world.multiple.noself | [to] room
-bool parse_args(CHAR_DATA *looker, bool show_errors, const char *cmd, 
-		char *args, const char *syntax, ...);
+bool parse_args(CHAR_DATA *looker, bool show_errors, const char *cmd,
+                char *args, const char *syntax, ...);
 
 //
 // the same as above, but returns a Python list version of the arguments
-void *Py_parse_args(CHAR_DATA *looker, bool show_errors, const char *cmd, 
-		    char *args, const char *syntax);
+void *Py_parse_args(CHAR_DATA *looker, bool show_errors, const char *cmd,
+                    char *args, const char *syntax);
 
 #endif // PARSE_H

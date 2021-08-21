@@ -13,8 +13,8 @@
 //
 //*****************************************************************************
 
-typedef struct list                       LIST;
-typedef struct list_iterator              LIST_ITERATOR;
+typedef struct list LIST;
+typedef struct list_iterator LIST_ITERATOR;
 
 //
 // Create a new list

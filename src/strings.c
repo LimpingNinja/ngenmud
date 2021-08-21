@@ -1,5 +1,5 @@
 /*
- * strings.c -  strings library used by NakedMud, there has been some
+ * strings.c -  strings library used by NgenMud, there has been some
  * superficial renaming done for consistency, but strings.c and strings.h
  * are derived from STRLIB 2. See: LICENSE.MD for details
  * ---
@@ -22,7 +22,7 @@
 const char *STR_NOINIT = "STR_NOINIT";
 
 static inline int strHdrSize(char type) {
-    switch(type&STR_TYPE_MASK) {
+    switch (type & STR_TYPE_MASK) {
         case STR_TYPE_5:
             return sizeof(struct sdshdr5);
         case STR_TYPE_8:
@@ -38,14 +38,14 @@ static inline int strHdrSize(char type) {
 }
 
 static inline char sdsReqType(size_t string_size) {
-    if (string_size < 1<<5)
+    if (string_size < 1 << 5)
         return STR_TYPE_5;
-    if (string_size < 1<<8)
+    if (string_size < 1 << 8)
         return STR_TYPE_8;
-    if (string_size < 1<<16)
+    if (string_size < 1 << 16)
         return STR_TYPE_16;
 #if (LONG_MAX == LLONG_MAX)
-    if (string_size < 1ll<<32)
+    if (string_size < 1ll << 32)
         return STR_TYPE_32;
     return STR_TYPE_64;
 #else
@@ -76,42 +76,42 @@ string str_new_length(const void *init, size_t initlen) {
     int hdrlen = strHdrSize(type);
     unsigned char *fp; /* flags pointer. */
 
-    sh = s_malloc(hdrlen+initlen+1);
+    sh = s_malloc(hdrlen + initlen + 1);
     if (sh == NULL) return NULL;
-    if (init==STR_NOINIT)
+    if (init == STR_NOINIT)
         init = NULL;
     else if (!init)
-        memset(sh, 0, hdrlen+initlen+1);
-    s = (char*)sh+hdrlen;
-    fp = ((unsigned char*)s)-1;
-    switch(type) {
+        memset(sh, 0, hdrlen + initlen + 1);
+    s = (char *) sh + hdrlen;
+    fp = ((unsigned char *) s) - 1;
+    switch (type) {
         case STR_TYPE_5: {
             *fp = type | (initlen << STR_TYPE_BITS);
             break;
         }
         case STR_TYPE_8: {
-            STR_HDR_VAR(8,s);
+            STR_HDR_VAR(8, s);
             sh->len = initlen;
             sh->alloc = initlen;
             *fp = type;
             break;
         }
         case STR_TYPE_16: {
-            STR_HDR_VAR(16,s);
+            STR_HDR_VAR(16, s);
             sh->len = initlen;
             sh->alloc = initlen;
             *fp = type;
             break;
         }
         case STR_TYPE_32: {
-            STR_HDR_VAR(32,s);
+            STR_HDR_VAR(32, s);
             sh->len = initlen;
             sh->alloc = initlen;
             *fp = type;
             break;
         }
         case STR_TYPE_64: {
-            STR_HDR_VAR(64,s);
+            STR_HDR_VAR(64, s);
             sh->len = initlen;
             sh->alloc = initlen;
             *fp = type;
@@ -127,7 +127,7 @@ string str_new_length(const void *init, size_t initlen) {
 /* Create an empty (zero length) sds string. Even in this case the string
  * always has an implicit null term. */
 string str_empty(void) {
-    return str_new_length("",0);
+    return str_new_length("", 0);
 }
 
 /* Create a new sds string starting from a null terminated C string. */
@@ -144,7 +144,7 @@ string str_duplicate(const string s) {
 /* Free an sds string. No operation is performed if 's' is NULL. */
 void str_free(string s) {
     if (s == NULL) return;
-    s_free((char*)s-strHdrSize(s[-1]));
+    s_free((char *) s - strHdrSize(s[-1]));
 }
 
 /* Set the sds string length to the length as obtained with strlen(), so
@@ -192,8 +192,8 @@ string strMakeRoomFor(string s, size_t addlen) {
     if (avail >= addlen) return s;
 
     len = str_length(s);
-    sh = (char*)s-strHdrSize(oldtype);
-    newlen = (len+addlen);
+    sh = (char *) s - strHdrSize(oldtype);
+    newlen = (len + addlen);
     if (newlen < STR_MAX_PREALLOC)
         newlen *= 2;
     else
@@ -207,18 +207,18 @@ string strMakeRoomFor(string s, size_t addlen) {
     if (type == STR_TYPE_5) type = STR_TYPE_8;
 
     hdrlen = strHdrSize(type);
-    if (oldtype==type) {
-        newsh = s_realloc(sh, hdrlen+newlen+1);
+    if (oldtype == type) {
+        newsh = s_realloc(sh, hdrlen + newlen + 1);
         if (newsh == NULL) return NULL;
-        s = (char*)newsh+hdrlen;
+        s = (char *) newsh + hdrlen;
     } else {
         /* Since the header size changes, need to move the string forward,
          * and can't use realloc */
-        newsh = s_malloc(hdrlen+newlen+1);
+        newsh = s_malloc(hdrlen + newlen + 1);
         if (newsh == NULL) return NULL;
-        memcpy((char*)newsh+hdrlen, s, len+1);
+        memcpy((char *) newsh + hdrlen, s, len + 1);
         s_free(sh);
-        s = (char*)newsh+hdrlen;
+        s = (char *) newsh + hdrlen;
         s[-1] = type;
         str_resize(s, len);
     }
@@ -238,7 +238,7 @@ string strRemoveFreeSpace(string s) {
     int hdrlen, oldhdrlen = strHdrSize(oldtype);
     size_t len = str_length(s);
     size_t avail = str_avail(s);
-    sh = (char*)s-oldhdrlen;
+    sh = (char *) s - oldhdrlen;
 
     /* Return ASAP if there is no space left. */
     if (avail == 0) return s;
@@ -252,16 +252,16 @@ string strRemoveFreeSpace(string s) {
      * required, we just realloc(), letting the allocator to do the copy
      * only if really needed. Otherwise if the change is huge, we manually
      * reallocate the string to use the different header type. */
-    if (oldtype==type || type > STR_TYPE_8) {
-        newsh = s_realloc(sh, oldhdrlen+len+1);
+    if (oldtype == type || type > STR_TYPE_8) {
+        newsh = s_realloc(sh, oldhdrlen + len + 1);
         if (newsh == NULL) return NULL;
-        s = (char*)newsh+oldhdrlen;
+        s = (char *) newsh + oldhdrlen;
     } else {
-        newsh = s_malloc(hdrlen+len+1);
+        newsh = s_malloc(hdrlen + len + 1);
         if (newsh == NULL) return NULL;
-        memcpy((char*)newsh+hdrlen, s, len+1);
+        memcpy((char *) newsh + hdrlen, s, len + 1);
         s_free(sh);
-        s = (char*)newsh+hdrlen;
+        s = (char *) newsh + hdrlen;
         s[-1] = type;
         str_resize(s, len);
     }
@@ -278,13 +278,13 @@ string strRemoveFreeSpace(string s) {
  */
 size_t strAllocSize(string s) {
     size_t alloc = str_alloc(s);
-    return strHdrSize(s[-1])+alloc+1;
+    return strHdrSize(s[-1]) + alloc + 1;
 }
 
 /* Return the pointer of the actual STR allocation (normally STR strings
  * are referenced by the start of the string buffer). */
 void *strAllocPtr(string s) {
-    return (void*) (s-strHdrSize(s[-1]));
+    return (void *) (s - strHdrSize(s[-1]));
 }
 
 /* Increment the sds length and decrements the left free space at the
@@ -313,40 +313,42 @@ void *strAllocPtr(string s) {
 void strIncrLen(string s, ssize_t incr) {
     unsigned char flags = s[-1];
     size_t len;
-    switch(flags&STR_TYPE_MASK) {
+    switch (flags & STR_TYPE_MASK) {
         case STR_TYPE_5: {
-            unsigned char *fp = ((unsigned char*)s)-1;
+            unsigned char *fp = ((unsigned char *) s) - 1;
             unsigned char oldlen = STR_TYPE_5_LEN(flags);
-            assert((incr > 0 && oldlen+incr < 32) || (incr < 0 && oldlen >= (unsigned int)(-incr)));
-            *fp = STR_TYPE_5 | ((oldlen+incr) << STR_TYPE_BITS);
-            len = oldlen+incr;
+            assert((incr > 0 && oldlen + incr < 32) || (incr < 0 && oldlen >= (unsigned int) (-incr)));
+            *fp = STR_TYPE_5 | ((oldlen + incr) << STR_TYPE_BITS);
+            len = oldlen + incr;
             break;
         }
         case STR_TYPE_8: {
-            STR_HDR_VAR(8,s);
-            assert((incr >= 0 && sh->alloc-sh->len >= incr) || (incr < 0 && sh->len >= (unsigned int)(-incr)));
+            STR_HDR_VAR(8, s);
+            assert((incr >= 0 && sh->alloc - sh->len >= incr) || (incr < 0 && sh->len >= (unsigned int) (-incr)));
             len = (sh->len += incr);
             break;
         }
         case STR_TYPE_16: {
-            STR_HDR_VAR(16,s);
-            assert((incr >= 0 && sh->alloc-sh->len >= incr) || (incr < 0 && sh->len >= (unsigned int)(-incr)));
+            STR_HDR_VAR(16, s);
+            assert((incr >= 0 && sh->alloc - sh->len >= incr) || (incr < 0 && sh->len >= (unsigned int) (-incr)));
             len = (sh->len += incr);
             break;
         }
         case STR_TYPE_32: {
-            STR_HDR_VAR(32,s);
-            assert((incr >= 0 && sh->alloc-sh->len >= (unsigned int)incr) || (incr < 0 && sh->len >= (unsigned int)(-incr)));
+            STR_HDR_VAR(32, s);
+            assert((incr >= 0 && sh->alloc - sh->len >= (unsigned int) incr) ||
+                   (incr < 0 && sh->len >= (unsigned int) (-incr)));
             len = (sh->len += incr);
             break;
         }
         case STR_TYPE_64: {
-            STR_HDR_VAR(64,s);
-            assert((incr >= 0 && sh->alloc-sh->len >= (uint64_t)incr) || (incr < 0 && sh->len >= (uint64_t)(-incr)));
+            STR_HDR_VAR(64, s);
+            assert((incr >= 0 && sh->alloc - sh->len >= (uint64_t) incr) || (incr < 0 && sh->len >= (uint64_t)(-incr)));
             len = (sh->len += incr);
             break;
         }
-        default: len = 0; /* Just to avoid compilation warnings. */
+        default:
+            len = 0; /* Just to avoid compilation warnings. */
     }
     s[len] = '\0';
 }
@@ -360,11 +362,11 @@ string str_grow_zero(string s, size_t len) {
     size_t curlen = str_length(s);
 
     if (len <= curlen) return s;
-    s = strMakeRoomFor(s,len-curlen);
+    s = strMakeRoomFor(s, len - curlen);
     if (s == NULL) return NULL;
 
     /* Make sure added region doesn't contain garbage */
-    memset(s+curlen,0,(len-curlen+1)); /* also set trailing \0 byte */
+    memset(s + curlen, 0, (len - curlen + 1)); /* also set trailing \0 byte */
     str_resize(s, len);
     return s;
 }
@@ -377,11 +379,11 @@ string str_grow_zero(string s, size_t len) {
 string str_append_len(string s, const void *t, size_t len) {
     size_t curlen = str_length(s);
 
-    s = strMakeRoomFor(s,len);
+    s = strMakeRoomFor(s, len);
     if (s == NULL) return NULL;
-    memcpy(s+curlen, t, len);
-    str_resize(s, curlen+len);
-    s[curlen+len] = '\0';
+    memcpy(s + curlen, t, len);
+    str_resize(s, curlen + len);
+    s[curlen + len] = '\0';
     return s;
 }
 
@@ -405,7 +407,7 @@ string str_append(string s, const string t) {
  * safe string pointed by 't' of length 'len' bytes. */
 string str_copy_length(string s, const char *t, size_t len) {
     if (str_alloc(s) < len) {
-        s = strMakeRoomFor(s,len-str_length(s));
+        s = strMakeRoomFor(s, len - str_length(s));
         if (s == NULL) return NULL;
     }
     memcpy(s, t, len);
@@ -427,6 +429,7 @@ string str_copy(string s, const char *t) {
  * The function returns the length of the null-terminated string
  * representation stored at 's'. */
 #define STR_LLSTR_SIZE 21
+
 int sdsll2str(char *s, long long value) {
     char *p, aux;
     unsigned long long v;
@@ -437,18 +440,18 @@ int sdsll2str(char *s, long long value) {
     v = (value < 0) ? -value : value;
     p = s;
     do {
-        *p++ = '0'+(v%10);
+        *p++ = '0' + (v % 10);
         v /= 10;
-    } while(v);
+    } while (v);
     if (value < 0) *p++ = '-';
 
     /* Compute length and add null term. */
-    l = p-s;
+    l = p - s;
     *p = '\0';
 
     /* Reverse the string. */
     p--;
-    while(s < p) {
+    while (s < p) {
         aux = *s;
         *s = *p;
         *p = aux;
@@ -467,17 +470,17 @@ int sdsull2str(char *s, unsigned long long v) {
      * an reversed string. */
     p = s;
     do {
-        *p++ = '0'+(v%10);
+        *p++ = '0' + (v % 10);
         v /= 10;
-    } while(v);
+    } while (v);
 
     /* Compute length and add null term. */
-    l = p-s;
+    l = p - s;
     *p = '\0';
 
     /* Reverse the string. */
     p--;
-    while(s < p) {
+    while (s < p) {
         aux = *s;
         *s = *p;
         *p = aux;
@@ -493,16 +496,16 @@ int sdsull2str(char *s, unsigned long long v) {
  */
 string str_from_longlong(long long value) {
     char buf[STR_LLSTR_SIZE];
-    int len = sdsll2str(buf,value);
+    int len = sdsll2str(buf, value);
 
-    return str_new_length(buf,len);
+    return str_new_length(buf, len);
 }
 
 /* Like str_printf() but gets va_list instead of being variadic. */
 string str_vprintf(string s, const char *fmt, va_list ap) {
     va_list cpy;
     char staticbuf[1024], *buf = staticbuf, *t;
-    size_t buflen = strlen(fmt)*2;
+    size_t buflen = strlen(fmt) * 2;
 
     /* We try to start using a static buffer for speed.
      * If not possible we revert to heap allocation. */
@@ -515,12 +518,12 @@ string str_vprintf(string s, const char *fmt, va_list ap) {
 
     /* Try with buffers two times bigger every time we fail to
      * fit the string in the current buffer size. */
-    while(1) {
-        buf[buflen-2] = '\0';
-        va_copy(cpy,ap);
+    while (1) {
+        buf[buflen - 2] = '\0';
+        va_copy(cpy, ap);
         vsnprintf(buf, buflen, fmt, cpy);
         va_end(cpy);
-        if (buf[buflen-2] != '\0') {
+        if (buf[buflen - 2] != '\0') {
             if (buf != staticbuf) s_free(buf);
             buflen *= 2;
             buf = s_malloc(buflen);
@@ -556,7 +559,7 @@ string str_printf(string s, const char *fmt, ...) {
     va_list ap;
     char *t;
     va_start(ap, fmt);
-    t = str_vprintf(s,fmt,ap);
+    t = str_vprintf(s, fmt, ap);
     va_end(ap);
     return t;
 }
@@ -586,81 +589,86 @@ string str_format(string s, char const *fmt, ...) {
     /* To avoid continuous reallocations, let's start with a buffer that
      * can hold at least two times the format string itself. It's not the
      * best heuristic but seems to work in practice. */
-    s = strMakeRoomFor(s, initlen + strlen(fmt)*2);
-    va_start(ap,fmt);
+    s = strMakeRoomFor(s, initlen + strlen(fmt) * 2);
+    va_start(ap, fmt);
     f = fmt;    /* Next format specifier byte to process. */
     i = initlen; /* Position of the next byte to write to dest str. */
-    while(*f) {
+    while (*f) {
         char next, *str;
         size_t l;
         long long num;
         unsigned long long unum;
 
         /* Make sure there is always space for at least 1 char. */
-        if (str_avail(s)==0) {
-            s = strMakeRoomFor(s,1);
+        if (str_avail(s) == 0) {
+            s = strMakeRoomFor(s, 1);
         }
 
-        switch(*f) {
-        case '%':
-            next = *(f+1);
-            f++;
-            switch(next) {
-            case 's':
-            case 'S':
-                str = va_arg(ap,char*);
-                l = (next == 's') ? strlen(str) : str_length(str);
-                if (str_avail(s) < l) {
-                    s = strMakeRoomFor(s,l);
+        switch (*f) {
+            case '%':
+                next = *(f + 1);
+                f++;
+                switch (next) {
+                    case 's':
+                    case 'S':
+                        str = va_arg(ap,
+                        char*);
+                        l = (next == 's') ? strlen(str) : str_length(str);
+                        if (str_avail(s) < l) {
+                            s = strMakeRoomFor(s, l);
+                        }
+                        memcpy(s + i, str, l);
+                        str_grow(s, l);
+                        i += l;
+                        break;
+                    case 'i':
+                    case 'I':
+                        if (next == 'i')
+                            num = va_arg(ap,
+                        int);
+                        else
+                        num = va_arg(ap,
+                        long long);
+                        {
+                            char buf[STR_LLSTR_SIZE];
+                            l = sdsll2str(buf, num);
+                            if (str_avail(s) < l) {
+                                s = strMakeRoomFor(s, l);
+                            }
+                            memcpy(s + i, buf, l);
+                            str_grow(s, l);
+                            i += l;
+                        }
+                        break;
+                    case 'u':
+                    case 'U':
+                        if (next == 'u')
+                            unum = va_arg(ap,
+                        unsigned int);
+                        else
+                        unum = va_arg(ap,
+                        unsigned long long);
+                        {
+                            char buf[STR_LLSTR_SIZE];
+                            l = sdsull2str(buf, unum);
+                            if (str_avail(s) < l) {
+                                s = strMakeRoomFor(s, l);
+                            }
+                            memcpy(s + i, buf, l);
+                            str_grow(s, l);
+                            i += l;
+                        }
+                        break;
+                    default: /* Handle %% and generally %<unknown>. */
+                        s[i++] = next;
+                        str_grow(s, 1);
+                        break;
                 }
-                memcpy(s+i,str,l);
-                str_grow(s,l);
-                i += l;
                 break;
-            case 'i':
-            case 'I':
-                if (next == 'i')
-                    num = va_arg(ap,int);
-                else
-                    num = va_arg(ap,long long);
-                {
-                    char buf[STR_LLSTR_SIZE];
-                    l = sdsll2str(buf,num);
-                    if (str_avail(s) < l) {
-                        s = strMakeRoomFor(s,l);
-                    }
-                    memcpy(s+i,buf,l);
-                    str_grow(s,l);
-                    i += l;
-                }
+            default:
+                s[i++] = *f;
+                str_grow(s, 1);
                 break;
-            case 'u':
-            case 'U':
-                if (next == 'u')
-                    unum = va_arg(ap,unsigned int);
-                else
-                    unum = va_arg(ap,unsigned long long);
-                {
-                    char buf[STR_LLSTR_SIZE];
-                    l = sdsull2str(buf,unum);
-                    if (str_avail(s) < l) {
-                        s = strMakeRoomFor(s,l);
-                    }
-                    memcpy(s+i,buf,l);
-                    str_grow(s,l);
-                    i += l;
-                }
-                break;
-            default: /* Handle %% and generally %<unknown>. */
-                s[i++] = next;
-                str_grow(s,1);
-                break;
-            }
-            break;
-        default:
-            s[i++] = *f;
-            str_grow(s,1);
-            break;
         }
         f++;
     }
@@ -690,13 +698,13 @@ string str_trim_chars(string s, const char *cset) {
     size_t len;
 
     sp = start = s;
-    ep = end = s+str_length(s)-1;
-    while(sp <= end && strchr(cset, *sp)) sp++;
-    while(ep > sp && strchr(cset, *ep)) ep--;
-    len = (sp > ep) ? 0 : ((ep-sp)+1);
+    ep = end = s + str_length(s) - 1;
+    while (sp <= end && strchr(cset, *sp)) sp++;
+    while (ep > sp && strchr(cset, *ep)) ep--;
+    len = (sp > ep) ? 0 : ((ep - sp) + 1);
     if (s != sp) memmove(s, sp, len);
     s[len] = '\0';
-    str_resize(s,len);
+    str_resize(s, len);
     return s;
 }
 
@@ -721,27 +729,27 @@ void str_range(string s, ssize_t start, ssize_t end) {
 
     if (len == 0) return;
     if (start < 0) {
-        start = len+start;
+        start = len + start;
         if (start < 0) start = 0;
     }
     if (end < 0) {
-        end = len+end;
+        end = len + end;
         if (end < 0) end = 0;
     }
-    newlen = (start > end) ? 0 : (end-start)+1;
+    newlen = (start > end) ? 0 : (end - start) + 1;
     if (newlen != 0) {
-        if (start >= (ssize_t)len) {
+        if (start >= (ssize_t) len) {
             newlen = 0;
-        } else if (end >= (ssize_t)len) {
-            end = len-1;
-            newlen = (start > end) ? 0 : (end-start)+1;
+        } else if (end >= (ssize_t) len) {
+            end = len - 1;
+            newlen = (start > end) ? 0 : (end - start) + 1;
         }
     } else {
         start = 0;
     }
-    if (start && newlen) memmove(s, s+start, newlen);
+    if (start && newlen) memmove(s, s + start, newlen);
     s[newlen] = 0;
-    str_resize(s,newlen);
+    str_resize(s, newlen);
 }
 
 /* Apply tolower() to every character of the sds string 's'. */
@@ -776,8 +784,8 @@ int str_compare(const string s1, const string s2) {
     l1 = str_length(s1);
     l2 = str_length(s2);
     minlen = (l1 < l2) ? l1 : l2;
-    cmp = memcmp(s1,s2,minlen);
-    if (cmp == 0) return l1>l2? 1: (l1<l2? -1: 0);
+    cmp = memcmp(s1, s2, minlen);
+    if (cmp == 0) return l1 > l2 ? 1 : (l1 < l2 ? -1 : 0);
     return cmp;
 }
 
@@ -804,40 +812,40 @@ string *str_split_len(const char *s, ssize_t len, const char *sep, int seplen, i
 
     if (seplen < 1 || len < 0) return NULL;
 
-    tokens = s_malloc(sizeof(string)*slots);
+    tokens = s_malloc(sizeof(string) * slots);
     if (tokens == NULL) return NULL;
 
     if (len == 0) {
         *count = 0;
         return tokens;
     }
-    for (j = 0; j < (len-(seplen-1)); j++) {
+    for (j = 0; j < (len - (seplen - 1)); j++) {
         /* make sure there is room for the next element and the final one */
-        if (slots < elements+2) {
+        if (slots < elements + 2) {
             string *newtokens;
 
             slots *= 2;
-            newtokens = s_realloc(tokens,sizeof(string)*slots);
+            newtokens = s_realloc(tokens, sizeof(string) * slots);
             if (newtokens == NULL) goto cleanup;
             tokens = newtokens;
         }
         /* search the separator */
-        if ((seplen == 1 && *(s+j) == sep[0]) || (memcmp(s+j,sep,seplen) == 0)) {
-            tokens[elements] = str_new_length(s+start,j-start);
+        if ((seplen == 1 && *(s + j) == sep[0]) || (memcmp(s + j, sep, seplen) == 0)) {
+            tokens[elements] = str_new_length(s + start, j - start);
             if (tokens[elements] == NULL) goto cleanup;
             elements++;
-            start = j+seplen;
-            j = j+seplen-1; /* skip the separator */
+            start = j + seplen;
+            j = j + seplen - 1; /* skip the separator */
         }
     }
     /* Add the final element. We are sure there is room in the tokens array. */
-    tokens[elements] = str_new_length(s+start,len-start);
+    tokens[elements] = str_new_length(s + start, len - start);
     if (tokens[elements] == NULL) goto cleanup;
     elements++;
     *count = elements;
     return tokens;
 
-cleanup:
+    cleanup:
     {
         int i;
         for (i = 0; i < elements; i++) str_free(tokens[i]);
@@ -850,7 +858,7 @@ cleanup:
 /* Free the result returned by str_split_len(), or do nothing if 'tokens' is NULL. */
 void str_free_splitres(string *tokens, int count) {
     if (!tokens) return;
-    while(count--)
+    while (count--)
         str_free(tokens[count]);
     s_free(tokens);
 }
@@ -862,28 +870,38 @@ void str_free_splitres(string *tokens, int count) {
  * After the call, the modified sds string is no longer valid and all the
  * references must be substituted with the new pointer returned by the call. */
 string str_add_repr(string s, const char *p, size_t len) {
-    s = str_append_len(s,"\"",1);
-    while(len--) {
-        switch(*p) {
-        case '\\':
-        case '"':
-            s = str_printf(s,"\\%c",*p);
-            break;
-        case '\n': s = str_append_len(s,"\\n",2); break;
-        case '\r': s = str_append_len(s,"\\r",2); break;
-        case '\t': s = str_append_len(s,"\\t",2); break;
-        case '\a': s = str_append_len(s,"\\a",2); break;
-        case '\b': s = str_append_len(s,"\\b",2); break;
-        default:
-            if (isprint(*p))
-                s = str_printf(s,"%c",*p);
-            else
-                s = str_printf(s,"\\x%02x",(unsigned char)*p);
-            break;
+    s = str_append_len(s, "\"", 1);
+    while (len--) {
+        switch (*p) {
+            case '\\':
+            case '"':
+                s = str_printf(s, "\\%c", *p);
+                break;
+            case '\n':
+                s = str_append_len(s, "\\n", 2);
+                break;
+            case '\r':
+                s = str_append_len(s, "\\r", 2);
+                break;
+            case '\t':
+                s = str_append_len(s, "\\t", 2);
+                break;
+            case '\a':
+                s = str_append_len(s, "\\a", 2);
+                break;
+            case '\b':
+                s = str_append_len(s, "\\b", 2);
+                break;
+            default:
+                if (isprint(*p))
+                    s = str_printf(s, "%c", *p);
+                else
+                    s = str_printf(s, "\\x%02x", (unsigned char) *p);
+                break;
         }
         p++;
     }
-    return str_append_len(s,"\"",1);
+    return str_append_len(s, "\"", 1);
 }
 
 /* Helper function for str_split_args() that returns non zero if 'c'
@@ -896,24 +914,47 @@ int is_hex_digit(char c) {
 /* Helper function for str_split_args() that converts a hex digit into an
  * integer from 0 to 15 */
 int hex_digit_to_int(char c) {
-    switch(c) {
-    case '0': return 0;
-    case '1': return 1;
-    case '2': return 2;
-    case '3': return 3;
-    case '4': return 4;
-    case '5': return 5;
-    case '6': return 6;
-    case '7': return 7;
-    case '8': return 8;
-    case '9': return 9;
-    case 'a': case 'A': return 10;
-    case 'b': case 'B': return 11;
-    case 'c': case 'C': return 12;
-    case 'd': case 'D': return 13;
-    case 'e': case 'E': return 14;
-    case 'f': case 'F': return 15;
-    default: return 0;
+    switch (c) {
+        case '0':
+            return 0;
+        case '1':
+            return 1;
+        case '2':
+            return 2;
+        case '3':
+            return 3;
+        case '4':
+            return 4;
+        case '5':
+            return 5;
+        case '6':
+            return 6;
+        case '7':
+            return 7;
+        case '8':
+            return 8;
+        case '9':
+            return 9;
+        case 'a':
+        case 'A':
+            return 10;
+        case 'b':
+        case 'B':
+            return 11;
+        case 'c':
+        case 'C':
+            return 12;
+        case 'd':
+        case 'D':
+            return 13;
+        case 'e':
+        case 'E':
+            return 14;
+        case 'f':
+        case 'F':
+            return 15;
+        default:
+            return 0;
     }
 }
 
@@ -942,103 +983,114 @@ string *str_split_args(const char *line, int *argc) {
     char **vector = NULL;
 
     *argc = 0;
-    while(1) {
+    while (1) {
         /* skip blanks */
-        while(*p && isspace(*p)) p++;
+        while (*p && isspace(*p)) p++;
         if (*p) {
             /* get a token */
-            int inq=0;  /* set to 1 if we are in "quotes" */
-            int insq=0; /* set to 1 if we are in 'single quotes' */
-            int done=0;
+            int inq = 0;  /* set to 1 if we are in "quotes" */
+            int insq = 0; /* set to 1 if we are in 'single quotes' */
+            int done = 0;
 
             if (current == NULL) current = str_empty();
-            while(!done) {
+            while (!done) {
                 if (inq) {
-                    if (*p == '\\' && *(p+1) == 'x' &&
-                                             is_hex_digit(*(p+2)) &&
-                                             is_hex_digit(*(p+3)))
-                    {
+                    if (*p == '\\' && *(p + 1) == 'x' &&
+                        is_hex_digit(*(p + 2)) &&
+                        is_hex_digit(*(p + 3))) {
                         unsigned char byte;
 
-                        byte = (hex_digit_to_int(*(p+2))*16)+
-                                hex_digit_to_int(*(p+3));
-                        current = str_append_len(current,(char*)&byte,1);
+                        byte = (hex_digit_to_int(*(p + 2)) * 16) +
+                               hex_digit_to_int(*(p + 3));
+                        current = str_append_len(current, (char *) &byte, 1);
                         p += 3;
-                    } else if (*p == '\\' && *(p+1)) {
+                    } else if (*p == '\\' && *(p + 1)) {
                         char c;
 
                         p++;
-                        switch(*p) {
-                        case 'n': c = '\n'; break;
-                        case 'r': c = '\r'; break;
-                        case 't': c = '\t'; break;
-                        case 'b': c = '\b'; break;
-                        case 'a': c = '\a'; break;
-                        default: c = *p; break;
+                        switch (*p) {
+                            case 'n':
+                                c = '\n';
+                                break;
+                            case 'r':
+                                c = '\r';
+                                break;
+                            case 't':
+                                c = '\t';
+                                break;
+                            case 'b':
+                                c = '\b';
+                                break;
+                            case 'a':
+                                c = '\a';
+                                break;
+                            default:
+                                c = *p;
+                                break;
                         }
-                        current = str_append_len(current,&c,1);
+                        current = str_append_len(current, &c, 1);
                     } else if (*p == '"') {
                         /* closing quote must be followed by a space or
                          * nothing at all. */
-                        if (*(p+1) && !isspace(*(p+1))) goto err;
-                        done=1;
+                        if (*(p + 1) && !isspace(*(p + 1))) goto err;
+                        done = 1;
                     } else if (!*p) {
                         /* unterminated quotes */
                         goto err;
                     } else {
-                        current = str_append_len(current,p,1);
+                        current = str_append_len(current, p, 1);
                     }
                 } else if (insq) {
-                    if (*p == '\\' && *(p+1) == '\'') {
+                    if (*p == '\\' && *(p + 1) == '\'') {
                         p++;
-                        current = str_append_len(current,"'",1);
+                        current = str_append_len(current, "'", 1);
                     } else if (*p == '\'') {
                         /* closing quote must be followed by a space or
                          * nothing at all. */
-                        if (*(p+1) && !isspace(*(p+1))) goto err;
-                        done=1;
+                        if (*(p + 1) && !isspace(*(p + 1))) goto err;
+                        done = 1;
                     } else if (!*p) {
                         /* unterminated quotes */
                         goto err;
                     } else {
-                        current = str_append_len(current,p,1);
+                        current = str_append_len(current, p, 1);
                     }
                 } else {
-                    switch(*p) {
-                    case ' ':
-                    case '\n':
-                    case '\r':
-                    case '\t':
-                    case '\0':
-                        done=1;
-                        break;
-                    case '"':
-                        inq=1;
-                        break;
-                    case '\'':
-                        insq=1;
-                        break;
-                    default:
-                        current = str_append_len(current,p,1);
-                        break;
+                    switch (*p) {
+                        case ' ':
+                        case '\n':
+                        case '\r':
+                        case '\t':
+                        case '\0':
+                            done = 1;
+                            break;
+                        case '"':
+                            inq = 1;
+                            break;
+                        case '\'':
+                            insq = 1;
+                            break;
+                        default:
+                            current = str_append_len(current, p, 1);
+                            break;
                     }
                 }
                 if (*p) p++;
             }
             /* add the token to the vector */
-            vector = s_realloc(vector,((*argc)+1)*sizeof(char*));
+            vector = s_realloc(vector, ((*argc) + 1) * sizeof(char *));
             vector[*argc] = current;
             (*argc)++;
             current = NULL;
         } else {
             /* Even on empty input string return something not NULL. */
-            if (vector == NULL) vector = s_malloc(sizeof(void*));
+            if (vector == NULL) vector = s_malloc(sizeof(void *));
             return vector;
         }
     }
 
-err:
-    while((*argc)--)
+    err:
+    while ((*argc)--)
         str_free(vector[*argc]);
     s_free(vector);
     if (current) str_free(current);
@@ -1077,7 +1129,7 @@ string str_join(char **argv, int argc, char *sep) {
 
     for (j = 0; j < argc; j++) {
         join = str_append_c(join, argv[j]);
-        if (j != argc-1) join = str_append_c(join,sep);
+        if (j != argc - 1) join = str_append_c(join, sep);
     }
     return join;
 }
@@ -1089,7 +1141,7 @@ string str_join_str(string *argv, int argc, const char *sep, size_t seplen) {
 
     for (j = 0; j < argc; j++) {
         join = str_append(join, argv[j]);
-        if (j != argc-1) join = str_append_len(join,sep,seplen);
+        if (j != argc - 1) join = str_append_len(join, sep, seplen);
     }
     return join;
 }
@@ -1100,5 +1152,7 @@ string str_join_str(string *argv, int argc, const char *sep, size_t seplen) {
  * the programs STR is linked to, if they want to touch the STR internals
  * even if they use a different allocator. */
 void *str_malloc(size_t size) { return s_malloc(size); }
-void *str_realloc(void *ptr, size_t size) { return s_realloc(ptr,size); }
+
+void *str_realloc(void *ptr, size_t size) { return s_realloc(ptr, size); }
+
 void str_free_alloc(void *ptr) { s_free(ptr); }

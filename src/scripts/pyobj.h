@@ -15,14 +15,16 @@
 // initialize objects for use. This must be called AFTER all other modules
 // have added in new get/setters and methods to pyobj
 PyMODINIT_FUNC init_PyObj(void);
-PyObject      *newPyObj(OBJ_DATA *obj);
 
-OBJ_DATA   *PyObj_AsObj(PyObject *obj);
-int         PyObj_AsUid(PyObject *obj);
+PyObject *newPyObj(OBJ_DATA *obj);
+
+OBJ_DATA *PyObj_AsObj(PyObject *obj);
+
+int PyObj_AsUid(PyObject *obj);
 
 //
 // checks to see of the object is a PyObj
-int         PyObj_Check(PyObject *value);
+int PyObj_Check(PyObject *value);
 
 //
 // getters allow Python to access pieces of the Obj module. Setters allow

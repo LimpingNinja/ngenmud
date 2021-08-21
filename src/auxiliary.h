@@ -65,8 +65,8 @@ void init_auxiliaries();
 // create a new set of functions for handling auxiliary data
 //
 AUXILIARY_FUNCS *
-newAuxiliaryFuncs(bitvector_t aux_type, void *newfunc, void *deleter, 
-		  void *copyTo, void *copy, void *store, void *read);
+newAuxiliaryFuncs(bitvector_t aux_type, void *newfunc, void *deleter,
+                  void *copyTo, void *copy, void *store, void *read);
 
 
 //

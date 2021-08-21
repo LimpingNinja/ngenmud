@@ -14,10 +14,13 @@
 
 // initialize sockets for use. This must be called AFTER all other modules
 // have added in new get/setters and methods to pyroom
-PyMODINIT_FUNC   init_PySocket(void);
-PyObject          *newPySocket(SOCKET_DATA *sock);
+PyMODINIT_FUNC init_PySocket(void);
+
+PyObject *newPySocket(SOCKET_DATA *sock);
+
 SOCKET_DATA *PySocket_AsSocket(PyObject *sock);
-int             PySocket_AsUid(PyObject *sock);
+
+int PySocket_AsUid(PyObject *sock);
 
 //
 // checks to see if the PyObject is a PySocket

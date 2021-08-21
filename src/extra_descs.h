@@ -18,20 +18,32 @@
 //*****************************************************************************
 // a set of edescs
 //*****************************************************************************
-EDESC_SET  *newEdescSet         (void);
-void        deleteEdescSet      (EDESC_SET *set);
-void        edescSetCopyTo      (EDESC_SET *from, EDESC_SET *to);
-EDESC_SET  *edescSetCopy        (EDESC_SET *set);
-void        edescSetPut         (EDESC_SET *set, EDESC_DATA *edesc);
-EDESC_DATA *edescSetGet         (EDESC_SET *set, const char *keyword);
-EDESC_DATA *edescSetGetNum      (EDESC_SET *set, int num);
-EDESC_DATA *edescSetRemove      (EDESC_SET *set, const char *keyword);
-EDESC_DATA *edescSetRemoveNum   (EDESC_SET *set, int num);
-void        removeEdesc         (EDESC_SET *set, EDESC_DATA *edesc);
-int         edescGetSetSize     (EDESC_SET *set);
-LIST       *edescSetGetList     (EDESC_SET *set);
-void        edescTagDesc        (BUFFER *buf, EDESC_SET *set,  
-				 const char *start_tag, const char *end_tag);
+EDESC_SET *newEdescSet(void);
+
+void deleteEdescSet(EDESC_SET *set);
+
+void edescSetCopyTo(EDESC_SET *from, EDESC_SET *to);
+
+EDESC_SET *edescSetCopy(EDESC_SET *set);
+
+void edescSetPut(EDESC_SET *set, EDESC_DATA *edesc);
+
+EDESC_DATA *edescSetGet(EDESC_SET *set, const char *keyword);
+
+EDESC_DATA *edescSetGetNum(EDESC_SET *set, int num);
+
+EDESC_DATA *edescSetRemove(EDESC_SET *set, const char *keyword);
+
+EDESC_DATA *edescSetRemoveNum(EDESC_SET *set, int num);
+
+void removeEdesc(EDESC_SET *set, EDESC_DATA *edesc);
+
+int edescGetSetSize(EDESC_SET *set);
+
+LIST *edescSetGetList(EDESC_SET *set);
+
+void edescTagDesc(BUFFER *buf, EDESC_SET *set,
+                  const char *start_tag, const char *end_tag);
 
 
 
@@ -55,6 +67,7 @@ void deleteEdesc(EDESC_DATA *edesc);
 // desc set from the storage set.
 //
 EDESC_SET *edescSetRead(STORAGE_SET *set);
+
 STORAGE_SET *edescSetStore(EDESC_SET *edescs);
 
 //
@@ -108,6 +121,6 @@ EDESC_SET *edescGetSet(EDESC_DATA *edesc);
 // and return a new copy of string (with tags)
 //
 char *tagKeywords(EDESC_DATA *edesc, const char *string,
-		  const char *start_tag, const char *end_tag);
+                  const char *start_tag, const char *end_tag);
 
 #endif // __EXTRA_DESC_H

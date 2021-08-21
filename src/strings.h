@@ -64,47 +64,47 @@ struct __attribute__ ((__packed__)) sdshdr64 {
 #define STR_TYPE_64 4
 #define STR_TYPE_MASK 7
 #define STR_TYPE_BITS 3
-#define STR_HDR_VAR(T,s) struct sdshdr##T *sh = (void*)((s)-(sizeof(struct sdshdr##T)));
-#define STR_HDR(T,s) ((struct sdshdr##T *)((s)-(sizeof(struct sdshdr##T))))
+#define STR_HDR_VAR(T, s) struct sdshdr##T *sh = (void*)((s)-(sizeof(struct sdshdr##T)));
+#define STR_HDR(T, s) ((struct sdshdr##T *)((s)-(sizeof(struct sdshdr##T))))
 #define STR_TYPE_5_LEN(f) ((f)>>STR_TYPE_BITS)
 
 static inline size_t str_length(const string s) {
     unsigned char flags = s[-1];
-    switch(flags&STR_TYPE_MASK) {
+    switch (flags & STR_TYPE_MASK) {
         case STR_TYPE_5:
             return STR_TYPE_5_LEN(flags);
         case STR_TYPE_8:
-            return STR_HDR(8,s)->len;
+            return STR_HDR(8, s)->len;
         case STR_TYPE_16:
-            return STR_HDR(16,s)->len;
+            return STR_HDR(16, s)->len;
         case STR_TYPE_32:
-            return STR_HDR(32,s)->len;
+            return STR_HDR(32, s)->len;
         case STR_TYPE_64:
-            return STR_HDR(64,s)->len;
+            return STR_HDR(64, s)->len;
     }
     return 0;
 }
 
 static inline size_t str_avail(const string s) {
     unsigned char flags = s[-1];
-    switch(flags&STR_TYPE_MASK) {
+    switch (flags & STR_TYPE_MASK) {
         case STR_TYPE_5: {
             return 0;
         }
         case STR_TYPE_8: {
-            STR_HDR_VAR(8,s);
+            STR_HDR_VAR(8, s);
             return sh->alloc - sh->len;
         }
         case STR_TYPE_16: {
-            STR_HDR_VAR(16,s);
+            STR_HDR_VAR(16, s);
             return sh->alloc - sh->len;
         }
         case STR_TYPE_32: {
-            STR_HDR_VAR(32,s);
+            STR_HDR_VAR(32, s);
             return sh->alloc - sh->len;
         }
         case STR_TYPE_64: {
-            STR_HDR_VAR(64,s);
+            STR_HDR_VAR(64, s);
             return sh->alloc - sh->len;
         }
     }
@@ -113,49 +113,47 @@ static inline size_t str_avail(const string s) {
 
 static inline void str_resize(string s, size_t newlen) {
     unsigned char flags = s[-1];
-    switch(flags&STR_TYPE_MASK) {
-        case STR_TYPE_5:
-            {
-                unsigned char *fp = ((unsigned char*)s)-1;
-                *fp = STR_TYPE_5 | (newlen << STR_TYPE_BITS);
-            }
+    switch (flags & STR_TYPE_MASK) {
+        case STR_TYPE_5: {
+            unsigned char *fp = ((unsigned char *) s) - 1;
+            *fp = STR_TYPE_5 | (newlen << STR_TYPE_BITS);
+        }
             break;
         case STR_TYPE_8:
-            STR_HDR(8,s)->len = newlen;
+            STR_HDR(8, s)->len = newlen;
             break;
         case STR_TYPE_16:
-            STR_HDR(16,s)->len = newlen;
+            STR_HDR(16, s)->len = newlen;
             break;
         case STR_TYPE_32:
-            STR_HDR(32,s)->len = newlen;
+            STR_HDR(32, s)->len = newlen;
             break;
         case STR_TYPE_64:
-            STR_HDR(64,s)->len = newlen;
+            STR_HDR(64, s)->len = newlen;
             break;
     }
 }
 
 static inline void str_grow(string s, size_t inc) {
     unsigned char flags = s[-1];
-    switch(flags&STR_TYPE_MASK) {
-        case STR_TYPE_5:
-            {
-                unsigned char *fp = ((unsigned char*)s)-1;
-                unsigned char newlen = STR_TYPE_5_LEN(flags)+inc;
-                *fp = STR_TYPE_5 | (newlen << STR_TYPE_BITS);
-            }
+    switch (flags & STR_TYPE_MASK) {
+        case STR_TYPE_5: {
+            unsigned char *fp = ((unsigned char *) s) - 1;
+            unsigned char newlen = STR_TYPE_5_LEN(flags) + inc;
+            *fp = STR_TYPE_5 | (newlen << STR_TYPE_BITS);
+        }
             break;
         case STR_TYPE_8:
-            STR_HDR(8,s)->len += inc;
+            STR_HDR(8, s)->len += inc;
             break;
         case STR_TYPE_16:
-            STR_HDR(16,s)->len += inc;
+            STR_HDR(16, s)->len += inc;
             break;
         case STR_TYPE_32:
-            STR_HDR(32,s)->len += inc;
+            STR_HDR(32, s)->len += inc;
             break;
         case STR_TYPE_64:
-            STR_HDR(64,s)->len += inc;
+            STR_HDR(64, s)->len += inc;
             break;
     }
 }
@@ -163,84 +161,116 @@ static inline void str_grow(string s, size_t inc) {
 /* str_alloc() = str_avail() + str_length() */
 static inline size_t str_alloc(const string s) {
     unsigned char flags = s[-1];
-    switch(flags&STR_TYPE_MASK) {
+    switch (flags & STR_TYPE_MASK) {
         case STR_TYPE_5:
             return STR_TYPE_5_LEN(flags);
         case STR_TYPE_8:
-            return STR_HDR(8,s)->alloc;
+            return STR_HDR(8, s)->alloc;
         case STR_TYPE_16:
-            return STR_HDR(16,s)->alloc;
+            return STR_HDR(16, s)->alloc;
         case STR_TYPE_32:
-            return STR_HDR(32,s)->alloc;
+            return STR_HDR(32, s)->alloc;
         case STR_TYPE_64:
-            return STR_HDR(64,s)->alloc;
+            return STR_HDR(64, s)->alloc;
     }
     return 0;
 }
 
 static inline void str_set_alloc(string s, size_t newlen) {
     unsigned char flags = s[-1];
-    switch(flags&STR_TYPE_MASK) {
+    switch (flags & STR_TYPE_MASK) {
         case STR_TYPE_5:
             /* Nothing to do, this type has no total allocation info. */
             break;
         case STR_TYPE_8:
-            STR_HDR(8,s)->alloc = newlen;
+            STR_HDR(8, s)->alloc = newlen;
             break;
         case STR_TYPE_16:
-            STR_HDR(16,s)->alloc = newlen;
+            STR_HDR(16, s)->alloc = newlen;
             break;
         case STR_TYPE_32:
-            STR_HDR(32,s)->alloc = newlen;
+            STR_HDR(32, s)->alloc = newlen;
             break;
         case STR_TYPE_64:
-            STR_HDR(64,s)->alloc = newlen;
+            STR_HDR(64, s)->alloc = newlen;
             break;
     }
 }
 
 string str_new_length(const void *init, size_t initlen);
+
 string str_new(const char *init);
+
 string str_empty(void);
+
 string str_duplicate(const string s);
+
 void str_free(string s);
+
 string str_grow_zero(string s, size_t len);
+
 string str_append_len(string s, const void *t, size_t len);
+
 string str_append_c(string s, const char *t);
+
 string str_append(string s, const string t);
+
 string str_copy_length(string s, const char *t, size_t len);
+
 string str_copy(string s, const char *t);
 
 string str_vprintf(string s, const char *fmt, va_list ap);
+
 #ifdef __GNUC__
 string str_printf(string s, const char *fmt, ...)
     __attribute__((format(printf, 2, 3)));
 #else
+
 string str_printf(string s, const char *fmt, ...);
+
 #endif
 
 string str_format(string s, char const *fmt, ...);
+
 string str_trim_chars(string s, const char *cset);
+
 void str_range(string s, ssize_t start, ssize_t end);
+
 void str_fix(string s);
+
 void str_clear(string s);
+
 int str_compare(const string s1, const string s2);
+
 string *str_split_len(const char *s, ssize_t len, const char *sep, int seplen, int *count);
+
 void str_free_splitres(string *tokens, int count);
+
 void str_to_lower(string s);
+
 void str_to_upper(string s);
+
 string str_from_longlong(long long value);
+
 string str_add_repr(string s, const char *p, size_t len);
+
 string *str_split_args(const char *line, int *argc);
+
 string str_map_chars(string s, const char *from, const char *to, size_t setlen);
+
 string str_join(char **argv, int argc, char *sep);
+
 string str_join_str(string *argv, int argc, const char *sep, size_t seplen);
 
 /* Low level functions exposed to the user API */
 string strMakeRoomFor(string s, size_t addlen);
+
 void strIncrLen(string s, ssize_t incr);
+
 string strRemoveFreeSpace(string s);
+
 size_t strAllocSize(string s);
+
 void *strAllocPtr(string s);
 
 /* Export the allocator used by STR to the program using STR.
@@ -248,7 +278,9 @@ void *strAllocPtr(string s);
  * allocators, but may want to allocate or free things that STR will
  * respectively free or allocate. */
 void *str_malloc(size_t size);
+
 void *str_realloc(void *ptr, size_t size);
+
 void str_free_alloc(void *ptr);
 
 #endif

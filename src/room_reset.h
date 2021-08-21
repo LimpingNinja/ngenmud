@@ -36,47 +36,78 @@
 // must be called before room resets are usable. Attaches a reset hook
 void init_room_reset(void);
 
-const char    *resetTypeGetName (int type);
+const char *resetTypeGetName(int type);
 
-RESET_DATA    *newReset         (void);
-void           deleteReset      (RESET_DATA *reset);
-RESET_DATA    *resetCopy        (RESET_DATA *reset);
-void           resetCopyTo      (RESET_DATA *from, RESET_DATA *to);
-STORAGE_SET   *resetStore       (RESET_DATA *reset);
-RESET_DATA    *resetRead        (STORAGE_SET *set);
+RESET_DATA *newReset(void);
 
-int            resetGetType     (const RESET_DATA *reset);
-int            resetGetTimes    (const RESET_DATA *reset);
-int            resetGetChance   (const RESET_DATA *reset);
-int            resetGetMax      (const RESET_DATA *reset);
-int            resetGetRoomMax  (const RESET_DATA *reset);
-const char    *resetGetArg      (const RESET_DATA *reset);
-BUFFER        *resetGetArgBuffer(const RESET_DATA *reset);
-LIST          *resetGetOn       (const RESET_DATA *reset);
-LIST          *resetGetIn       (const RESET_DATA *reset);
-LIST          *resetGetThen     (const RESET_DATA *reset);
+void deleteReset(RESET_DATA *reset);
 
-void           resetSetType     (RESET_DATA *reset, int type);
-void           resetSetTimes    (RESET_DATA *reset, int times);
-void           resetSetChance   (RESET_DATA *reset, int chance);
-void           resetSetMax      (RESET_DATA *reset, int max);
-void           resetSetRoomMax  (RESET_DATA *reset, int room_max);
-void           resetSetArg      (RESET_DATA *reset, const char *arg);
+RESET_DATA *resetCopy(RESET_DATA *reset);
 
-void           resetAddOn       (RESET_DATA *reset, RESET_DATA *on);
-void           resetAddIn       (RESET_DATA *reset, RESET_DATA *in);
-void           resetAddThen     (RESET_DATA *reset, RESET_DATA *then);
+void resetCopyTo(RESET_DATA *from, RESET_DATA *to);
 
-RESET_LIST    *newResetList(void);
-void        deleteResetList(RESET_LIST *list);
-RESET_LIST   *resetListCopy(RESET_LIST *list);
-void        resetListCopyTo(RESET_LIST *from, RESET_LIST *to);
+STORAGE_SET *resetStore(RESET_DATA *reset);
+
+RESET_DATA *resetRead(STORAGE_SET *set);
+
+int resetGetType(const RESET_DATA *reset);
+
+int resetGetTimes(const RESET_DATA *reset);
+
+int resetGetChance(const RESET_DATA *reset);
+
+int resetGetMax(const RESET_DATA *reset);
+
+int resetGetRoomMax(const RESET_DATA *reset);
+
+const char *resetGetArg(const RESET_DATA *reset);
+
+BUFFER *resetGetArgBuffer(const RESET_DATA *reset);
+
+LIST *resetGetOn(const RESET_DATA *reset);
+
+LIST *resetGetIn(const RESET_DATA *reset);
+
+LIST *resetGetThen(const RESET_DATA *reset);
+
+void resetSetType(RESET_DATA *reset, int type);
+
+void resetSetTimes(RESET_DATA *reset, int times);
+
+void resetSetChance(RESET_DATA *reset, int chance);
+
+void resetSetMax(RESET_DATA *reset, int max);
+
+void resetSetRoomMax(RESET_DATA *reset, int room_max);
+
+void resetSetArg(RESET_DATA *reset, const char *arg);
+
+void resetAddOn(RESET_DATA *reset, RESET_DATA *on);
+
+void resetAddIn(RESET_DATA *reset, RESET_DATA *in);
+
+void resetAddThen(RESET_DATA *reset, RESET_DATA *then);
+
+RESET_LIST *newResetList(void);
+
+void deleteResetList(RESET_LIST *list);
+
+RESET_LIST *resetListCopy(RESET_LIST *list);
+
+void resetListCopyTo(RESET_LIST *from, RESET_LIST *to);
+
 STORAGE_SET *resetListStore(RESET_LIST *list);
-RESET_LIST   *resetListRead(STORAGE_SET *set);
+
+RESET_LIST *resetListRead(STORAGE_SET *set);
+
 const char *resetListGetKey(RESET_LIST *list);
-void        resetListSetKey(RESET_LIST *list, const char *key);
-LIST    *resetListGetResets(RESET_LIST *list);
-void           resetListAdd(RESET_LIST *list, RESET_DATA *reset);
-void        resetListRemove(RESET_LIST *list, RESET_DATA *reset);
+
+void resetListSetKey(RESET_LIST *list, const char *key);
+
+LIST *resetListGetResets(RESET_LIST *list);
+
+void resetListAdd(RESET_LIST *list, RESET_DATA *reset);
+
+void resetListRemove(RESET_LIST *list, RESET_DATA *reset);
 
 #endif // __ROOM_RESET_H

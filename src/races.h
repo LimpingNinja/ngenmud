@@ -11,13 +11,21 @@
 //*****************************************************************************
 
 void init_races();
+
 void add_race(const char *name, const char *abbrev, BODY_DATA *body, int pc_ok);
+
 int raceCount();
+
 bool isRace(const char *name);
+
 BODY_DATA *raceCreateBody(const char *name);
+
 bool raceIsForPC(const char *name);
+
 const char *raceGetAbbrev(const char *name);
+
 const char *raceGetList(bool pc_only);
+
 const char *raceDefault(void);
 
 #endif // RACES_H

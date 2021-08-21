@@ -20,13 +20,13 @@ void init_inform(void);
 //********************
 // Use with message()
 //********************
-#define TO_ROOM 	(1 << 0) // everyone in the room except ch and vict
-#define TO_VICT		(1 << 1) // just to the victim
-#define TO_CHAR		(1 << 2) // just the character
+#define TO_ROOM    (1 << 0) // everyone in the room except ch and vict
+#define TO_VICT        (1 << 1) // just to the victim
+#define TO_CHAR        (1 << 2) // just the character
 #define TO_WORLD        (1 << 3) // like TO_ROOM, but to all chars
 
 //
-// Send a message out
+// Send a message out - this should not be the position of the server to handle
 //
 // Converts the following symbols:
 //  $n = ch name
@@ -43,43 +43,43 @@ void init_inform(void);
 //  $a = a/an of obj
 //  $A = a/an of vobj
 //
-void message(CHAR_DATA *ch,  CHAR_DATA *vict,
-	     OBJ_DATA  *obj, OBJ_DATA  *vobj,
-	     int hide_nosee, bitvector_t range, 
-	     const char *mssg);
+void message(CHAR_DATA *ch, CHAR_DATA *vict,
+             OBJ_DATA *obj, OBJ_DATA *vobj,
+             int hide_nosee, bitvector_t range,
+             const char *mssg);
 
 //
 // same deal as message(), but takes a formatting
-void mssgprintf(CHAR_DATA *ch, CHAR_DATA *vict, 
-		OBJ_DATA *obj, OBJ_DATA  *vobj,
-		int hide_nosee, bitvector_t range, const char *fmt, ...)
-  __attribute__ ((format (printf, 7, 8)));
+void mssgprintf(CHAR_DATA *ch, CHAR_DATA *vict,
+                OBJ_DATA *obj, OBJ_DATA *vobj,
+                int hide_nosee, bitvector_t range, const char *fmt, ...)
+__attribute__ ((format (printf, 7, 8)));
 
 //
 // send a message to everyone outdoors
 //
-void  send_outdoors(const char *format, ...)  
+void send_outdoors(const char *format, ...)
 __attribute__ ((format (printf, 1, 2)));
 
 
 //
 // send a message to a list of characters
 //
-void  send_to_list (LIST *list, const char *format, ...) 
+void send_to_list(LIST *list, const char *format, ...)
 __attribute__ ((format (printf, 2, 3)));
 
 
 //
 // send a message to a specific character
 //
-void  send_to_char (CHAR_DATA *ch, const char *format, ...) 
+void send_to_char(CHAR_DATA *ch, const char *format, ...)
 __attribute__ ((format (printf, 2, 3)));
 
 
 //
 // send a message to everyone at or above the specified level
 //
-void send_to_level(int level, const char *format, ...) 
+void send_to_level(int level, const char *format, ...)
 __attribute__ ((format (printf, 2, 3)));
 
 
@@ -88,7 +88,7 @@ __attribute__ ((format (printf, 2, 3)));
 // but not the character himself. If hide_nosee is TRUE, then the message
 // is not sent to people who cannot see the character.
 //
-void send_around_char(CHAR_DATA *ch, bool hide_nosee, const char *format, ...) 
+void send_around_char(CHAR_DATA *ch, bool hide_nosee, const char *format, ...)
 __attribute__ ((format (printf, 3, 4)));
 
 
@@ -97,7 +97,7 @@ __attribute__ ((format (printf, 3, 4)));
 // used, and show_used_furniture is FALSE, then skip the object.
 //
 void list_contents(CHAR_DATA *ch, LIST *contents, bool show_used_furniture,
-		   const char *descriptor(OBJ_DATA *));
+                   const char *descriptor(OBJ_DATA *));
 
 
 //

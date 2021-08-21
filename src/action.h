@@ -59,12 +59,12 @@ bool is_acting(void *ch, bitvector_t where);
 //
 // for an example of how start_action works, see admin.c (cmd_dsay)
 //
-void start_action(void           *ch, 
-		  int          delay,
-		  bitvector_t  where,
-		  void  *on_complete,
-		  void *on_interrupt,
-		  void         *data,
-		  const char    *arg);
+void start_action(void *ch,
+                  int delay,
+                  bitvector_t where,
+                  void *on_complete,
+                  void *on_interrupt,
+                  void *data,
+                  const char *arg);
 
 #endif // __ACTION_H

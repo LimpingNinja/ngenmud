@@ -49,10 +49,10 @@ void init_items(void);
 // read should take in a storage set and, from it, parse a new instance
 // of itemdata. The function should take a form as follows:
 //    itemdata *itemDataRead(STORAGE_SET *set)
-void item_add_type(const char *type, 
-		   void *newfunc,void *deleter,
-		   void *copyTo, void *copy, 
-		   void *store,  void *read);
+void item_add_type(const char *type,
+                   void *newfunc, void *deleter,
+                   void *copyTo, void *copy,
+                   void *store, void *read);
 
 //
 // Build a list of all the current item types. Item types are listed in

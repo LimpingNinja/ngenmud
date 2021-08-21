@@ -14,11 +14,13 @@ typedef struct buffer_data BUFFER;
 // allocate/deallocate a buffer. start capacity must be supplied, but the
 // buffer can grow indefinitely.
 BUFFER *newBuffer(int start_capacity);
+
 void deleteBuffer(BUFFER *buf);
 
 // concatinate the text to the end of the buffer
-void        bufferCat   (BUFFER *buf, const char *txt);
-void        bufferCatCh (BUFFER *buf, const char ch);
+void bufferCat(BUFFER *buf, const char *txt);
+
+void bufferCatCh(BUFFER *buf, const char ch);
 
 // clear the buffer's contents
 void bufferClear(BUFFER *buf);

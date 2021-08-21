@@ -19,25 +19,29 @@ typedef struct cmd_data CMD_DATA;
 #define COMMAND(name) \
   void name(CHAR_DATA *ch, const char *cmd, char *arg)
 #define CMD_CHK_PTR(name) \
-  bool (* name)(CHAR_DATA *ch, const char *cmd) 
+  bool (* name)(CHAR_DATA *ch, const char *cmd)
 #define CMD_CHK(name) \
   bool name(CHAR_DATA *ch, const char *cmd)
 
-CMD_DATA   *newCmd(const char *name, COMMAND(func), const char *user_group,
-		   bool interrupts);
-CMD_DATA *newPyCmd(const char *name, void  *pyfunc, const char *user_group,
-		   bool interrupts);
+CMD_DATA *newCmd(const char *name, COMMAND(func), const char *user_group,
+                 bool interrupts);
+
+CMD_DATA *newPyCmd(const char *name, void *pyfunc, const char *user_group,
+                   bool interrupts);
 
 //
 // change our information, without changing our checks
-void   cmdUpdate(CMD_DATA *cmd, COMMAND(func), const char *user_group, 
-		 bool interrupts);
-void cmdPyUpdate(CMD_DATA *cmd, void *pyfunc, const char *user_group,
-		 bool interrupts);
+void cmdUpdate(CMD_DATA *cmd, COMMAND(func), const char *user_group,
+               bool interrupts);
 
-void     deleteCmd(CMD_DATA *cmd);
-CMD_DATA  *cmdCopy(CMD_DATA *cmd);
-void     cmdCopyTo(CMD_DATA *from, CMD_DATA *to);
+void cmdPyUpdate(CMD_DATA *cmd, void *pyfunc, const char *user_group,
+                 bool interrupts);
+
+void deleteCmd(CMD_DATA *cmd);
+
+CMD_DATA *cmdCopy(CMD_DATA *cmd);
+
+void cmdCopyTo(CMD_DATA *from, CMD_DATA *to);
 
 //
 // -1     did not attempt; no command but all checks passed (fail)
@@ -45,11 +49,15 @@ void     cmdCopyTo(CMD_DATA *from, CMD_DATA *to);
 //  1     attempted, and succeeded (success)
 int charTryCmd(CHAR_DATA *ch, CMD_DATA *cmd, char *arg);
 
-const char      *cmdGetName(CMD_DATA *cmd);
+const char *cmdGetName(CMD_DATA *cmd);
+
 const char *cmdGetUserGroup(CMD_DATA *cmd);
-bool       cmdGetInterrupts(CMD_DATA *cmd);
-void            cmdAddCheck(CMD_DATA *cmd, CMD_CHK(func));
-void          cmdAddPyCheck(CMD_DATA *cmd, void *pyfunc);
+
+bool cmdGetInterrupts(CMD_DATA *cmd);
+
+void cmdAddCheck(CMD_DATA *cmd, CMD_CHK(func));
+
+void cmdAddPyCheck(CMD_DATA *cmd, void *pyfunc);
 
 //
 // do we have an associated function, or are we just a list of command checks?

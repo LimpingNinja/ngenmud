@@ -15,7 +15,7 @@ PyMODINIT_FUNC init_PyStorage(void);
 
 //
 // create a new python representation of the storage set
-PyObject *newPyStorageSet (STORAGE_SET *set);
+PyObject *newPyStorageSet(STORAGE_SET *set);
 
 //
 // return the storage set that is contained within it.

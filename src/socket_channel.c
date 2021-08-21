@@ -6,8 +6,7 @@
 #include "socket.h"
 #include "hooks.h"
 
-void socket_read(const char *info)
-{
+void socket_read(const char *info) {
     SOCKET_DATA *dsock = NULL;
     int size;
     extern int errno;
@@ -16,38 +15,31 @@ void socket_read(const char *info)
 
     /* check for buffer overflows, and drop connection in that case */
     size = strlen(dsock->inbuf);
-    if (size >= sizeof(dsock->inbuf) - 2)
-    {
+    if (size >= sizeof(dsock->inbuf) - 2) {
         text_to_socket(dsock, "\n\r!!!! Input Overflow !!!!\n\r");
         dsock->valid_read = FALSE;
         return;
     }
 
     /* start reading from the socket */
-    for (;;)
-    {
+    for (;;) {
         int sInput;
         int wanted = sizeof(dsock->inbuf) - 2 - size;
 
         sInput = read(dsock->control, dsock->inbuf + size, wanted);
 
-        if (sInput > 0)
-        {
+        if (sInput > 0) {
             size += sInput;
 
-            if (dsock->inbuf[size-1] == '\n' || dsock->inbuf[size-1] == '\r')
+            if (dsock->inbuf[size - 1] == '\n' || dsock->inbuf[size - 1] == '\r')
                 break;
-        }
-        else if (sInput == 0)
-        {
+        } else if (sInput == 0) {
             log_string("Read_from_socket: EOF");
             dsock->valid_read = FALSE;
             return;
-        }
-        else if (errno == EAGAIN || sInput == wanted)
+        } else if (errno == EAGAIN || sInput == wanted)
             break;
-        else
-        {
+        else {
             perror("Read_from_socket");
             dsock->valid_read = FALSE;
             return;

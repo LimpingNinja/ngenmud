@@ -6,5 +6,5 @@ set(CMAKE_C_STANDARD 11)
 include_directories(.)
 
 add_library(alias
-    alias.c
-    alias.h)
+        alias.c
+        alias.h)
