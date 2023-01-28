@@ -71,6 +71,9 @@ ngenmud.Append(CCFLAGS=['-fcommon', '-Wall', '-g', '-ggdb', '-O2'])
 # Required libraries
 ngenmud.Append(LIBS=['z', 'm', 'pthread'])
 
+# Use the libpath for the PYENV version
+ngenmud.Append(LIBPATH=['$PYENV_ROOT/versions/%d.%d.%d/lib' % version_info[0:3]])
+
 # non-darwin OSes need to include crypt
 if platform != 'darwin':
    ngenmud.Append(LIBS=['crypt'])
